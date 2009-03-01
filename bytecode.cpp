@@ -28,13 +28,13 @@ CompiledBytecode::CompiledBytecode(char *_name, int _size)
 
 CompiledBytecode::CompiledBytecode(int _size)
 {
-    //name = NULL;
+    //name = ""; // dirty code
     size = _size;
 }
 
 CompiledBytecode::CompiledBytecode()
 {
-    //name = NULL;
+    //name = "";// dirty code
     size = 0;
 }
 
