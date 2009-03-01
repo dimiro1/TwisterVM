@@ -8,12 +8,12 @@ all: zen zenc
 .DEFAULT: all
 
 zen: $(ZENOBJS)
-	$(CC) $(CFLAGS) $(ZENOBJS) -o zen
+	$(CC) $(CFLAGS) $(ZENOBJS) -o zen.out
 
 zenc: $(ZENCOBJS)
-	$(CC) $(CFLAGS) $(ZENCOBJS) -o zenc
+	$(CC) $(CFLAGS) $(ZENCOBJS) -o zenc.out
 
 clean:
-	rm -f *.o
+	rm -f *.o *.out
 
 
