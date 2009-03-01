@@ -13,9 +13,8 @@ void showUsage()
   fprintf(stderr,
   "usage: %s [options] [script file].\n"
   "Available options are:\n"
-  "  -d [disassemble] filename\tdisassemble code\n"
   "  -e [execute] filename\t\texecute filename\n"
-  "  -s [stack] filename\t\tshow initial stack\n"
+  "  -d [disassemble] filename\tdisassemble code\n"
   "  -h [help]\t\t\tshow this help\n"
   "  -c [copyright]\t\tcopyright information\n\n"
   ,
