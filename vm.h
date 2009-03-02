@@ -38,13 +38,13 @@ class VM {
         void reset();
         void showBytecodes();
 
-        int push(int value);
-        int pop();
-        int getop(); // get the element in stack top, but dont pop it
+        void push(float value);
+        float pop();
+        float getop(); // get the element in stack top, but dont pop it
         void showStack();
 
     private:
-        std::stack<int> stack;
+        std::stack<float> stack;
         int pc; // program counter
         ByteCode *program[MAX_PROGRAM_SIZE];
         int current_program_size; // number of bytecodes

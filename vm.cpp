@@ -48,7 +48,7 @@ void VM::showBytecodes()
 
     for( int i = 0; i < current_program_size; i++ ) {
         if( program[i]->operand != 0 )
-            printf ("| %-2d | %-15s |  %-3d |", i+1, opcodeName[program[i]->opcode], program[i]->operand);
+            printf ("| %-2d | %-15s |  %-3g |", i+1, opcodeName[program[i]->opcode], program[i]->operand);
         else
             printf ("| %-2d | %-15s |      |", i+1, opcodeName[program[i]->opcode]);
         cout << endl;
@@ -118,16 +118,16 @@ void VM::showStack()
     cout << "| STACK |" << endl;
     cout << "+-------+" << endl;
     while(!stack.empty()) {
-        printf("| %5d |\n", pop());
+        printf("| %5g |\n", pop());
     }
     cout << "+-------+" << endl;
 }
 
 /* inline because the overhead; much faster */
-inline int VM::push(int value) { stack.push(value); }
+inline void VM::push(float value) { stack.push(value); }
 
 // returns the element at top of the stack
-inline int VM::pop() { int element = stack.top(); stack.pop(); return element; }
+inline float VM::pop() { float element = stack.top(); stack.pop(); return element; }
 
-inline int VM::getop() { return stack.top(); }
+inline float VM::getop() { return stack.top(); }
 

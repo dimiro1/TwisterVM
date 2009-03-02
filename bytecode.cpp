@@ -14,7 +14,7 @@ ByteCode::ByteCode(Opcode _opcode)
     operand = NULL;
 }
 
-ByteCode::ByteCode(Opcode _opcode, int _operand)
+ByteCode::ByteCode(Opcode _opcode, float _operand)
 {
     opcode = _opcode;
     operand = _operand;

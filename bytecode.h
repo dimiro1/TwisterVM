@@ -11,10 +11,10 @@ class ByteCode {
     public:
         ByteCode();
         ByteCode(Opcode _opcode);
-        ByteCode(Opcode _opcode, int _operand);
+        ByteCode(Opcode _opcode, float _operand);
 
         Opcode opcode;
-        int operand;
+        float operand;
 };
 
 
