@@ -18,7 +18,7 @@ enum Opcode {
 };
 
 /* used in showBytecodes */
-static char *opcodeName[] = {
+static const char *opcodeName[] = {
     "PUSH",
     "ADD",
     "SUB",
