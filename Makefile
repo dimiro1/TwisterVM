@@ -3,14 +3,14 @@ CFLAGS=-Wall
 ZENOBJS=vm.o zen.o bytecode.o
 ZENCOBJS=bytecode.o zenc.o
 
-all: zen zenc
+all: zen.out zenc.out
 
 .DEFAULT: all
 
-zen: $(ZENOBJS)
+zen.out: $(ZENOBJS)
 	$(CC) $(CFLAGS) $(ZENOBJS) -o zen.out
 
-zenc: $(ZENCOBJS)
+zenc.out: $(ZENCOBJS)
 	$(CC) $(CFLAGS) $(ZENCOBJS) -o zenc.out
 
 clean:
