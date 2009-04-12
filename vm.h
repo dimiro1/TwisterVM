@@ -29,27 +29,28 @@ using std::ifstream;
 #define MAX_PROGRAM_SIZE 256
 
 class VM {
-    public:
-        VM();
-        ~VM();
-        int load(char *progname);
-        int execute(ByteCode *);
-        int run();
-        void reset();
-        void showBytecodes();
+ public:
 
-        void push(float value);
-        float pop();
-        float getop(); // get the element in stack top, but dont pop it
-        void showStack();
+   VM ();
+   ~VM ();
+   int load (char *progname);
+   int execute (ByteCode *);
+   int run ();
+   void reset ();
+   void showBytecodes ();
 
-    private:
-        std::stack<float> stack;
-        int pc; // program counter
-        ByteCode *program[MAX_PROGRAM_SIZE];
-        int current_program_size; // number of bytecodes
+   void push (float value);
+   float pop ();
+   float getop (); // get the element in stack top, but dont pop it
+   void showStack ();
 
+ private:
+
+   std::stack<float> stack;
+   int pc; // program counter
+   ByteCode *program[MAX_PROGRAM_SIZE];
+   int current_program_size; // number of bytecodes
 };
 
-#endif
+#endif						\
 

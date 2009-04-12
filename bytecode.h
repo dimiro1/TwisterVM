@@ -22,7 +22,7 @@ class ByteCode {
 // we can't use pointers
 // because when writing the Object in a file
 // they will be NULL pointers.
-// That's because to use an array for instructions with fixed size
+// That's why to use an array for instructions with fixed size
 // and a fixed size string name
 //
 // ? How use a list or a vector or some default data structure to save 

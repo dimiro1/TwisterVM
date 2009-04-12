@@ -5,9 +5,14 @@
 
 static char *execname; // executable name
 
-inline void showCopyright() { cout << "zen - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl; }
+inline void 
+showCopyright () 
+{ 
+  cout << "zen - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl; 
+}
 
-void showUsage()
+void 
+showUsage ()
 {
 
   fprintf(stderr,
@@ -24,45 +29,46 @@ void showUsage()
 
 }
 
-int main(int argc, char **argv)
+int 
+main (int argc, char **argv)
 {
-    VM vm; // instantiate a new vm
+  VM vm; // instantiate a new vm
 
-    execname = argv[0];
+  execname = argv[0];
 
-    static struct option long_options[] = {
-        {"copyright",   no_argument, 0, 'c'      },
-        {"disassemble", required_argument, 0, 'd'},
-        {"execute",     required_argument, 0, 'e'},
-        {"help",        no_argument, 0, 'h'      },
-        {0,0,0,0}
-    };
+  static struct option long_options[] = {
+    {"copyright",   no_argument, 0, 'c'      },
+    {"disassemble", required_argument, 0, 'd'},
+    {"execute",     required_argument, 0, 'e'},
+    {"help",        no_argument, 0, 'h'      },
+    {0,0,0,0}
+  };
 
-    int option_index = 0;
-    int c;
+  int option_index = 0;
+  int c;
 
-    while( (c = getopt_long( argc, argv, "cd:e:h", long_options, &option_index )) != -1) {
-        switch( c ) {
-            case 'c':
-                showCopyright();
-                break;
-            case 'd':
-                vm.load(optarg);
-                vm.showBytecodes();
-                break;
-            case 'e':
-                vm.load(optarg);
-                vm.run();
-                break;
-            case 'h':
-            case '?':
-                showUsage();
-                break;
-            default:
-                abort();
-                break;
-       }
+  while( (c = getopt_long( argc, argv, "cd:e:h", long_options, &option_index )) != -1) {
+    switch( c ) {
+    case 'c':
+      showCopyright ();
+      break;
+    case 'd':
+      vm.load (optarg);
+      vm.showBytecodes ();
+      break;
+    case 'e':
+      vm.load (optarg);
+      vm.run ();
+      break;
+    case 'h':
+    case '?':
+      showUsage ();
+      break;
+    default:
+      abort ();
+      break;
     }
-    return 0;
+  }
+  return 0;
 }
 
