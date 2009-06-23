@@ -108,11 +108,11 @@ main (int argc, char **argv)
   if (argc == 3) 
     {
       if (strcmp (argv[1], "-c") == 0)
-	createFile (argv[2], 12);
+		  createFile (argv[2], 12);
       else if (strcmp(argv[1], "-w") == 0)
-	writeData (argv[2]);
+		  writeData (argv[2]);
       else if(strcmp(argv[1], "-r") == 0)
-	read (argv[2]);
+		  read (argv[2]);
     } 
   else
     cout << "error" << endl;
