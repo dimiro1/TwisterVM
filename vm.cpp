@@ -28,10 +28,22 @@ VM::load (char *progname)
       cerr << "Cant open " << progname << endl;
       exit(1);
     }
-
   CompiledBytecode *cp = new CompiledBytecode ();
+  /* magic */
+  /* code len */
+  /* instructions */
 
-  infile.read ( reinterpret_cast<char *>(cp), sizeof (CompiledBytecode));
+  /* tenta pegar o numero mágico */
+  infile.read (reinterpret_cast<char *>(&cp->magic), sizeof (int));
+  if (cp->magic != MAGIC_VERSION_NUM)
+	 {
+		cout << "not a vm file!" << endl;
+		exit (1);
+	 }
+  infile.read (reinterpret_cast<char *>(&cp->size), sizeof (int));
+  cp->instructions = new ByteCode[cp->size];
+  infile.read (reinterpret_cast<char *>(cp->instructions), cp->size * sizeof (ByteCode));
+
   current_program_size = cp->size;
   for (int i = 0; i < cp->size; i++)
     program[i] = &(cp->instructions[i]);

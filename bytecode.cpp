@@ -20,21 +20,27 @@ ByteCode::ByteCode (Opcode _opcode, float _operand)
    operand = _operand;
 }
 
-CompiledBytecode::CompiledBytecode (char *_name, int _size)
-{
-   strcpy(name, _name);
-   size = _size;
-}
-
 CompiledBytecode::CompiledBytecode (int _size)
 {
-   //name = ""; // dirty code
-   size = _size;
+  magic = 0x01;					  /* 0.1 */
+  size = _size;
+  pc = 0;
+  instructions = new ByteCode[_size];
 }
 
 CompiledBytecode::CompiledBytecode()
 {
    //name = "";// dirty code
-   size = 0;
+   /* size = 0; */
+}
+
+void CompiledBytecode::add_instruction (ByteCode b)
+{
+  instructions[pc++] = b;
+}
+
+CompiledBytecode::~CompiledBytecode ()
+{
+  delete [] instructions;
 }
 
