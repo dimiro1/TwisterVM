@@ -1,6 +1,8 @@
 #ifndef BYTECODE_H
 #define BYTECODE_H
 
+#include <iostream>
+
 #include "opcode.h"
 #include <cstring>
 #define MAGIC_VERSION_NUM 0x01 // version 0.1
@@ -21,7 +23,8 @@ public:
   CompiledBytecode ();
   virtual ~CompiledBytecode ();
 
-  void add_instruction (ByteCode b);
+  void add_instruction (ByteCode _size);
+  void alloc_instructions (int _size);
   int magic;
   int size;
   int pc;

@@ -1,0 +1,45 @@
+#include "../bytecode.h"
+#include <ctype.h>
+
+COMPILER Assembler
+
+	CompiledBytecode *cp;
+
+	CHARACTERS
+		letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".
+		digit = "0123456789".
+		cr  = '\r'.
+		tab = '\t'.
+		lf = '\n'.
+		blank = " ".
+
+	TOKENS
+		ID = letter {letter | digit | "-" | "_"}.
+		NUM = digit {digit} ["." digit {digit}] [("e"|"E" ["-"|"+"]) digit {digit}].
+
+	COMMENTS FROM ";" TO lf
+
+	IGNORE cr + tab + lf
+
+	PRODUCTIONS
+      Assembler = HeadSection CodeSection.
+		HeadSection = ".begin" "Header" "@size" NUM (. cp->alloc_instructions (atoi (coco_string_create_char (t->val))); .) ".end" "Header".
+
+		CodeSection = ".begin" "Code" {CodeInstruction} ".end" "Code".
+		CodeInstruction = Push | Add | Sub | Mult | Div | Pop
+						| Print | Puts | Nop | Reset | Getop
+						| Halt
+						.
+		Push = "push" NUM (. cp->add_instruction (ByteCode (PUSH, atof (coco_string_create_char (t->val)))); .).
+		Add = "add" (. cp->add_instruction (ByteCode (ADD)); .).
+		Sub = "sub" (. cp->add_instruction (ByteCode (SUB)); .).
+		Mult = "mult" (. cp->add_instruction (ByteCode (MULT)); .).
+		Div = "div" (. cp->add_instruction (ByteCode (DIV)); .).
+		Pop = "pop" (. cp->add_instruction (ByteCode (POP)); .).
+		Print = "print" (. cp->add_instruction (ByteCode (PRINT)); .).
+		Puts = "puts" (. cp->add_instruction (ByteCode (PUTS)); .).
+		Nop = "nop" (. cp->add_instruction (ByteCode (NOP)); .).
+		Reset = "reset" (. cp->add_instruction (ByteCode (RESET)); .).
+		Getop = "getop" (. cp->add_instruction (ByteCode (GETOP)); .).
+		Halt = "halt" (. cp->add_instruction (ByteCode (HALT)); .).
+END Assembler.
