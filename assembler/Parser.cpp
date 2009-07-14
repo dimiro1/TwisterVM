@@ -261,7 +261,7 @@ void Parser::Label() {
 
 void Parser::Discard() {
 		Expect(15);
-		gen->emit_discard (); 
+		gen->emit_dcard (); 
 }
 
 void Parser::Clsp() {

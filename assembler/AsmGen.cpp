@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-14 14:11:11 BRT>
+ *   Modified: <2009-07-14 15:06:06 BRT>
  */
 
 #include "AsmGen.h"
@@ -56,9 +56,9 @@ void AsmGen::emit_div ()
   assembled_file->add_instruction (Instruction (OP_DIV));
 }
 
-void AsmGen::emit_discard ()
+void AsmGen::emit_dcard ()
 {
-  assembled_file->add_instruction (Instruction (OP_DISCARD));
+  assembled_file->add_instruction (Instruction (OP_DCARD));
 }
 
 void AsmGen::emit_getop ()

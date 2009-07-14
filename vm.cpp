@@ -60,13 +60,12 @@ VM::disassemble ()
 		 << sizeof (code_section) * code_len 
 		 << " bytes at " 
 		 << hex << code_section << ")" << endl;
-
   for ( int i = 0; i < code_len; i++ ) 
     {
       if( code_section[i].operand != 0 )
-		  printf (" [%3d] %-5s %-3g", i, opcodeName[code_section[i].opcode], code_section[i].operand);
+		  printf ("%3d %-6s %-3g", i, opcodeName[code_section[i].opcode], code_section[i].operand);
       else
-		  printf (" [%3d] %-5s", i, opcodeName[code_section[i].opcode]);
+		  printf ("%3d %-6s", i, opcodeName[code_section[i].opcode]);
       cout << endl;
     }
 }
@@ -94,7 +93,7 @@ VM::execute ()
 			 push (pop () / right);
 			 pc++;
 			 break;
-		  case OP_DISCARD:
+		  case OP_DCARD:
 			 pop ();
 			 pc++;
 			 break;
@@ -142,7 +141,7 @@ VM::execute ()
 			 break;
 		  }
 	 }
-  return 0; // nunca alcançado
+  return 0; // nunca alcançado, espero!
 }
 
 // empty the sp
@@ -184,7 +183,7 @@ inline float
 VM::pop () 
 { 
   float element = sp.top (); 
-  sp.pop (); 
+  sp.pop ();
   return element; 
 }
 

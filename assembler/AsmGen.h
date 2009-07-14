@@ -28,7 +28,7 @@ public:
   void emit_add ();
   void emit_clsp ();
   void emit_div ();
-  void emit_discard ();
+  void emit_dcard ();
   void emit_getop ();
   void emit_goto (float _operand);
   void emit_halt ();

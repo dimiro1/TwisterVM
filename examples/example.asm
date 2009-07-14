@@ -9,7 +9,7 @@
 ; 3044.2 * 6312
 
 .options
-   @size 14 ; quantidade de instruções
+   @size 15 ; quantidade de instruções
    @name example ; nome do programa (opcional), será o nome do arquivo
                  ; caso não informado, o nome sera o nome default.
 .end
@@ -32,5 +32,6 @@
   mult
   add
   puts
+  halt
 .end
 

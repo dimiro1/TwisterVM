@@ -1,6 +1,6 @@
 ; versão otimizada do exemplo1
 .options
-   @size 2 ; quantidade de instruções
+   @size 3 ; quantidade de instruções
            ; não é nem muito necessario
            ; so coloque essa opção
            ; pois preciso do tamanho para
@@ -16,5 +16,6 @@
 .code
   push 9356.2
   puts
+  halt
 .end
 

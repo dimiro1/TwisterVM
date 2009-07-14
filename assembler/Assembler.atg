@@ -49,7 +49,7 @@ COMPILER Assembler
 		Add = "add" (. gen->emit_add (); .).
 		Clsp = "clsp" (. gen->emit_clsp (); .).
 		Div = "div" (. gen->emit_div (); .).
-		Discard = "discard" (. gen->emit_discard (); .).
+		Discard = "discard" (. gen->emit_dcard (); .).
 		Getop = "getop" (. gen->emit_getop (); .).
 		Goto = "goto" NUM (. gen->emit_goto (atof (coco_string_create_char (t->val))); .).
 		Halt = "halt" (. gen->emit_halt (); .).

@@ -1,5 +1,5 @@
 .options
-    @size 112 
+    @size 113
 .end
 
 .code
@@ -122,4 +122,6 @@
   mult
   add
   puts
+
+  halt
 .end
