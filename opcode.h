@@ -4,34 +4,34 @@
 
 enum Opcode
 {
-  PUSH,
   ADD,
-  SUB,
-  MULT,
   DIV,
+  GETOP,			// for puts and print
+  HALT,
+  MULT,
+  NOP,				// no operation
   POP,
   PRINT,
+  PUSH,
   PUTS,
-  NOP,				// no operation
   RESET,
-  GETOP,			// for puts and print
-  HALT
+  SUB
 };
 
 /* used in showBytecodes */
 static const char *opcodeName[] = {
-  "PUSH",
-  "ADD",
-  "SUB",
-  "MULT",
-  "DIV",
-  "POP",
-  "PRINT",
-  "PUTS",
-  "NOP",			// no operation
-  "RESET",
-  "GETOP",
-  "HALT"
+  "add",
+  "div",
+  "getop",
+  "halt",
+  "mult",
+  "nop",			// no operation
+  "pop",
+  "print",
+  "push",
+  "puts",
+  "reset",
+  "sub"
 };
 
 #endif

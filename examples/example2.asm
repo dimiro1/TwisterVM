@@ -1,4 +1,4 @@
-; versão optimizada do exemplo1
+; versão otimizada do exemplo1
 .options
    @size 2 ; quantidade de instruções
            ; não é nem muito necessario
