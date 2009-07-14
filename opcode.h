@@ -1,21 +1,21 @@
-#ifndef OPCODE_H
-#define OPCODE_H
+#ifndef _OPCODE_H_
+#define _OPCODE_H_
 #include <cstdlib>
 
 enum Opcode
 {
-  ADD,
-  DIV,
-  GETOP,			// for puts and print
-  HALT,
-  MULT,
-  NOP,				// no operation
-  POP,
-  PRINT,
-  PUSH,
-  PUTS,
-  RESET,
-  SUB
+  OP_ADD,
+  OP_DIV,
+  OP_GETOP,			// for puts and print
+  OP_HALT,
+  OP_MULT,
+  OP_NOP,				// no operation
+  OP_POP,
+  OP_PRINT,
+  OP_PUSH,
+  OP_PUTS,
+  OP_RESET,
+  OP_SUB
 };
 
 /* used in showBytecodes */

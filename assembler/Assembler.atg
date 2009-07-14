@@ -28,7 +28,7 @@ COMPILER Assembler
 									   ".end".
 									   
 		OptionsOptionsSection = "@size" NUM 
-													     (. gen->alloc_instruction_section (atoi (coco_string_create_char (t->val))); .)
+													     (. gen->alloc_code_section (atoi (coco_string_create_char (t->val))); .)
 													| "@name" ID
 															 (. gen->set_output_file_name (coco_string_create_char (t->val)); .)
 													.

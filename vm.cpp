@@ -18,13 +18,14 @@ VM::~VM ()
 }
 
 
-/* load program into memory */
+/* load code_section into memory */
 int 
 VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
 {
+  running_file_name = progname;
   TwcFile *tw = new TwcFile ();
-  ifstream infile (progname, ios::binary);
-
+  ifstream infile (running_file_name, ios::binary);
+  
   if (!infile.good ()) 
 	 throw BadFileException (progname);
 
@@ -34,15 +35,16 @@ VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
 	 throw NotRecognizedFileException (progname);
 
   infile.read (reinterpret_cast<char *>(&tw->code_len), sizeof (int));
-  tw->alloc_instruction_section (tw->code_len);
-  infile.read (reinterpret_cast<char *>(tw->instructions), tw->code_len * sizeof (Instruction));
+  tw->alloc_code_section (tw->code_len);
+  infile.read (reinterpret_cast<char *>(tw->code_section), tw->code_len * sizeof (Instruction));
 
   code_len = tw->code_len;
 
-  program = new Instruction[tw->code_len];
+  code_section = new Instruction[tw->code_len];
 
+  /* cxarrega as instruções na TwisterVM */
   for (int i = 0; i < tw->code_len; i++)
-    program[i] = tw->instructions[i];
+    code_section[i] = tw->code_section[i];
 
   return 0;
 }
@@ -51,23 +53,22 @@ VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
 void 
 VM::disassemble ()
 {
-  cout << "+-----------------------------+" << endl;
-  cout << "|       PROGRAM BYTECODES     |" << endl;
-  cout << "+----+-----------------+------+" << endl;
-  cout << "| LN | OPCODE          | OPER |" << endl;
-  cout << "+----+-----------------+------+" << endl;
+  /* Baseado no disasemble do lua5.1 */
+  cout << " " << running_file_name 
+		 << " (" << code_len 
+		 << " instructions, " 
+		 << sizeof (code_section) * code_len 
+		 << " bytes at " 
+		 << hex << code_section << ")" << endl;
 
   for ( int i = 0; i < code_len; i++ ) 
     {
-      if( program[i].operand != 0 )
-	printf ("| %-2d | %-15s |  %-3g |", i+1, opcodeName[program[i].opcode], program[i].operand);
+      if( code_section[i].operand != 0 )
+		  printf (" [%3d] %-5s %-3g", i+1, opcodeName[code_section[i].opcode], code_section[i].operand);
       else
-	printf ("| %-2d | %-15s |      |", i+1, opcodeName[program[i].opcode]);
+		  printf (" [%3d] %-5s", i + 1, opcodeName[code_section[i].opcode]);
       cout << endl;
     }
-  cout << "+----+-----------------+------+" << endl;
-  cout << "|    WRITTEN BY CLAUDEMIRO    |" << endl;
-  cout << "+-----------------------------+" << endl;
 }
 
 int 
@@ -76,36 +77,41 @@ VM::execute (Instruction &instruction)
   int right; /* its is used in sub or div operations */
   switch (instruction.opcode) 
     {
-    case NOP:
-      break;
-    case PUSH:
-      push (instruction.operand);
-      break;
-    case POP:
-      pop ();
-      break;
-    case ADD:
+    case OP_ADD:
       push (pop () + pop ());
       break;
-    case SUB:
-      right = pop ();
-      push (pop () - right);
-      break;
-    case MULT:
-      push (pop () * pop ());
-      break;
-    case DIV:
+    case OP_DIV:
       right = pop ();
       push (pop () / right);
       break;
-    case PRINT:
+    case OP_GETOP:				  /* não esta concluida */
+      top ();
+      break;
+    case OP_HALT:					  /* nao esta implementada */
+      break;
+    case OP_MULT:
+      push (pop () * pop ());
+      break;
+    case OP_NOP:
+      break;
+    case OP_POP:
+      pop ();
+      break;
+    case OP_PRINT:
       cout << pop ();
       break;
-    case PUTS:
-      cout << getop () << endl;
+    case OP_PUSH:
+      push (instruction.operand);
       break;
-    case RESET:
+    case OP_PUTS:
+      cout << top () << endl;
+      break;
+    case OP_RESET:
       reset ();
+      break;
+    case OP_SUB:
+      right = pop ();
+      push (pop () - right);
       break;
     }
   return 0;
@@ -116,14 +122,14 @@ VM::run ()
 {
   for ( int i = 0; i < code_len; i++ ) 
     {
-      execute (program[i]);
-      ++pc; // increments the program counter when a bytecode is executed
+      execute (code_section[i]);
+      ++pc; // increments the code_section counter when a bytecode is executed
     }
   return 0;
 }
 
 // empty the sp
-// delete the program list
+// delete the code_section list
 inline void 
 VM::reset () 
 { 
@@ -135,12 +141,10 @@ VM::reset ()
 void 
 VM::disassemble_sp ()
 {
-  cout << "+-------+" << endl;
-  cout << "| SP |" << endl;
-  cout << "+-------+" << endl;
+  cout << " [ SP ] " << endl;
   while (!sp.empty ())
-	 printf("| %5g |\n", sp.top ());
-  cout << "+-------+" << endl;
+	 printf(" [%-4g] \n", sp.top ());
+  cout << endl;
 }
 
 /* inline because the overhead; much faster */
@@ -160,7 +164,7 @@ VM::pop ()
 }
 
 inline float 
-VM::getop () 
+VM::top () 
 { 
   return sp.top (); 
 }

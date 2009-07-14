@@ -21,7 +21,7 @@ public:
   AsmGen (string _output_file_name);
   ~AsmGen ();
 
-  void alloc_instruction_section (int _code_len);
+  void alloc_code_section (int _code_len);
   void write_to_file ();
   void set_output_file_name (const char *_file_name);
 

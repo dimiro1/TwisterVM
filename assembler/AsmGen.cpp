@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-14 09:34:22 BRT>
+ *   Modified: <2009-07-14 10:34:59 BRT>
  */
 
 #include "AsmGen.h"
@@ -19,9 +19,9 @@ AsmGen::~AsmGen ()
   delete output_file;
 }
 
-void AsmGen::alloc_instruction_section (int _code_len)
+void AsmGen::alloc_code_section (int _code_len)
 {
-  assembled_file->alloc_instruction_section (_code_len);
+  assembled_file->alloc_code_section (_code_len);
 }
 
 void AsmGen::write_to_file ()
@@ -30,7 +30,7 @@ void AsmGen::write_to_file ()
 
   output_file->write (reinterpret_cast<char *>(&assembled_file->magic), sizeof (int));
   output_file->write (reinterpret_cast<char *>(&assembled_file->code_len), sizeof (int));
-  output_file->write (reinterpret_cast<char *>(assembled_file->instructions), assembled_file->code_len * sizeof (Instruction));
+  output_file->write (reinterpret_cast<char *>(assembled_file->code_section), assembled_file->code_len * sizeof (Instruction));
   output_file->close ();
 }
 
@@ -43,60 +43,60 @@ void AsmGen::set_output_file_name (const char *_file_name)
 
 void AsmGen::emit_add ()
 {
-  assembled_file->add_instruction (Instruction (ADD));
+  assembled_file->add_instruction (Instruction (OP_ADD));
 }
 
 void AsmGen::emit_div ()
 {
-  assembled_file->add_instruction (Instruction (DIV));
+  assembled_file->add_instruction (Instruction (OP_DIV));
 }
 
 void AsmGen::emit_getop ()
 {
-  assembled_file->add_instruction (Instruction (GETOP));
+  assembled_file->add_instruction (Instruction (OP_GETOP));
 }
 
 void AsmGen::emit_halt ()
 {
-  assembled_file->add_instruction (Instruction (HALT));
+  assembled_file->add_instruction (Instruction (OP_HALT));
 }
 
 void AsmGen::emit_mult ()
 {
-  assembled_file->add_instruction (Instruction (MULT));
+  assembled_file->add_instruction (Instruction (OP_MULT));
 }
 
 void AsmGen::emit_nop ()
 {
-  assembled_file->add_instruction (Instruction (NOP));
+  assembled_file->add_instruction (Instruction (OP_NOP));
 }
 
 void AsmGen::emit_pop ()
 {
-  assembled_file->add_instruction (Instruction (POP));
+  assembled_file->add_instruction (Instruction (OP_POP));
 }
 
 void AsmGen::emit_print ()
 {
-  assembled_file->add_instruction (Instruction (PRINT));
+  assembled_file->add_instruction (Instruction (OP_PRINT));
 }
 
 void AsmGen::emit_push (float _operand)
 {
-  assembled_file->add_instruction (Instruction (PUSH, _operand));
+  assembled_file->add_instruction (Instruction (OP_PUSH, _operand));
 }
 
 void AsmGen::emit_puts ()
 {
-  assembled_file->add_instruction (Instruction (PUTS));
+  assembled_file->add_instruction (Instruction (OP_PUTS));
 }
 
 void AsmGen::emit_reset ()
 {
-  assembled_file->add_instruction (Instruction (RESET));
+  assembled_file->add_instruction (Instruction (OP_RESET));
 }
 
 void AsmGen::emit_sub ()
 {
-  assembled_file->add_instruction (Instruction (SUB));
+  assembled_file->add_instruction (Instruction (OP_SUB));
 }

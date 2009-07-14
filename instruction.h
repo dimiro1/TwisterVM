@@ -24,11 +24,11 @@ public:
   virtual ~TwcFile ();
 
   void add_instruction (Instruction _code_len);
-  void alloc_instruction_section (int _code_len);
+  void alloc_code_section (int _code_len);
   int magic;
   int code_len;
-  int pc;
-  Instruction *instructions;
+  int pc;							  /* instrução atual em code section */
+  Instruction *code_section;
 };
 
 

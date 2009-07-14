@@ -86,7 +86,7 @@ void Parser::OptionsOptionsSection() {
 		if (la->kind == 5) {
 			Get();
 			Expect(2);
-			gen->alloc_instruction_section (atoi (coco_string_create_char (t->val))); 
+			gen->alloc_code_section (atoi (coco_string_create_char (t->val))); 
 		} else if (la->kind == 6) {
 			Get();
 			Expect(1);
