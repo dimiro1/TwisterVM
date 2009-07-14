@@ -23,12 +23,17 @@ using std::ifstream;
 
 #include <stack>
 
+/* Exceptions */
+
+#include "NotRecognizedFileException.h"
+#include "BadFileException.h"
+
 class VM {
  public:
 
    VM ();
    ~VM ();
-   int load (char *progname);
+  int load (char *progname) throw (BadFileException, NotRecognizedFileException);
    int execute (Instruction &);
    int run ();
    void reset ();
@@ -44,7 +49,7 @@ class VM {
    std::stack<float> sp;
    int pc; // program counter
    Instruction *program;
-   int current_program_size; // number of bytecodes
+   int code_len; // number of bytecodes
 };
 
 #endif						\

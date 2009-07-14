@@ -84,7 +84,14 @@ main (int argc, char **argv)
 	 }
   else
 	 {
-		vm.load (argv[0]);
+		try {
+		  vm.load (argv[0]);
+		} catch (NotRecognizedFileException e) {
+		  cout << e.what () << endl;
+		} catch (BadFileException e) {
+		  cout << e.what () << endl;
+		}
+
 		if (dflag)
 		  vm.disassemble ();
 		if (eflag)

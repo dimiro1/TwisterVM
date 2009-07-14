@@ -8,7 +8,7 @@ FRAMESDIR = "/usr/share/coco-cpp"
 all: twister assembler/twisterc
 
 opcode.cpp: opcode.h
-vm.cpp: vm.h
+vm.cpp: vm.h NotRecognizedFileException.h BadFileException.h
 instruction.cpp: instruction.h
 
 twister: $(VMOBJS)

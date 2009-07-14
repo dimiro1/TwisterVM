@@ -20,12 +20,12 @@ Instruction::Instruction (Opcode _opcode, float _operand)
    operand = _operand;
 }
 
-TwcFile::TwcFile (int _size)
+TwcFile::TwcFile (int _code_len)
 {
   magic = MAGIC_VERSION_NUM;
-  size = _size;
+  code_len = _code_len;
   pc = 0;
-  instructions = new Instruction[_size];
+  instructions = new Instruction[_code_len];
 }
 
 TwcFile::TwcFile()
@@ -39,10 +39,10 @@ void TwcFile::add_instruction (Instruction _b)
   instructions[pc++] = _b;
 }
 
-void TwcFile::alloc_instruction_section (int _size)
+void TwcFile::alloc_instruction_section (int _code_len)
 {
-  instructions = new Instruction[_size];
-  size = _size;
+  instructions = new Instruction[_code_len];
+  code_len = _code_len;
 }
 
 TwcFile::~TwcFile ()

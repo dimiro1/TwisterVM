@@ -9,7 +9,7 @@
 VM::VM ()
 {
   pc = 0;
-  current_program_size = 0;
+  code_len = 0;
 }
 
 VM::~VM ()
@@ -20,36 +20,29 @@ VM::~VM ()
 
 /* load program into memory */
 int 
-VM::load (char *progname)
+VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
 {
-  ifstream infile (progname, ios::binary);
-  if (!infile) 
-    {
-      cerr << "Cant open " << progname << endl;
-      exit(1);
-    }
   TwcFile *tw = new TwcFile ();
-  /* magic */
-  /* code len */
-  /* instructions */
+  ifstream infile (progname, ios::binary);
+
+  if (!infile.good ()) 
+	 throw BadFileException (progname);
 
   /* tenta pegar o numero mágico */
   infile.read (reinterpret_cast<char *>(&tw->magic), sizeof (int));
   if (tw->magic != MAGIC_VERSION_NUM)
-	 {
-		cout << "not a vm file!" << endl;
-		exit (1);
-	 }
-  infile.read (reinterpret_cast<char *>(&tw->size), sizeof (int));
-  tw->alloc_instruction_section (tw->size);
-  infile.read (reinterpret_cast<char *>(tw->instructions), tw->size * sizeof (Instruction));
+	 throw NotRecognizedFileException (progname);
 
-  current_program_size = tw->size;
+  infile.read (reinterpret_cast<char *>(&tw->code_len), sizeof (int));
+  tw->alloc_instruction_section (tw->code_len);
+  infile.read (reinterpret_cast<char *>(tw->instructions), tw->code_len * sizeof (Instruction));
 
-  program = new Instruction[tw->size];
+  code_len = tw->code_len;
 
-  for (int i = 0; i < tw->size; i++)
-    program[i] = tw->instructions[i]; /* verificar essa linha */
+  program = new Instruction[tw->code_len];
+
+  for (int i = 0; i < tw->code_len; i++)
+    program[i] = tw->instructions[i];
 
   return 0;
 }
@@ -64,7 +57,7 @@ VM::disassemble ()
   cout << "| LN | OPCODE          | OPER |" << endl;
   cout << "+----+-----------------+------+" << endl;
 
-  for ( int i = 0; i < current_program_size; i++ ) 
+  for ( int i = 0; i < code_len; i++ ) 
     {
       if( program[i].operand != 0 )
 	printf ("| %-2d | %-15s |  %-3g |", i+1, opcodeName[program[i].opcode], program[i].operand);
@@ -121,7 +114,7 @@ VM::execute (Instruction &instruction)
 int 
 VM::run ()
 {
-  for ( int i = 0; i < current_program_size; i++ ) 
+  for ( int i = 0; i < code_len; i++ ) 
     {
       execute (program[i]);
       ++pc; // increments the program counter when a bytecode is executed

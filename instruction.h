@@ -19,14 +19,14 @@ public:
 
 class TwcFile {
 public:
-  TwcFile (int _size);
+  TwcFile (int _code_len);
   TwcFile ();
   virtual ~TwcFile ();
 
-  void add_instruction (Instruction _size);
-  void alloc_instruction_section (int _size);
+  void add_instruction (Instruction _code_len);
+  void alloc_instruction_section (int _code_len);
   int magic;
-  int size;
+  int code_len;
   int pc;
   Instruction *instructions;
 };

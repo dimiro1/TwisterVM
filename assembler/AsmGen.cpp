@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-14 08:37:22 BRT>
+ *   Modified: <2009-07-14 09:34:22 BRT>
  */
 
 #include "AsmGen.h"
@@ -29,8 +29,8 @@ void AsmGen::write_to_file ()
   output_file = new ofstream (output_file_name.c_str(), ios::binary);
 
   output_file->write (reinterpret_cast<char *>(&assembled_file->magic), sizeof (int));
-  output_file->write (reinterpret_cast<char *>(&assembled_file->size), sizeof (int));
-  output_file->write (reinterpret_cast<char *>(assembled_file->instructions), assembled_file->size * sizeof (Instruction));
+  output_file->write (reinterpret_cast<char *>(&assembled_file->code_len), sizeof (int));
+  output_file->write (reinterpret_cast<char *>(assembled_file->instructions), assembled_file->code_len * sizeof (Instruction));
   output_file->close ();
 }
 
