@@ -22,10 +22,11 @@ public:
   ~AsmGen ();
 
   void alloc_code_section (int _code_len);
-  void write_to_file ();
+  void assemble ();
   void set_output_file_name (const char *_file_name);
 
   void emit_add ();
+  void emit_clsp ();
   void emit_div ();
   void emit_discard ();
   void emit_getop ();

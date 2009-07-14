@@ -27,30 +27,40 @@ using std::hex;
 #include <fstream>
 using std::ifstream;
 
+#include <set>
 #include <stack>
+
+/* Memory type */
+/* typedef std::set<Object *> Memory; */
 
 class VM {
 public:
 
   VM ();
   ~VM ();
-  int load (char *progname) throw (BadFileException, NotRecognizedFileException);
-  int execute ();
-  void reset ();
-  void disassemble ();
 
-  void push (float value);
-  float pop ();
-  float top (); // get the element in sp top, but dont pop it
+  int load (char *progname) 
+	 throw (BadFileException, NotRecognizedFileException);
+
+  int execute ();
+  void disassemble ();
   void disassemble_sp ();
 
 private:
-  const char *running_file_name; /* arquivo sendo executado. */
+  /* Memory mem; */
   std::stack<float> sp;
   int pc; // program counter
   Instruction *code_section;
   int code_len; // number of bytecodes
+
+  const char *running_file_name; /* arquivo sendo executado. */
+
+  void reset ();
+  void reset_sp ();
+  void push (float value);
+  float pop ();
+  float top (); // get the element in sp top, but dont pop it
 };
 
-#endif						\
+#endif
 

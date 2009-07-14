@@ -30,6 +30,7 @@ private:
 		_EOF=0,
 		_ID=1,
 		_NUM=2,
+		_STRING=3,
 	};
 	int maxT;
 
@@ -61,8 +62,10 @@ AsmGen *gen;
 
 	void Assembler();
 	void OptionsSection();
+	void StaticSection();
 	void CodeSection();
 	void OptionsOptionsSection();
+	void StaticOptions();
 	void CodeInstruction();
 	void Push();
 	void Add();
@@ -79,6 +82,7 @@ AsmGen *gen;
 	void Halt();
 	void Label();
 	void Discard();
+	void Clsp();
 
 	void Parse();
 

@@ -83,64 +83,87 @@ VM::execute ()
 		  {
 		  case OP_ADD:
 			 push (pop () + pop ());
+			 pc++;
+			 break;
+		  case OP_CLSP:
+			 reset_sp ();
+			 pc++;
 			 break;
 		  case OP_DIV:
 			 right = pop ();
 			 push (pop () / right);
+			 pc++;
 			 break;
 		  case OP_DISCARD:
 			 pop ();
+			 pc++;
 			 break;
 		  case OP_GETOP:				  /* não esta concluida */
 			 top ();
+			 pc++;
 			 break;
 		  case OP_GOTO:
-			 pc = static_cast<int> (running.operand) - 1; /* corrigir isso */
+			 pc = static_cast<int> (running.operand);
 			 break;
 		  case OP_HALT:
 			 exit (0);					  /* sai normalmente */
 			 break;
 		  case OP_MULT:
 			 push (pop () * pop ());
+			 pc++;
 			 break;
 		  case OP_NOP:
+			 pc++;
 			 break;
 		  case OP_POP:
 			 pop ();
+			 pc++;
 			 break;
 		  case OP_PRINT:
 			 cout << pop ();
+			 pc++;
 			 break;
 		  case OP_PUSH:
 			 push (running.operand);
+			 pc++;
 			 break;
 		  case OP_PUTS:
 			 cout << top () << endl;
+			 pc++;
 			 break;
 		  case OP_RESET:
 			 reset ();
+			 pc++;
 			 break;
 		  case OP_SUB:
 			 right = pop ();
 			 push (pop () - right);
+			 pc++;
 			 break;
 		  }
-		pc++;
 	 }
   return 0; // nunca alcançado
 }
 
 // empty the sp
-// delete the code_section list
+// reset the program counter
 inline void 
 VM::reset () 
 { 
-  pc = 0; 
+  pc = 0;
+  reset_sp ();
+}
+
+inline void
+VM::reset_sp ()
+{
+  while (!sp.empty ())
+	 sp.pop ();
 }
 
 /* sp manipulation */
 /* need changes */
-void 
+void
 VM::disassemble_sp ()
 {
   cout << " [ SP ] " << endl;

@@ -1,5 +1,10 @@
 .options
-    @size 10
+  @size 10
+.end
+
+.static
+  @number ten 10
+  @string hello "Hello World"
 .end
 
 .code

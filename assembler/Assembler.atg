@@ -11,18 +11,20 @@ COMPILER Assembler
 		cr  = '\r'.
 		tab = '\t'.
 		lf = '\n'.
-		blank = " ".
+		noquote1 = ANY - "'" - cr - lf.
+		noquote2 = ANY - '"' - cr - lf.
 
 	TOKENS
 		ID = letter {letter | digit | "-" | "_"}.
 		NUM = digit {digit} ["." digit {digit}] [("e"|"E" ["-"|"+"]) digit {digit}].
+		STRING = ("'" {noquote1} "'" | '"' {noquote2} '"'). /* permitida string vazia. */
 
 	COMMENTS FROM ";" TO lf
 
 	IGNORE cr + tab + lf
 
 	PRODUCTIONS
-      Assembler = OptionsSection CodeSection.
+      Assembler = OptionsSection [StaticSection] CodeSection.
 		OptionsSection = ".options" 
 											  {OptionsOptionsSection}
 									   ".end".
@@ -33,18 +35,19 @@ COMPILER Assembler
 															 (. gen->set_output_file_name (coco_string_create_char (t->val)); .)
 													.
 													
-		/*StaticSection = ".static"
+		StaticSection = ".static"
 												{StaticOptions}
-										".end".*/
+										".end".
 										
-		/* StaticOptions = @string ID STRING | @number ID NUM.*/
+		StaticOptions = "@number" ID NUM | "@string" ID STRING.
 
 		CodeSection = ".code" {CodeInstruction} ".end".
 		CodeInstruction = Push | Add | Sub | Mult | Div | Pop
 						| Print | Puts | Nop | Reset | Getop | Goto
-						| Halt | Label | Discard
+						| Halt | Label | Discard | Clsp
 						.
 		Add = "add" (. gen->emit_add (); .).
+		Clsp = "clsp" (. gen->emit_clsp (); .).
 		Div = "div" (. gen->emit_div (); .).
 		Discard = "discard" (. gen->emit_discard (); .).
 		Getop = "getop" (. gen->emit_getop (); .).

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-14 12:43:38 BRT>
+ *   Modified: <2009-07-14 14:11:11 BRT>
  */
 
 #include "AsmGen.h"
@@ -24,7 +24,7 @@ void AsmGen::alloc_code_section (int _code_len)
   assembled_file->alloc_code_section (_code_len);
 }
 
-void AsmGen::write_to_file ()
+void AsmGen::assemble ()
 {
   output_file = new ofstream (output_file_name.c_str(), ios::binary);
 
@@ -44,6 +44,11 @@ void AsmGen::set_output_file_name (const char *_file_name)
 void AsmGen::emit_add ()
 {
   assembled_file->add_instruction (Instruction (OP_ADD));
+}
+
+void AsmGen::emit_clsp ()
+{
+  assembled_file->add_instruction (Instruction (OP_CLSP));
 }
 
 void AsmGen::emit_div ()

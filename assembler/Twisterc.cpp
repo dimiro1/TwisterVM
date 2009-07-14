@@ -62,7 +62,7 @@ main (int argc, char **argv)
 		parser->Parse ();
 
 		/* escreve assembled_code em arquivo */
-		parser->gen->write_to_file ();
+		parser->gen->assemble ();
 		delete parser;
 		delete parser->gen;
 		delete scanner;

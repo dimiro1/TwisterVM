@@ -5,6 +5,7 @@
 enum Opcode
 {
   OP_ADD,
+  OP_CLSP,							  /* limpa a pilha */
   OP_DIV,
   OP_DISCARD,						  /* Discarta o topo da pilha */
   OP_GETOP,			// for puts and print
@@ -23,6 +24,7 @@ enum Opcode
 /* used in showBytecodes */
 static const char *opcodeName[] = {
   "add",
+  "clsp",
   "div",
   "discard",
   "getop",
