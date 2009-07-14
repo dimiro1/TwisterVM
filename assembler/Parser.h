@@ -62,6 +62,7 @@ AsmGen *gen;
 	void Assembler();
 	void OptionsSection();
 	void CodeSection();
+	void OptionsOptionsSection();
 	void CodeInstruction();
 	void Push();
 	void Add();

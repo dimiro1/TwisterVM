@@ -1,7 +1,7 @@
 #ifndef _ASM_GEN_H_
 #define _ASM_GEN_H_
 
-#include "../bytecode.h"
+#include "../instruction.h"
 
 #include <iostream>
 using std::ios;
@@ -21,8 +21,9 @@ public:
   AsmGen (string _output_file_name);
   ~AsmGen ();
 
-  void alloc_instruction_array (int _code_len);
+  void alloc_instruction_section (int _code_len);
   void write_to_file ();
+  void set_output_file_name (const char *_file_name);
 
   void emit_add ();
   void emit_div ();
@@ -38,9 +39,10 @@ public:
   void emit_sub ();
 
 private:
-  CompiledBytecode *assembled_file;
+  TwcFile *assembled_file;
   string output_file_name;
   ofstream *output_file;
+  string default_extension;
 };
 
 

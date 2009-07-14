@@ -86,7 +86,7 @@ main (int argc, char **argv)
 	 {
 		vm.load (argv[0]);
 		if (dflag)
-		  vm.showBytecodes ();
+		  vm.disassemble ();
 		if (eflag)
 		  vm.run ();
 	 }

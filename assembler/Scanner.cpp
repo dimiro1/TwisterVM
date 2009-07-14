@@ -411,27 +411,27 @@ Scanner::~Scanner() {
 void Scanner::Init() {
 	EOL    = '\n';
 	eofSym = 0;
-	maxT = 19;
-	noSym = 19;
+	maxT = 20;
+	noSym = 20;
 	int i;
 	for (i = 65; i <= 90; ++i) start.set(i, 1);
 	for (i = 97; i <= 122; ++i) start.set(i, 1);
 	for (i = 48; i <= 57; ++i) start.set(i, 2);
-	start.set(46, 27);
-	start.set(64, 15);
+	start.set(46, 30);
+	start.set(64, 31);
 		start.set(Buffer::EoF, -1);
-	keywords.set(L"add", 7);
-	keywords.set(L"div", 8);
-	keywords.set(L"getop", 9);
-	keywords.set(L"halt", 10);
-	keywords.set(L"mult", 11);
-	keywords.set(L"nop", 12);
-	keywords.set(L"pop", 13);
-	keywords.set(L"print", 14);
-	keywords.set(L"push", 15);
-	keywords.set(L"puts", 16);
-	keywords.set(L"reset", 17);
-	keywords.set(L"sub", 18);
+	keywords.set(L"add", 8);
+	keywords.set(L"div", 9);
+	keywords.set(L"getop", 10);
+	keywords.set(L"halt", 11);
+	keywords.set(L"mult", 12);
+	keywords.set(L"nop", 13);
+	keywords.set(L"pop", 14);
+	keywords.set(L"print", 15);
+	keywords.set(L"push", 16);
+	keywords.set(L"puts", 17);
+	keywords.set(L"reset", 18);
+	keywords.set(L"sub", 19);
 
 
 	tvalLength = 128;
@@ -632,53 +632,69 @@ Token* Scanner::NextToken() {
 			case_14:
 			{t->kind = 3; break;}
 		case 15:
-			if (ch == L's') {AddCh(); goto case_16;}
+			case_15:
+			if (ch == L'n') {AddCh(); goto case_16;}
 			else {t->kind = noSym; break;}
 		case 16:
 			case_16:
-			if (ch == L'i') {AddCh(); goto case_17;}
+			if (ch == L'd') {AddCh(); goto case_17;}
 			else {t->kind = noSym; break;}
 		case 17:
 			case_17:
-			if (ch == L'z') {AddCh(); goto case_18;}
-			else {t->kind = noSym; break;}
+			{t->kind = 4; break;}
 		case 18:
 			case_18:
-			if (ch == L'e') {AddCh(); goto case_19;}
+			if (ch == L'i') {AddCh(); goto case_19;}
 			else {t->kind = noSym; break;}
 		case 19:
 			case_19:
-			{t->kind = 4; break;}
+			if (ch == L'z') {AddCh(); goto case_20;}
+			else {t->kind = noSym; break;}
 		case 20:
 			case_20:
-			if (ch == L'n') {AddCh(); goto case_21;}
+			if (ch == L'e') {AddCh(); goto case_21;}
 			else {t->kind = noSym; break;}
 		case 21:
 			case_21:
-			if (ch == L'd') {AddCh(); goto case_22;}
-			else {t->kind = noSym; break;}
+			{t->kind = 5; break;}
 		case 22:
 			case_22:
-			{t->kind = 5; break;}
+			if (ch == L'a') {AddCh(); goto case_23;}
+			else {t->kind = noSym; break;}
 		case 23:
 			case_23:
-			if (ch == L'o') {AddCh(); goto case_24;}
+			if (ch == L'm') {AddCh(); goto case_24;}
 			else {t->kind = noSym; break;}
 		case 24:
 			case_24:
-			if (ch == L'd') {AddCh(); goto case_25;}
+			if (ch == L'e') {AddCh(); goto case_25;}
 			else {t->kind = noSym; break;}
 		case 25:
 			case_25:
-			if (ch == L'e') {AddCh(); goto case_26;}
-			else {t->kind = noSym; break;}
+			{t->kind = 6; break;}
 		case 26:
 			case_26:
-			{t->kind = 6; break;}
+			if (ch == L'o') {AddCh(); goto case_27;}
+			else {t->kind = noSym; break;}
 		case 27:
+			case_27:
+			if (ch == L'd') {AddCh(); goto case_28;}
+			else {t->kind = noSym; break;}
+		case 28:
+			case_28:
+			if (ch == L'e') {AddCh(); goto case_29;}
+			else {t->kind = noSym; break;}
+		case 29:
+			case_29:
+			{t->kind = 7; break;}
+		case 30:
 			if (ch == L'o') {AddCh(); goto case_8;}
-			else if (ch == L'e') {AddCh(); goto case_20;}
-			else if (ch == L'c') {AddCh(); goto case_23;}
+			else if (ch == L'e') {AddCh(); goto case_15;}
+			else if (ch == L'c') {AddCh(); goto case_26;}
+			else {t->kind = noSym; break;}
+		case 31:
+			if (ch == L's') {AddCh(); goto case_18;}
+			else if (ch == L'n') {AddCh(); goto case_22;}
 			else {t->kind = noSym; break;}
 
 	}

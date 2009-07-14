@@ -24,9 +24,15 @@ COMPILER Assembler
 	PRODUCTIONS
       Assembler = OptionsSection CodeSection.
 		OptionsSection = ".options" 
-											  "@size" NUM 
-													(. gen->alloc_instruction_array (atoi (coco_string_create_char (t->val))); .)
+											  {OptionsOptionsSection}
 									   ".end".
+									   
+		OptionsOptionsSection = "@size" NUM 
+													     (. gen->alloc_instruction_section (atoi (coco_string_create_char (t->val))); .)
+													| "@name" ID
+															 (. gen->set_output_file_name (coco_string_create_char (t->val)); .)
+													.
+													
 		/*StaticSection = ".static"
 												{StaticOptions}
 										".end".*/

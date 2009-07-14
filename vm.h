@@ -7,7 +7,7 @@
 #define VM_H
 
 #include "opcode.h"
-#include "bytecode.h"
+#include "instruction.h"
 
 #include <cstdio>
 
@@ -18,15 +18,10 @@ using std::endl;
 using std::ios;
 using std::cerr;
 
-
 #include <fstream>
-
-using std::ofstream;
 using std::ifstream;
 
 #include <stack>
-
-#define MAX_PROGRAM_SIZE 256
 
 class VM {
  public:
@@ -34,21 +29,21 @@ class VM {
    VM ();
    ~VM ();
    int load (char *progname);
-   int execute (ByteCode *);
+   int execute (Instruction &);
    int run ();
    void reset ();
-   void showBytecodes ();
+   void disassemble ();
 
    void push (float value);
    float pop ();
-   float getop (); // get the element in stack top, but dont pop it
-   void showStack ();
+   float getop (); // get the element in sp top, but dont pop it
+   void disassemble_sp ();
 
  private:
 
-   std::stack<float> stack;
+   std::stack<float> sp;
    int pc; // program counter
-   ByteCode *program[MAX_PROGRAM_SIZE];
+   Instruction *program;
    int current_program_size; // number of bytecodes
 };
 
