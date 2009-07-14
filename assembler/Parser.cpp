@@ -71,7 +71,7 @@ void Parser::HeadSection() {
 		Expect(4);
 		Expect(5);
 		Expect(2);
-		cp->alloc_instructions (atoi (coco_string_create_char (t->val))); 
+		gen->alloc_instruction_array (atoi (coco_string_create_char (t->val))); 
 		Expect(6);
 		Expect(4);
 }
@@ -88,51 +88,51 @@ void Parser::CodeSection() {
 
 void Parser::CodeInstruction() {
 		switch (la->kind) {
-		case 8: {
+		case 16: {
 			Push();
 			break;
 		}
-		case 9: {
+		case 8: {
 			Add();
 			break;
 		}
-		case 10: {
+		case 19: {
 			Sub();
 			break;
 		}
-		case 11: {
+		case 12: {
 			Mult();
 			break;
 		}
-		case 12: {
+		case 9: {
 			Div();
 			break;
 		}
-		case 13: {
+		case 14: {
 			Pop();
 			break;
 		}
-		case 14: {
+		case 15: {
 			Print();
 			break;
 		}
-		case 15: {
+		case 17: {
 			Puts();
 			break;
 		}
-		case 16: {
+		case 13: {
 			Nop();
 			break;
 		}
-		case 17: {
+		case 18: {
 			Reset();
 			break;
 		}
-		case 18: {
+		case 10: {
 			Getop();
 			break;
 		}
-		case 19: {
+		case 11: {
 			Halt();
 			break;
 		}
@@ -141,64 +141,64 @@ void Parser::CodeInstruction() {
 }
 
 void Parser::Push() {
-		Expect(8);
+		Expect(16);
 		Expect(2);
-		cp->add_instruction (ByteCode (PUSH, atof (coco_string_create_char (t->val)))); 
+		gen->emit_push (atof (coco_string_create_char (t->val))); 
 }
 
 void Parser::Add() {
-		Expect(9);
-		cp->add_instruction (ByteCode (ADD)); 
+		Expect(8);
+		gen->emit_add (); 
 }
 
 void Parser::Sub() {
-		Expect(10);
-		cp->add_instruction (ByteCode (SUB)); 
+		Expect(19);
+		gen->emit_sub (); 
 }
 
 void Parser::Mult() {
-		Expect(11);
-		cp->add_instruction (ByteCode (MULT)); 
+		Expect(12);
+		gen->emit_mult (); 
 }
 
 void Parser::Div() {
-		Expect(12);
-		cp->add_instruction (ByteCode (DIV)); 
+		Expect(9);
+		gen->emit_div (); 
 }
 
 void Parser::Pop() {
-		Expect(13);
-		cp->add_instruction (ByteCode (POP)); 
+		Expect(14);
+		gen->emit_pop (); 
 }
 
 void Parser::Print() {
-		Expect(14);
-		cp->add_instruction (ByteCode (PRINT)); 
+		Expect(15);
+		gen->emit_print (); 
 }
 
 void Parser::Puts() {
-		Expect(15);
-		cp->add_instruction (ByteCode (PUTS)); 
+		Expect(17);
+		gen->emit_puts (); 
 }
 
 void Parser::Nop() {
-		Expect(16);
-		cp->add_instruction (ByteCode (NOP)); 
+		Expect(13);
+		gen->emit_nop (); 
 }
 
 void Parser::Reset() {
-		Expect(17);
-		cp->add_instruction (ByteCode (RESET)); 
+		Expect(18);
+		gen->emit_reset (); 
 }
 
 void Parser::Getop() {
-		Expect(18);
-		cp->add_instruction (ByteCode (GETOP)); 
+		Expect(10);
+		gen->emit_getop (); 
 }
 
 void Parser::Halt() {
-		Expect(19);
-		cp->add_instruction (ByteCode (HALT)); 
+		Expect(11);
+		gen->emit_halt (); 
 }
 
 
@@ -258,18 +258,18 @@ void Errors::SynErr(int line, int col, int n) {
 			case 5: s = coco_string_create(L"\"@size\" expected"); break;
 			case 6: s = coco_string_create(L"\".end\" expected"); break;
 			case 7: s = coco_string_create(L"\"Code\" expected"); break;
-			case 8: s = coco_string_create(L"\"push\" expected"); break;
-			case 9: s = coco_string_create(L"\"add\" expected"); break;
-			case 10: s = coco_string_create(L"\"sub\" expected"); break;
-			case 11: s = coco_string_create(L"\"mult\" expected"); break;
-			case 12: s = coco_string_create(L"\"div\" expected"); break;
-			case 13: s = coco_string_create(L"\"pop\" expected"); break;
-			case 14: s = coco_string_create(L"\"print\" expected"); break;
-			case 15: s = coco_string_create(L"\"puts\" expected"); break;
-			case 16: s = coco_string_create(L"\"nop\" expected"); break;
-			case 17: s = coco_string_create(L"\"reset\" expected"); break;
-			case 18: s = coco_string_create(L"\"getop\" expected"); break;
-			case 19: s = coco_string_create(L"\"halt\" expected"); break;
+			case 8: s = coco_string_create(L"\"add\" expected"); break;
+			case 9: s = coco_string_create(L"\"div\" expected"); break;
+			case 10: s = coco_string_create(L"\"getop\" expected"); break;
+			case 11: s = coco_string_create(L"\"halt\" expected"); break;
+			case 12: s = coco_string_create(L"\"mult\" expected"); break;
+			case 13: s = coco_string_create(L"\"nop\" expected"); break;
+			case 14: s = coco_string_create(L"\"pop\" expected"); break;
+			case 15: s = coco_string_create(L"\"print\" expected"); break;
+			case 16: s = coco_string_create(L"\"push\" expected"); break;
+			case 17: s = coco_string_create(L"\"puts\" expected"); break;
+			case 18: s = coco_string_create(L"\"reset\" expected"); break;
+			case 19: s = coco_string_create(L"\"sub\" expected"); break;
 			case 20: s = coco_string_create(L"??? expected"); break;
 			case 21: s = coco_string_create(L"invalid CodeInstruction"); break;
 

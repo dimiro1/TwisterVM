@@ -3,7 +3,7 @@
 #if !defined(COCO_PARSER_H__)
 #define COCO_PARSER_H__
 
-#include "../bytecode.h"
+#include "AsmGen.h"
 #include <ctype.h>
 
 
@@ -51,7 +51,7 @@ public:
 	Token *t;			// last recognized token
 	Token *la;			// lookahead token
 
-CompiledBytecode *cp;
+AsmGen *gen;
 
 	
 

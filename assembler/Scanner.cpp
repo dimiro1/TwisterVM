@@ -422,18 +422,18 @@ void Scanner::Init() {
 		start.set(Buffer::EoF, -1);
 	keywords.set(L"Header", 4);
 	keywords.set(L"Code", 7);
-	keywords.set(L"push", 8);
-	keywords.set(L"add", 9);
-	keywords.set(L"sub", 10);
-	keywords.set(L"mult", 11);
-	keywords.set(L"div", 12);
-	keywords.set(L"pop", 13);
-	keywords.set(L"print", 14);
-	keywords.set(L"puts", 15);
-	keywords.set(L"nop", 16);
-	keywords.set(L"reset", 17);
-	keywords.set(L"getop", 18);
-	keywords.set(L"halt", 19);
+	keywords.set(L"add", 8);
+	keywords.set(L"div", 9);
+	keywords.set(L"getop", 10);
+	keywords.set(L"halt", 11);
+	keywords.set(L"mult", 12);
+	keywords.set(L"nop", 13);
+	keywords.set(L"pop", 14);
+	keywords.set(L"print", 15);
+	keywords.set(L"push", 16);
+	keywords.set(L"puts", 17);
+	keywords.set(L"reset", 18);
+	keywords.set(L"sub", 19);
 
 
 	tvalLength = 128;
