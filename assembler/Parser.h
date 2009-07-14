@@ -60,7 +60,7 @@ AsmGen *gen;
 	void SemErr(const wchar_t* msg);
 
 	void Assembler();
-	void HeadSection();
+	void OptionsSection();
 	void CodeSection();
 	void CodeInstruction();
 	void Push();

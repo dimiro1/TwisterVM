@@ -22,10 +22,16 @@ COMPILER Assembler
 	IGNORE cr + tab + lf
 
 	PRODUCTIONS
-      Assembler = HeadSection CodeSection.
-		HeadSection = ".begin" "Header" "@size" NUM (. gen->alloc_instruction_array (atoi (coco_string_create_char (t->val))); .) ".end" "Header".
+      Assembler = OptionsSection CodeSection.
+		OptionsSection = ".options" 
+											  "@size" NUM 
+													(. gen->alloc_instruction_array (atoi (coco_string_create_char (t->val))); .)
+									   ".end".
+		/*StaticSection = ".static"
+												{StaticOptions}
+										".end".*/
 
-		CodeSection = ".begin" "Code" {CodeInstruction} ".end" "Code".
+		CodeSection = ".code" {CodeInstruction} ".end".
 		CodeInstruction = Push | Add | Sub | Mult | Div | Pop
 						| Print | Puts | Nop | Reset | Getop
 						| Halt

@@ -8,11 +8,14 @@
 ; 3049.2 - 5
 ; 3044.2 * 6312
 
-.begin Header
+.options
    @size 14 ; quantidade de instruções
-.end Header
+.end
+
+;.static
+;.end
 		  
-.begin Code
+.code
   push 77
   push 2
   mult
@@ -27,5 +30,5 @@
   mult
   add
   puts
-.end Code
+.end
 
