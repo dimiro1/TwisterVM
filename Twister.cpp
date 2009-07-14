@@ -8,7 +8,7 @@ static char *execname; // executable name
 inline void
 showCopyright ()
 {
-  cout << "zen - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl;
+  cout << "TwisterVm - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl;
 }
 
 void
@@ -25,7 +25,6 @@ showUsage ()
   execname);
   fflush(stderr);
   showCopyright();
-
 }
 
 /* execute, disassemble, help and copyright flags */

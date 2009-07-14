@@ -1,24 +1,29 @@
 CC=g++
 COCOR = cococpp
 CFLAGS=-Wall
-ZENOBJS=vm.o zen.o bytecode.o
-ASMOBJS = assembler/Parser.o assembler/Scanner.o assembler/Main.o bytecode.o assembler/AsmGen.o
+VMOBJS=vm.o Twister.o bytecode.o
+ASMOBJS = assembler/Parser.o assembler/Scanner.o assembler/Twisterc.o bytecode.o assembler/AsmGen.o
 FRAMESDIR = "/usr/share/coco-cpp"
 
-all: vm assembler/assembler
+all: twister assembler/twisterc
 
-vm: $(ZENOBJS)
-	$(CC) $(CFLAGS) $(ZENOBJS) -o vm
+opcode.cpp: opcode.h
+vm.cpp: vm.h
+bytecode.cpp: bytecode.h
 
-assembler/assembler: $(ASMOBJS) 
-	$(CC) $(CFLAGS) $(ASMOBJS) -o assembler/assembler
+twister: $(VMOBJS)
+	$(CC) $(CFLAGS) $(VMOBJS) -o twister
+
+# Assembler
+assembler/twisterc: $(ASMOBJS) 
+	$(CC) $(CFLAGS) $(ASMOBJS) -o assembler/twisterc
 
 assembler/Parser.cpp assembler/Scanner.cpp: assembler/Assembler.atg
 	$(COCOR) -frames $(FRAMESDIR) assembler/Assembler.atg
 
 assembler/Parser.o assembler/Scanner.o: assembler/Parser.cpp assembler/Scanner.cpp
 
-assembler/Main.o: assembler/Main.cpp
+assembler/Twisterc.o: assembler/Twisterc.cpp
 
 assembler/AsmGen.o: bytecode.o assembler/AsmGen.h
 

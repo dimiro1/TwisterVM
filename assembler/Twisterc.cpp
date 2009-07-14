@@ -31,9 +31,9 @@ main (int argc, char **argv)
   int c;
   Scanner *scanner;
   Parser *parser;
-  string out_file_name = "out.zenc";
+  string out_file_name = "out.twc";
 
-  while ( (c = getopt( argc, argv, "o:")) != -1) {
+  while ( (c = getopt( argc, argv, "ho:")) != -1) {
 	 switch( c ) {
 	 case 'o':
 		out_file_name = optarg;
