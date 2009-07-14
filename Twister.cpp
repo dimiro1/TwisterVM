@@ -95,7 +95,7 @@ main (int argc, char **argv)
 		if (dflag)
 		  vm.disassemble ();
 		if (eflag)
-		  vm.run ();
+		  vm.execute ();
 	 }
   return 0;
 }

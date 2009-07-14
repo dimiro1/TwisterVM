@@ -27,13 +27,15 @@ public:
 
   void emit_add ();
   void emit_div ();
+  void emit_discard ();
   void emit_getop ();
+  void emit_goto (float _operand);
   void emit_halt ();
   void emit_mult ();
   void emit_nop ();
   void emit_pop ();
   void emit_print ();
-  void emit_push (float operand);
+  void emit_push (float _operand);
   void emit_puts ();
   void emit_reset ();
   void emit_sub ();

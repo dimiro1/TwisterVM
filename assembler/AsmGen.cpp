@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-14 10:34:59 BRT>
+ *   Modified: <2009-07-14 12:43:38 BRT>
  */
 
 #include "AsmGen.h"
@@ -51,9 +51,20 @@ void AsmGen::emit_div ()
   assembled_file->add_instruction (Instruction (OP_DIV));
 }
 
+void AsmGen::emit_discard ()
+{
+  assembled_file->add_instruction (Instruction (OP_DISCARD));
+}
+
 void AsmGen::emit_getop ()
 {
   assembled_file->add_instruction (Instruction (OP_GETOP));
+}
+
+/* TODO: Corrigir essa função, o goto deve receber un inteiro. */
+void AsmGen::emit_goto (float _operand)
+{
+  assembled_file->add_instruction (Instruction (OP_GOTO, _operand));
 }
 
 void AsmGen::emit_halt ()

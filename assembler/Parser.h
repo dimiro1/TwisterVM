@@ -75,7 +75,10 @@ AsmGen *gen;
 	void Nop();
 	void Reset();
 	void Getop();
+	void Goto();
 	void Halt();
+	void Label();
+	void Discard();
 
 	void Parse();
 

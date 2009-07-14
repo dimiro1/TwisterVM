@@ -411,8 +411,8 @@ Scanner::~Scanner() {
 void Scanner::Init() {
 	EOL    = '\n';
 	eofSym = 0;
-	maxT = 20;
-	noSym = 20;
+	maxT = 23;
+	noSym = 23;
 	int i;
 	for (i = 65; i <= 90; ++i) start.set(i, 1);
 	for (i = 97; i <= 122; ++i) start.set(i, 1);
@@ -422,16 +422,19 @@ void Scanner::Init() {
 		start.set(Buffer::EoF, -1);
 	keywords.set(L"add", 8);
 	keywords.set(L"div", 9);
-	keywords.set(L"getop", 10);
-	keywords.set(L"halt", 11);
-	keywords.set(L"mult", 12);
-	keywords.set(L"nop", 13);
-	keywords.set(L"pop", 14);
-	keywords.set(L"print", 15);
-	keywords.set(L"push", 16);
-	keywords.set(L"puts", 17);
-	keywords.set(L"reset", 18);
-	keywords.set(L"sub", 19);
+	keywords.set(L"discard", 10);
+	keywords.set(L"getop", 11);
+	keywords.set(L"goto", 12);
+	keywords.set(L"halt", 13);
+	keywords.set(L"label", 14);
+	keywords.set(L"mult", 15);
+	keywords.set(L"nop", 16);
+	keywords.set(L"pop", 17);
+	keywords.set(L"print", 18);
+	keywords.set(L"push", 19);
+	keywords.set(L"puts", 20);
+	keywords.set(L"reset", 21);
+	keywords.set(L"sub", 22);
 
 
 	tvalLength = 128;

@@ -41,13 +41,16 @@ COMPILER Assembler
 
 		CodeSection = ".code" {CodeInstruction} ".end".
 		CodeInstruction = Push | Add | Sub | Mult | Div | Pop
-						| Print | Puts | Nop | Reset | Getop
-						| Halt
+						| Print | Puts | Nop | Reset | Getop | Goto
+						| Halt | Label | Discard
 						.
 		Add = "add" (. gen->emit_add (); .).
 		Div = "div" (. gen->emit_div (); .).
+		Discard = "discard" (. gen->emit_discard (); .).
 		Getop = "getop" (. gen->emit_getop (); .).
+		Goto = "goto" NUM (. gen->emit_goto (atof (coco_string_create_char (t->val))); .).
 		Halt = "halt" (. gen->emit_halt (); .).
+		Label = "label" ID.
 		Mult = "mult" (. gen->emit_mult (); .).
 		Nop = "nop" (. gen->emit_nop (); .).
 		Pop = "pop" (. gen->emit_pop (); .).

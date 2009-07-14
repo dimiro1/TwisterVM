@@ -35,8 +35,7 @@ public:
   VM ();
   ~VM ();
   int load (char *progname) throw (BadFileException, NotRecognizedFileException);
-  int execute (Instruction &);
-  int run ();
+  int execute ();
   void reset ();
   void disassemble ();
 

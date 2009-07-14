@@ -64,68 +64,70 @@ VM::disassemble ()
   for ( int i = 0; i < code_len; i++ ) 
     {
       if( code_section[i].operand != 0 )
-		  printf (" [%3d] %-5s %-3g", i+1, opcodeName[code_section[i].opcode], code_section[i].operand);
+		  printf (" [%3d] %-5s %-3g", i, opcodeName[code_section[i].opcode], code_section[i].operand);
       else
-		  printf (" [%3d] %-5s", i + 1, opcodeName[code_section[i].opcode]);
+		  printf (" [%3d] %-5s", i, opcodeName[code_section[i].opcode]);
       cout << endl;
     }
 }
 
 int 
-VM::execute (Instruction &instruction)
+VM::execute ()
 {
   int right; /* its is used in sub or div operations */
-  switch (instruction.opcode) 
-    {
-    case OP_ADD:
-      push (pop () + pop ());
-      break;
-    case OP_DIV:
-      right = pop ();
-      push (pop () / right);
-      break;
-    case OP_GETOP:				  /* não esta concluida */
-      top ();
-      break;
-    case OP_HALT:					  /* nao esta implementada */
-      break;
-    case OP_MULT:
-      push (pop () * pop ());
-      break;
-    case OP_NOP:
-      break;
-    case OP_POP:
-      pop ();
-      break;
-    case OP_PRINT:
-      cout << pop ();
-      break;
-    case OP_PUSH:
-      push (instruction.operand);
-      break;
-    case OP_PUTS:
-      cout << top () << endl;
-      break;
-    case OP_RESET:
-      reset ();
-      break;
-    case OP_SUB:
-      right = pop ();
-      push (pop () - right);
-      break;
-    }
-  return 0;
-}
-
-int 
-VM::run ()
-{
-  for ( int i = 0; i < code_len; i++ ) 
-    {
-      execute (code_section[i]);
-      ++pc; // increments the code_section counter when a bytecode is executed
-    }
-  return 0;
+  Instruction running;
+  while (true)
+	 {
+		running = code_section[pc];
+		switch (running.opcode) 
+		  {
+		  case OP_ADD:
+			 push (pop () + pop ());
+			 break;
+		  case OP_DIV:
+			 right = pop ();
+			 push (pop () / right);
+			 break;
+		  case OP_DISCARD:
+			 pop ();
+			 break;
+		  case OP_GETOP:				  /* não esta concluida */
+			 top ();
+			 break;
+		  case OP_GOTO:
+			 pc = static_cast<int> (running.operand) - 1; /* corrigir isso */
+			 break;
+		  case OP_HALT:
+			 exit (0);					  /* sai normalmente */
+			 break;
+		  case OP_MULT:
+			 push (pop () * pop ());
+			 break;
+		  case OP_NOP:
+			 break;
+		  case OP_POP:
+			 pop ();
+			 break;
+		  case OP_PRINT:
+			 cout << pop ();
+			 break;
+		  case OP_PUSH:
+			 push (running.operand);
+			 break;
+		  case OP_PUTS:
+			 cout << top () << endl;
+			 break;
+		  case OP_RESET:
+			 reset ();
+			 break;
+		  case OP_SUB:
+			 right = pop ();
+			 push (pop () - right);
+			 break;
+		  }
+		pc++;
+	 }
+  return 0; // nunca alcançado
 }
 
 // empty the sp

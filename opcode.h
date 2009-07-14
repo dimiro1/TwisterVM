@@ -6,7 +6,9 @@ enum Opcode
 {
   OP_ADD,
   OP_DIV,
+  OP_DISCARD,						  /* Discarta o topo da pilha */
   OP_GETOP,			// for puts and print
+  OP_GOTO,
   OP_HALT,
   OP_MULT,
   OP_NOP,				// no operation
@@ -22,7 +24,9 @@ enum Opcode
 static const char *opcodeName[] = {
   "add",
   "div",
+  "discard",
   "getop",
+  "goto",
   "halt",
   "mult",
   "nop",			// no operation
