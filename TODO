@@ -1,0 +1,6 @@
+(A) Adicionar uma lista de variaveis estaticas ao assembler e a vm.
+(A) Adicionar tipos promitivos à VM.
+(A) Usar Exceptions para reportar erros na vm e no assembler.
+(B) Adicionar o Nome do arquivo fonte no arquivo compilado.
+(C) Adicionar execução concorrente dentro do interpretador.
+(B) Documentar o código.
