@@ -30,6 +30,8 @@ COMPILER Assembler
 		/*StaticSection = ".static"
 												{StaticOptions}
 										".end".*/
+										
+		/* StaticOptions = @string ID STRING | @number ID NUM.*/
 
 		CodeSection = ".code" {CodeInstruction} ".end".
 		CodeInstruction = Push | Add | Sub | Mult | Div | Pop
