@@ -18,17 +18,17 @@ showUsage ()
   fprintf(stderr,
   "usage: %s [options] [script file].\n"
   "Available options are:\n"
-  "  -d [disassemble] \t\tdisassemble code\n"
-  "  -h [help]\t\t\tshow this help\n"
-  "  -c [copyright]\t\tcopyright information\n\n"
+  "  -l [list] \t\tlist code\n"
+  "  -h [help]\t\tshow this help\n"
+  "  -c [copyright]\tcopyright information\n\n"
   ,
   execname);
   fflush(stderr);
   showCopyright();
 }
 
-/* execute, disassemble, help and copyright flags */
-int eflag, dflag, hflag, cflag;
+/* execute, list, help and copyright flags */
+bool eflag, lflag, hflag, cflag;
 
 int
 main (int argc, char **argv)
@@ -41,33 +41,33 @@ main (int argc, char **argv)
 
   static struct option long_options[] = {
 	 {"copyright",   no_argument, 0, 'c'      },
-	 {"disassemble", no_argument, 0, 'd'},
+	 {"list", no_argument, 0, 'd'},
 	 {"help",        no_argument, 0, 'h'      },
 	 {0,0,0,0}
   };
 
-  eflag = 1;
-  while( (c = getopt_long( argc, argv, "cdh", long_options, &option_index )) != -1) {
+  eflag = true;
+  while( (c = getopt_long( argc, argv, "clh", long_options, &option_index )) != -1) {
 	 switch( c ) {
 	 case 'c':
-		cflag = 1;
+		cflag = true;
 		break;
-	 case 'd':
-		eflag = 0;
-		dflag = 1;
+	 case 'l':
+		eflag = false;
+		lflag = true;
 		break;
 	 case 'h':
 	 case '?':
-		hflag = 1;
+		hflag = true;
 		break;
 	 default:
-		hflag = 1;
+		hflag = true;
 		break;
 	 }
   }
 
   argv += optind;
-  if (argc < 2)
+  if (argc < 2 || hflag )
 	 {
 		showUsage ();
 		exit (0);
@@ -75,11 +75,6 @@ main (int argc, char **argv)
   if (cflag)
 	 {
 		showCopyright ();
-		exit (0);
-	 }
-  if (hflag)
-	 {
-		showUsage ();
 		exit (0);
 	 }
   else
@@ -92,8 +87,8 @@ main (int argc, char **argv)
 		  cout << e.what () << endl;
 		}
 
-		if (dflag)
-		  vm.disassemble ();
+		if (lflag)
+		  vm.list ();
 		if (eflag)
 		  vm.execute ();
 	 }

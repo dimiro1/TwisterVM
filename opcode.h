@@ -21,8 +21,7 @@ enum Opcode
   OP_SUB
 };
 
-/* used in showBytecodes */
-static const char *opcodeName[] = {
+static const char *mneumonic[] = {
   "add",
   "clsp",
   "div",

@@ -51,9 +51,8 @@ VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
 
 
 void 
-VM::disassemble ()
+VM::list ()
 {
-  /* Baseado no disasemble do lua5.1 */
   cout << " " << running_file_name 
 		 << " (" << code_len 
 		 << " instructions, " 
@@ -63,9 +62,9 @@ VM::disassemble ()
   for ( int i = 0; i < code_len; i++ ) 
     {
       if( code_section[i].operand != 0 )
-		  printf ("%3d %-6s %-3g", i, opcodeName[code_section[i].opcode], code_section[i].operand);
+		  printf ("%3d: %-6s %-3g", i, mneumonic[code_section[i].opcode], code_section[i].operand);
       else
-		  printf ("%3d %-6s", i, opcodeName[code_section[i].opcode]);
+		  printf ("%3d: %-6s", i, mneumonic[code_section[i].opcode]);
       cout << endl;
     }
 }
@@ -163,7 +162,7 @@ VM::reset_sp ()
 /* sp manipulation */
 /* need changes */
 void
-VM::disassemble_sp ()
+VM::list_sp ()
 {
   cout << " [ SP ] " << endl;
   while (!sp.empty ())

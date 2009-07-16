@@ -43,8 +43,8 @@ public:
 	 throw (BadFileException, NotRecognizedFileException);
 
   int execute ();
-  void disassemble ();
-  void disassemble_sp ();
+  void list ();
+  void list_sp ();
 
 private:
   /* Memory mem; */
