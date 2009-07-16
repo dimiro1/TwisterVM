@@ -4,3 +4,13 @@
 *.out
 *.old
 *.twc
+*.a
+test/runtests
+autoscan.log
+Makefile
+autom4te.cache
+config.log
+config.status
+config.h
+stamp-h1
+.deps
