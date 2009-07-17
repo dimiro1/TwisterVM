@@ -11,14 +11,14 @@ class Instruction {
 public:
   Instruction ();
   Instruction (Opcode _opcode);
-  Instruction (Opcode _opcode, int _op1);
-  Instruction (Opcode _opcode, int _op1, int _op2);
-  Instruction (Opcode _opcode, int _op1, int _op2, int _op3);
+  Instruction (Opcode _opcode, int _A);
+  Instruction (Opcode _opcode, int _A, int _B);
+  Instruction (Opcode _opcode, int _A, int _B, int _C);
 
   Opcode opcode;
-  unsigned int op1;
-  unsigned int op2;
-  unsigned int op3;
+  unsigned int A;
+  unsigned int B;
+  unsigned int C;
 };
 
 /* TODO: esta classe deixará de esistir */

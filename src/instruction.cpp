@@ -5,41 +5,41 @@
 Instruction::Instruction ()
 {
    opcode = OP_NOP;
-   op1 = NULL;
-	op2 = NULL;
-	op3 = NULL;
+   A = NULL;
+	B = NULL;
+	C = NULL;
 }
 
 Instruction::Instruction (Opcode _opcode)
 {
    opcode = _opcode;
-   op1 = NULL;
-	op2 = NULL;
-	op3 = NULL;
+   A = NULL;
+	B = NULL;
+	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode, int _op1)
+Instruction::Instruction (Opcode _opcode, int _A)
 {
    opcode = _opcode;
-   op1 = _op1;
-	op2 = NULL;
-	op3 = NULL;
+   A = _A;
+	B = NULL;
+	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode, int _op1, int _op2)
+Instruction::Instruction (Opcode _opcode, int _A, int _B)
 {
    opcode = _opcode;
-   op1 = _op1;
-	op2 = _op2;
-	op3 = NULL;
+   A = _A;
+	B = _B;
+	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode, int _op1, int _op2, int _op3)
+Instruction::Instruction (Opcode _opcode, int _A, int _B, int _C)
 {
    opcode = _opcode;
-   op1 = _op1;
-	op2 = _op2;
-	op3 = _op3;
+   A = _A;
+	B = _B;
+	C = _C;
 }
 
 TwcFile::TwcFile (int _code_len)

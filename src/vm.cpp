@@ -70,21 +70,21 @@ VM::list ()
 		switch (current_context->code_section[i].opcode)
 		  {
 		  case OP_STORE_S:
-			 cout << "\"" << current_context->get_string(current_context->code_section[i].op1) << "\" $" << current_context->code_section[i].op3;
+			 cout << "\"" << current_context->get_string(current_context->code_section[i].A) << "\" $" << current_context->code_section[i].C;
 			 break;
 		  case OP_PUT_S: case OP_PRINT_S:
-			 cout << "$" << current_context->code_section[i].op1;
+			 cout << "$" << current_context->code_section[i].A;
 			 break;
 		  case OP_STORE_N:
-			 cout  << current_context->num_table[current_context->code_section[i].op1] << " $" << current_context->code_section[i].op3;
+			 cout  << current_context->num_table[current_context->code_section[i].A] << " $" << current_context->code_section[i].C;
 			 break;
 		  case OP_PUT_N: case OP_PRINT_N:
-			 cout << "$" << current_context->code_section[i].op1;
+			 cout << "$" << current_context->code_section[i].A;
 			 break;
 		  case OP_CONCAT_S:
-			 cout  << "$" << current_context->code_section[i].op1 
-					 << " $" << current_context->code_section[i].op2 
-					 << " $" << current_context->code_section[i].op3 ;
+			 cout  << "$" << current_context->code_section[i].A 
+					 << " $" << current_context->code_section[i].B 
+					 << " $" << current_context->code_section[i].C ;
 			 break;
 		  case OP_MOV_N:
 			 break;
@@ -155,86 +155,86 @@ VM::execute ()
 		  {
 			 /* aritmetica opcodes numeros */
 		  case OP_ADD_N:
-			 RN(executing.op3,
-				 current_context->num_table[executing.op1] +
-				 current_context->num_table[executing.op2]);
+			 RN(executing.C,
+				 current_context->num_table[executing.A] +
+				 current_context->num_table[executing.B]);
 			 current_context->pc++;
 			 break;
 		  case OP_SUB_N:
-			 RN(executing.op3,
-				 current_context->num_table[executing.op1] -
-				 current_context->num_table[executing.op2]);
+			 RN(executing.C,
+				 current_context->num_table[executing.A] -
+				 current_context->num_table[executing.B]);
 			 current_context->pc++;
 			 break;
 		  case OP_MULT_N:
-			 RN(executing.op3,
-				 current_context->num_table[executing.op1] *
-				 current_context->num_table[executing.op2]);
+			 RN(executing.C,
+				 current_context->num_table[executing.A] *
+				 current_context->num_table[executing.B]);
 			 current_context->pc++;
 			 break;
 		  case OP_DIV_N:
-			 RN(executing.op3,
-				 current_context->num_table[executing.op1] /
-				 current_context->num_table[executing.op2]);
+			 RN(executing.C,
+				 current_context->num_table[executing.A] /
+				 current_context->num_table[executing.B]);
 			 current_context->pc++;
 			 break;
 		  case OP_MOD_N:
-			 RN(executing.op3,
-				 static_cast<int>(current_context->num_table[executing.op1]) %
-				 static_cast<int>(current_context->num_table[executing.op2]));
+			 RN(executing.C,
+				 static_cast<int>(current_context->num_table[executing.A]) %
+				 static_cast<int>(current_context->num_table[executing.B]));
 			 current_context->pc++;
 			 break;
 		  case OP_POW_N:
-			 RN(executing.op3, pow (current_context->num_table[executing.op1],
-											 current_context->num_table[executing.op2]));
+			 RN(executing.C, pow (current_context->num_table[executing.A],
+											 current_context->num_table[executing.B]));
 			 current_context->pc++;
 			 break;
 		  case OP_NEG_N:			  /* TODO: melhorar esse neg */
-			 RN(executing.op1, -current_context->num_table[executing.op1]);
+			 RN(executing.A, -current_context->num_table[executing.A]);
 			 current_context->pc++;
 			 break;
 		  case OP_ABS_N:
-			 RN(executing.op1, fabs (current_context->num_table[executing.op1]));
+			 RN(executing.A, fabs (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_SIN_N:
-			 RN(executing.op3, sin (current_context->num_table[executing.op1]));
+			 RN(executing.C, sin (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_COS_N:
-			 RN(executing.op3, cos (current_context->num_table[executing.op1]));
+			 RN(executing.C, cos (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_TAN_N:
-			 RN(executing.op3, tan (current_context->num_table[executing.op1]));
+			 RN(executing.C, tan (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_ASIN_N:
-			 RN(executing.op3, asin (current_context->num_table[executing.op1]));
+			 RN(executing.C, asin (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_ACOS_N:
-			 RN(executing.op3, acos (current_context->num_table[executing.op1]));
+			 RN(executing.C, acos (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_ATAN_N:
-			 RN(executing.op3, atan (current_context->num_table[executing.op1]));
+			 RN(executing.C, atan (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_LOG_N:
-			 RN(executing.op3, log (current_context->num_table[executing.op1]));
+			 RN(executing.C, log (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_SQRT_N:
-			 RN(executing.op3, sqrt (current_context->num_table[executing.op1]));
+			 RN(executing.C, sqrt (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_CEIL_N:
-			 RN(executing.op3, ceil (current_context->num_table[executing.op1]));
+			 RN(executing.C, ceil (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 		  case OP_FLOOR_N:
-			 RN(executing.op3, floor (current_context->num_table[executing.op1]));
+			 RN(executing.C, floor (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
 			 /* fim opcodes aritmetica numeros */
@@ -301,59 +301,59 @@ VM::execute ()
 
 			 /* IO */
 		  case OP_PRINT_S:
-			 cout << RS(executing.op1);
+			 cout << RS(executing.A);
 			 current_context->pc++;
 			 break;
 		  case OP_PRINT_N:
-			 cout << RN(executing.op1);
+			 cout << RN(executing.A);
 			 current_context->pc++;
 			 break;
 		  case OP_PUT_S:
-			 cout << RS(executing.op1) << endl;
+			 cout << RS(executing.A) << endl;
 			 current_context->pc++;
 			 break;
 		  case OP_PUT_N:
-			 cout << RN(executing.op1) << endl;
+			 cout << RN(executing.A) << endl;
 			 current_context->pc++;
 			 break;
 		  case OP_INPUT_S:
 			 cin >> ins;
-			 RS(executing.op1, ins);
+			 RS(executing.C, ins);
 			 current_context->pc++;
 			 break;
 		  case OP_INPUT_N:
 			 cin >> ind;
-			 RN(executing.op1, ind);
+			 RN(executing.C, ind);
 			 current_context->pc++;
 			 break;
 			 /* end IO */
 
 			 /* REgisters manipulation */
 		  case OP_MOV_N:
-			 RN(executing.op2, current_context->num_table[executing.op1]);
+			 RN(executing.B, current_context->num_table[executing.A]);
 			 current_context->pc++;
 			 break;
 		  case OP_MOV_S:
-			 RS(executing.op2, current_context->get_string(executing.op1));
+			 RS(executing.B, current_context->get_string(executing.A));
 			 current_context->pc++;
 			 break;
 		  case OP_STORE_S:
-			 RS(executing.op3, 
-				 string (current_context->get_string(executing.op1)));
+			 RS(executing.C, 
+				 string (current_context->get_string(executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_STORE_N:
-			 RN(executing.op3, 
-				 current_context->num_table[executing.op1]);
+			 RN(executing.C, 
+				 current_context->num_table[executing.A]);
 			 current_context->pc++;
 			 break;
 			 /* fim Registers manipulation */
 
 			 /* string */
 		  case OP_CONCAT_S:
-			 string s1 = RS(executing.op1);
-			 string s2 = RS(executing.op2);
-			 RS(executing.op3, s1 + s2);
+			 string s1 = RS(executing.A);
+			 string s2 = RS(executing.B);
+			 RS(executing.C, s1 + s2);
 			 current_context->pc++;
 			 break;
 			 /* fim string */
