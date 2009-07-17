@@ -6,12 +6,6 @@
 
 #include "vm.h"
 
-VM::VM ()
-{
-  pc = 0;
-  code_len = 0;
-}
-
 VM::~VM ()
 {
   reset ();
@@ -23,29 +17,34 @@ int
 VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
 {
   running_file_name = progname;
-  TwcFile *tw = new TwcFile ();
+  current_context = new ExecContext ();
   ifstream infile (running_file_name, ios::binary);
   
-  if (!infile.good ()) 
+  if (!infile) 
 	 throw BadFileException (progname);
 
   /* tenta pegar o numero mágico */
-  infile.read (reinterpret_cast<char *>(&tw->magic), sizeof (int));
-  if (tw->magic != MAGIC_VERSION_NUM)
+  infile.read (reinterpret_cast<char *>(&current_context->magic), sizeof (unsigned int));
+  if (current_context->magic != MAGIC_VERSION_NUM)
 	 throw NotRecognizedFileException (progname);
 
-  infile.read (reinterpret_cast<char *>(&tw->code_len), sizeof (int));
-  tw->alloc_code_section (tw->code_len);
-  infile.read (reinterpret_cast<char *>(tw->code_section), tw->code_len * sizeof (Instruction));
+  /* ler tabelas estaticas */
+  /* strings */
+  infile.read ( reinterpret_cast<char *>(&current_context->string_table_len), sizeof (unsigned int));
+  /* TODO: testar se ocorreu alocação correta */
+  current_context->string_table = new char[current_context->string_table_len];
+  infile.read ( reinterpret_cast<char *>(current_context->string_table), current_context->string_table_len * sizeof (char));
+  /* numeros */
+  infile.read ( reinterpret_cast<char *>(&current_context->num_table_len), sizeof (unsigned int));
+  /* TODO: testar se ocorreu alocação correta */
+  current_context->num_table = new double[current_context->num_table_len];
+  infile.read ( reinterpret_cast<char *>(current_context->num_table), current_context->num_table_len * sizeof (double));
 
-  code_len = tw->code_len;
-
-  code_section = new Instruction[tw->code_len];
-
-  /* cxarrega as instruções na TwisterVM */
-  for (int i = 0; i < tw->code_len; i++)
-    code_section[i] = tw->code_section[i];
-
+  /* ler codigo */
+  infile.read (reinterpret_cast<char *>(&current_context->code_len), sizeof (int));
+  /* TODO: testar se ocorreu alocação correta */
+  current_context->code_section = new Instruction[current_context->code_len];
+  infile.read (reinterpret_cast<char *>(current_context->code_section), current_context->code_len * sizeof (Instruction));
   return 0;
 }
 
@@ -54,90 +53,310 @@ void
 VM::list ()
 {
   cout << " " << running_file_name 
-		 << " (" << code_len 
+		 << " (" << current_context->code_len
 		 << " instructions, " 
-		 << sizeof (code_section) * code_len 
+		 << sizeof (current_context->code_section) * current_context->code_len 
 		 << " bytes at " 
-		 << hex << code_section << ")" << endl;
-  for ( int i = 0; i < code_len; i++ ) 
-    {
-      if( code_section[i].operand != 0 )
-		  printf ("%3d: %-6s %-3g", i, mneumonic[code_section[i].opcode], code_section[i].operand);
-      else
-		  printf ("%3d: %-6s", i, mneumonic[code_section[i].opcode]);
-      cout << endl;
-    }
+		 << hex << current_context->code_section << ")" << endl;
+  /* genric */
+
+  /* IO */
+
+  /* registers */
+
+  for (int i = 0; i < current_context->code_len; ++i)
+	 {
+		cout << i << ": " << mneumonic[current_context->code_section[i].opcode] << " ";
+		switch (current_context->code_section[i].opcode)
+		  {
+		  case OP_STORE_S:
+			 cout << "\"" << current_context->get_string(current_context->code_section[i].op1) << "\" $" << current_context->code_section[i].op3;
+			 break;
+		  case OP_PUT_S: case OP_PRINT_S:
+			 cout << "$" << current_context->code_section[i].op1;
+			 break;
+		  case OP_STORE_N:
+			 cout  << current_context->num_table[current_context->code_section[i].op1] << " $" << current_context->code_section[i].op3;
+			 break;
+		  case OP_PUT_N: case OP_PRINT_N:
+			 cout << "$" << current_context->code_section[i].op1;
+			 break;
+		  case OP_CONCAT_S:
+			 cout  << "$" << current_context->code_section[i].op1 
+					 << " $" << current_context->code_section[i].op2 
+					 << " $" << current_context->code_section[i].op3 ;
+			 break;
+		  case OP_MOV_N:
+			 break;
+		  case OP_MOV_S:
+			 break;
+		  case OP_INPUT_N:
+			 break;
+		  case OP_INPUT_S:
+			 break;
+		  case OP_NOP:
+			 break;
+		  case OP_GOTO:
+			 break;
+		  case OP_HALT:
+			 break;
+		  case OP_ADD_N:
+			 break;
+		  case OP_SUB_N:
+			 break;
+		  case OP_MULT_N:
+			 break;
+		  case OP_DIV_N:
+			 break;
+		  case OP_MOD_N:
+			 break;
+		  case OP_POW_N:
+			 break;
+		  case OP_NEG_N:
+			 break;
+		  case OP_ABS_N:
+			 break;
+		  case OP_SIN_N:
+			 break;
+		  case OP_COS_N:
+			 break;
+		  case OP_TAN_N:
+			 break;
+		  case OP_ASIN_N:
+			 break;
+		  case OP_ACOS_N:
+			 break;
+		  case OP_ATAN_N:
+			 break;
+		  case OP_LOG_N:
+			 break;
+		  case OP_SQRT_N:
+			 break;
+		  case OP_CEIL_N:
+			 break;
+		  case OP_FLOOR_N:
+			 break;
+		  }
+		cout << endl;
+	 }
 }
 
 int 
 VM::execute ()
 {
+  string ins;
+  double ind;
   int right; /* its is used in sub or div operations */
-  Instruction running;
+  Instruction executing;
   while (true)
 	 {
-		running = code_section[pc];
-		switch (running.opcode) 
+		executing = current_context->code_section[current_context->pc];
+		switch (executing.opcode) 
 		  {
+			 /* aritmetica opcodes numeros */
+		  case OP_ADD_N:
+			 RN(executing.op3,
+				 current_context->num_table[executing.op1] +
+				 current_context->num_table[executing.op2]);
+			 current_context->pc++;
+			 break;
+		  case OP_SUB_N:
+			 RN(executing.op3,
+				 current_context->num_table[executing.op1] -
+				 current_context->num_table[executing.op2]);
+			 current_context->pc++;
+			 break;
+		  case OP_MULT_N:
+			 RN(executing.op3,
+				 current_context->num_table[executing.op1] *
+				 current_context->num_table[executing.op2]);
+			 current_context->pc++;
+			 break;
+		  case OP_DIV_N:
+			 RN(executing.op3,
+				 current_context->num_table[executing.op1] /
+				 current_context->num_table[executing.op2]);
+			 current_context->pc++;
+			 break;
+		  case OP_MOD_N:
+			 RN(executing.op3,
+				 static_cast<int>(current_context->num_table[executing.op1]) %
+				 static_cast<int>(current_context->num_table[executing.op2]));
+			 current_context->pc++;
+			 break;
+		  case OP_POW_N:
+			 RN(executing.op3, pow (current_context->num_table[executing.op1],
+											 current_context->num_table[executing.op2]));
+			 current_context->pc++;
+			 break;
+		  case OP_NEG_N:			  /* TODO: melhorar esse neg */
+			 RN(executing.op1, -current_context->num_table[executing.op1]);
+			 current_context->pc++;
+			 break;
+		  case OP_ABS_N:
+			 RN(executing.op1, fabs (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_SIN_N:
+			 RN(executing.op3, sin (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_COS_N:
+			 RN(executing.op3, cos (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_TAN_N:
+			 RN(executing.op3, tan (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_ASIN_N:
+			 RN(executing.op3, asin (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_ACOS_N:
+			 RN(executing.op3, acos (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_ATAN_N:
+			 RN(executing.op3, atan (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_LOG_N:
+			 RN(executing.op3, log (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_SQRT_N:
+			 RN(executing.op3, sqrt (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_CEIL_N:
+			 RN(executing.op3, ceil (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+		  case OP_FLOOR_N:
+			 RN(executing.op3, floor (current_context->num_table[executing.op1]));
+			 current_context->pc++;
+			 break;
+			 /* fim opcodes aritmetica numeros */
+
+			 /* deprecated opcodes */
 		  case OP_ADD:
-			 push (pop () + pop ());
-			 pc++;
+			 /* push (pop () + pop ()); */
+			 /* pc++; */
 			 break;
 		  case OP_CLSP:
-			 reset_sp ();
-			 pc++;
+			 /* reset_sp (); */
+			 /* pc++; */
 			 break;
 		  case OP_DIV:
-			 right = pop ();
-			 push (pop () / right);
-			 pc++;
+			 /* right = pop (); */
+			 /* push (pop () / right); */
+			 /* pc++; */
 			 break;
 		  case OP_DCARD:
-			 pop ();
-			 pc++;
+			 /* pop (); */
+			 /* pc++; */
 			 break;
 		  case OP_GETOP:				  /* não esta concluida */
-			 top ();
-			 pc++;
+			 /* top (); */
+			 /* pc++; */
+			 break;
+		  case OP_MULT:
+			 /* push (pop () * pop ()); */
+			 /* pc++; */
+			 break;
+		  case OP_POP:
+			 /* pop (); */
+			 /* pc++; */
+			 break;
+		  case OP_PUSH:
+			 /* push (running.operand); */
+			 /* pc++; */
+			 break;
+		  case OP_PUTS:
+			 /* cout << top () << endl; */
+			 /* pc++; */
+			 break;
+		  case OP_RESET:
+			 /* reset (); */
+			 /* pc++; */
+			 break;
+		  case OP_SUB:
+			 /* right = pop (); */
+			 /* push (pop () - right); */
+			 /* pc++; */
+			 break;
+			 /* fim deprecated opcodes */
+
+			 /* generic */
+		  case OP_NOP:
+			 current_context->pc++;
 			 break;
 		  case OP_GOTO:
-			 pc = static_cast<int> (running.operand);
 			 break;
 		  case OP_HALT:
 			 exit (0);					  /* sai normalmente */
 			 break;
-		  case OP_MULT:
-			 push (pop () * pop ());
-			 pc++;
+			 /* fim generic */
+
+			 /* IO */
+		  case OP_PRINT_S:
+			 cout << RS(executing.op1);
+			 current_context->pc++;
 			 break;
-		  case OP_NOP:
-			 pc++;
+		  case OP_PRINT_N:
+			 cout << RN(executing.op1);
+			 current_context->pc++;
 			 break;
-		  case OP_POP:
-			 pop ();
-			 pc++;
+		  case OP_PUT_S:
+			 cout << RS(executing.op1) << endl;
+			 current_context->pc++;
 			 break;
-		  case OP_PRINT:
-			 cout << pop ();
-			 pc++;
+		  case OP_PUT_N:
+			 cout << RN(executing.op1) << endl;
+			 current_context->pc++;
 			 break;
-		  case OP_PUSH:
-			 push (running.operand);
-			 pc++;
+		  case OP_INPUT_S:
+			 cin >> ins;
+			 RS(executing.op1, ins);
+			 current_context->pc++;
 			 break;
-		  case OP_PUTS:
-			 cout << top () << endl;
-			 pc++;
+		  case OP_INPUT_N:
+			 cin >> ind;
+			 RN(executing.op1, ind);
+			 current_context->pc++;
 			 break;
-		  case OP_RESET:
-			 reset ();
-			 pc++;
+			 /* end IO */
+
+			 /* REgisters manipulation */
+		  case OP_MOV_N:
+			 RN(executing.op2, current_context->num_table[executing.op1]);
+			 current_context->pc++;
 			 break;
-		  case OP_SUB:
-			 right = pop ();
-			 push (pop () - right);
-			 pc++;
+		  case OP_MOV_S:
+			 RS(executing.op2, current_context->get_string(executing.op1));
+			 current_context->pc++;
 			 break;
+		  case OP_STORE_S:
+			 RS(executing.op3, 
+				 string (current_context->get_string(executing.op1)));
+			 current_context->pc++;
+			 break;
+		  case OP_STORE_N:
+			 RN(executing.op3, 
+				 current_context->num_table[executing.op1]);
+			 current_context->pc++;
+			 break;
+			 /* fim Registers manipulation */
+
+			 /* string */
+		  case OP_CONCAT_S:
+			 string s1 = RS(executing.op1);
+			 string s2 = RS(executing.op2);
+			 RS(executing.op3, s1 + s2);
+			 current_context->pc++;
+			 break;
+			 /* fim string */
 		  }
 	 }
   return 0; // nunca alcançado, espero!
@@ -148,7 +367,7 @@ VM::execute ()
 inline void 
 VM::reset () 
 { 
-  pc = 0;
+  /* pc = 0; */
   reset_sp ();
 }
 

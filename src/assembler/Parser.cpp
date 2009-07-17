@@ -102,7 +102,7 @@ void Parser::OptionsOptionsSection() {
 			Get();
 			Expect(1);
 			gen->set_output_file_name (coco_string_create_char (t->val)); 
-		} else SynErr(29);
+		} else SynErr(32);
 }
 
 void Parser::StaticOptions() {
@@ -114,7 +114,7 @@ void Parser::StaticOptions() {
 			Get();
 			Expect(1);
 			Expect(3);
-		} else SynErr(30);
+		} else SynErr(33);
 }
 
 void Parser::CodeInstruction() {
@@ -183,7 +183,15 @@ void Parser::CodeInstruction() {
 			Sub();
 			break;
 		}
-		default: SynErr(31); break;
+		case 29: {
+			Store_i();
+			break;
+		}
+		case 28: {
+			Store_s();
+			break;
+		}
+		default: SynErr(34); break;
 		}
 }
 
@@ -269,6 +277,28 @@ void Parser::Sub() {
 		gen->emit_sub (); 
 }
 
+void Parser::Store_i() {
+		int n; 
+		Expect(29);
+		Register(n);
+		Expect(2);
+		cout << "$" << n << " " << coco_string_create_char (t->val) << endl; 
+}
+
+void Parser::Store_s() {
+		int n; 
+		Expect(28);
+		Register(n);
+		Expect(3);
+		cout << "$" << n << " " << coco_string_create_char (t->val) << endl; 
+}
+
+void Parser::Register(int &n) {
+		Expect(30);
+		Expect(2);
+		n =  atoi (coco_string_create_char (t->val)); 
+}
+
 
 
 void Parser::Parse() {
@@ -282,7 +312,7 @@ void Parser::Parse() {
 }
 
 Parser::Parser(Scanner *scanner) {
-	maxT = 28;
+	maxT = 31;
 
 	dummyToken = NULL;
 	t = la = NULL;
@@ -296,9 +326,9 @@ bool Parser::StartOf(int s) {
 	const bool T = true;
 	const bool x = false;
 
-	static bool set[2][30] = {
-		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
-		{x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, x,x}
+	static bool set[2][33] = {
+		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x},
+		{x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x,x, x}
 	};
 
 
@@ -346,10 +376,13 @@ void Errors::SynErr(int line, int col, int n) {
 			case 25: s = coco_string_create(L"\"puts\" expected"); break;
 			case 26: s = coco_string_create(L"\"reset\" expected"); break;
 			case 27: s = coco_string_create(L"\"sub\" expected"); break;
-			case 28: s = coco_string_create(L"??? expected"); break;
-			case 29: s = coco_string_create(L"invalid OptionsOptionsSection"); break;
-			case 30: s = coco_string_create(L"invalid StaticOptions"); break;
-			case 31: s = coco_string_create(L"invalid CodeInstruction"); break;
+			case 28: s = coco_string_create(L"\"store_s\" expected"); break;
+			case 29: s = coco_string_create(L"\"store_i\" expected"); break;
+			case 30: s = coco_string_create(L"\"$\" expected"); break;
+			case 31: s = coco_string_create(L"??? expected"); break;
+			case 32: s = coco_string_create(L"invalid OptionsOptionsSection"); break;
+			case 33: s = coco_string_create(L"invalid StaticOptions"); break;
+			case 34: s = coco_string_create(L"invalid CodeInstruction"); break;
 
 		default:
 		{

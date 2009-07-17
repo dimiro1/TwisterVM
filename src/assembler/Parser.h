@@ -5,6 +5,8 @@
 
 #include "AsmGen.h"
 #include <ctype.h>
+#include <iostream>
+using namespace std;
 
 
 #include "Scanner.h"
@@ -83,6 +85,9 @@ AsmGen *gen;
 	void Puts();
 	void Reset();
 	void Sub();
+	void Store_i();
+	void Store_s();
+	void Register(int &n);
 
 	void Parse();
 

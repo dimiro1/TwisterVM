@@ -1,0 +1,15 @@
+.options
+.end
+
+; output
+; hello world
+; 10
+.code
+  store_s "hello" $0
+  store_s " world" $1
+  concat_s $0 $1 $0
+  put_s $0
+  store_n 10 $0
+  put_n $0
+  halt
+.end

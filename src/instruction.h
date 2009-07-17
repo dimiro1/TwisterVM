@@ -9,14 +9,19 @@
 
 class Instruction {
 public:
-  Instruction();
-  Instruction(Opcode _opcode);
-  Instruction(Opcode _opcode, float _operand);
+  Instruction ();
+  Instruction (Opcode _opcode);
+  Instruction (Opcode _opcode, int _op1);
+  Instruction (Opcode _opcode, int _op1, int _op2);
+  Instruction (Opcode _opcode, int _op1, int _op2, int _op3);
 
   Opcode opcode;
-  float operand;
+  unsigned int op1;
+  unsigned int op2;
+  unsigned int op3;
 };
 
+/* TODO: esta classe deixará de esistir */
 class TwcFile {
 public:
   TwcFile (int _code_len);

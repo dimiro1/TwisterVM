@@ -1,0 +1,9 @@
+.options
+  @size 3
+.end
+
+.code
+  store_s $0 "hello World"
+  store_i $1 10
+  halt
+.end

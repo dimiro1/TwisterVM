@@ -1,5 +1,7 @@
 #include "AsmGen.h"
 #include <ctype.h>
+#include <iostream>
+using namespace std;
 
 COMPILER Twisterc
 
@@ -64,6 +66,8 @@ COMPILER Twisterc
                         | Puts
                         | Reset 
                         | Sub 
+                        | Store_i
+                        | Store_s
 						.
 		Add   = "add" 
                     (. gen->emit_add (); .).
@@ -97,5 +101,13 @@ COMPILER Twisterc
                     (. gen->emit_reset (); .).
 		Sub   = "sub" 
                     (. gen->emit_sub (); .).
+
+		Store_s (. int n; .)  = "store_s" Register<n> STRING 
+                    (. cout << "$" << n << " " << coco_string_create_char (t->val) << endl; .).
+
+		Store_i (. int n; .)  = "store_i" Register<n> NUM 
+                    (. cout << "$" << n << " " << coco_string_create_char (t->val) << endl; .).
+
+        Register<int &n> = "$" NUM (. n =  atoi (coco_string_create_char (t->val)); .).
 END Twisterc.
 
