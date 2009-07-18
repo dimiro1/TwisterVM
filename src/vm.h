@@ -23,6 +23,7 @@ using std::cerr;
 
 #include <iomanip>
 using std::hex;
+using std::dec;
 
 #include <map>
 #include <stack>

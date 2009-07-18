@@ -10,12 +10,15 @@
 class Instruction {
 public:
   Instruction ();
-  Instruction (Opcode _opcode);
-  Instruction (Opcode _opcode, int _A);
-  Instruction (Opcode _opcode, int _A, int _B);
-  Instruction (Opcode _opcode, int _A, int _B, int _C);
+  Instruction (unsigned int _opcode);
+  Instruction (unsigned int _opcode, unsigned int _A);
+  Instruction (unsigned int _opcode, unsigned int _A, 
+					unsigned int _B);
 
-  Opcode opcode;
+  Instruction (unsigned int _opcode, unsigned int _A, 
+					unsigned int _B, unsigned int _C);
+
+  unsigned int opcode;
   unsigned int A : 12;
   unsigned int B : 12;
   unsigned int C : 12;

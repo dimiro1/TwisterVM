@@ -10,7 +10,7 @@ Instruction::Instruction ()
 	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode)
+Instruction::Instruction (unsigned int _opcode)
 {
    opcode = _opcode;
    A = NULL;
@@ -18,7 +18,7 @@ Instruction::Instruction (Opcode _opcode)
 	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode, int _A)
+Instruction::Instruction (unsigned int _opcode, unsigned int _A)
 {
    opcode = _opcode;
    A = _A;
@@ -26,7 +26,7 @@ Instruction::Instruction (Opcode _opcode, int _A)
 	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode, int _A, int _B)
+Instruction::Instruction (unsigned int _opcode, unsigned int _A, unsigned int _B)
 {
    opcode = _opcode;
    A = _A;
@@ -34,7 +34,8 @@ Instruction::Instruction (Opcode _opcode, int _A, int _B)
 	C = NULL;
 }
 
-Instruction::Instruction (Opcode _opcode, int _A, int _B, int _C)
+Instruction::Instruction (unsigned int _opcode, unsigned int _A, 
+								  unsigned int _B, unsigned int _C)
 {
    opcode = _opcode;
    A = _A;

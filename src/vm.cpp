@@ -1,7 +1,7 @@
 /*
- * vm.cpp
- * Copyright (c) 2009 Claudemiro Alves Feitosa Neto
- * Edited in emacs.
+ *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
+ *   <dimiro1@gmail.com>
+ *   Modified: <2009-07-18 12:51:27 BRT>
  */
 
 #include "vm.h"
@@ -25,93 +25,76 @@ VM::load (string progname)
 void 
 VM::list ()
 {
-  cout << " " << running_file_name 
-		 << " (" << current_context->code_len
+  Instruction current;
+
+  cout << " (" << current_context->code_len
 		 << " instructions, " 
 		 << sizeof (current_context->code_section) * current_context->code_len 
 		 << " bytes at " 
-		 << hex << current_context->code_section << ")" << endl;
-  /* genric */
-
-  /* IO */
-
-  /* registers */
-
-  for (int i = 0; i < current_context->code_len; ++i)
+		 << hex << current_context->code_section << ")" << dec << endl;
+  for (int i = 0; i < current_context->code_len; i++)
 	 {
-		cout << i << ": " << mneumonic[current_context->code_section[i].opcode] << " ";
-		switch (current_context->code_section[i].opcode)
+		current = current_context->code_section[i];
+		cout << " " << i << ": " << mneumonic[current.opcode] << " ";
+		switch (current.opcode)
 		  {
 		  case OP_STORE_S:
-			 cout << "\"" << current_context->get_string(current_context->code_section[i].A) << "\" $" << current_context->code_section[i].C;
+			 cout << "\"" << current_context->get_string(current.A) 
+					<< "\" $" << current.C;
 			 break;
 		  case OP_PUT_S: case OP_PRINT_S:
-			 cout << "$" << current_context->code_section[i].A;
+			 cout << "$" << current.A;
 			 break;
 		  case OP_STORE_N:
-			 cout  << current_context->num_table[current_context->code_section[i].A] << " $" << current_context->code_section[i].C;
+			 cout  << current_context->get_num (current.A) 
+					 << " $" << current.C;
 			 break;
 		  case OP_PUT_N: case OP_PRINT_N:
-			 cout << "$" << current_context->code_section[i].A;
+			 cout << "$" << current.A;
 			 break;
 		  case OP_CONCAT_S:
-			 cout  << "$" << current_context->code_section[i].A 
-					 << " $" << current_context->code_section[i].B 
-					 << " $" << current_context->code_section[i].C ;
+			 cout  << "$" << current.A 
+					 << " $" << current.B 
+					 << " $" << current.C ;
 			 break;
-		  case OP_MOV_N:
+		  case OP_MOV_N: case OP_MOV_S:
+			 cout  << "$" << current.A 
+					 << " $" << current.C ;
 			 break;
-		  case OP_MOV_S:
-			 break;
-		  case OP_INPUT_N:
-			 break;
-		  case OP_INPUT_S:
-			 break;
-		  case OP_NOP:
+		  case OP_INPUT_N: case OP_INPUT_S:
+			 cout  << "$" << current.C;
 			 break;
 		  case OP_GOTO:
+			 cout  << "$" << current.A;
 			 break;
-		  case OP_HALT:
-			 break;
-		  case OP_ADD_N:
-			 break;
-		  case OP_SUB_N:
-			 break;
-		  case OP_MULT_N:
-			 break;
-		  case OP_DIV_N:
-			 break;
+		  case OP_ADD_N:  case OP_SUB_N:
+		  case OP_MULT_N: case OP_DIV_N:
 		  case OP_MOD_N:
+			 cout  << "$" << current.A 
+					 << " $" << current.B 
+					 << " $" << current.C ;
 			 break;
 		  case OP_POW_N:
+			 cout  << "$" << current.A 
+					 << " $" << current.C ;
 			 break;
 		  case OP_NEG_N:
+			 cout  << "$" << current.C;
 			 break;
-		  case OP_ABS_N:
-			 break;
-		  case OP_SIN_N:
-			 break;
-		  case OP_COS_N:
-			 break;
-		  case OP_TAN_N:
-			 break;
-		  case OP_ASIN_N:
-			 break;
-		  case OP_ACOS_N:
-			 break;
-		  case OP_ATAN_N:
-			 break;
-		  case OP_LOG_N:
-			 break;
-		  case OP_SQRT_N:
-			 break;
-		  case OP_CEIL_N:
-			 break;
+		  case OP_ABS_N:  case OP_SIN_N:
+		  case OP_COS_N:  case OP_TAN_N:
+		  case OP_ASIN_N: case OP_ACOS_N:
+		  case OP_ATAN_N: case OP_LOG_N:
+		  case OP_SQRT_N: case OP_CEIL_N: 
 		  case OP_FLOOR_N:
+			 cout  << "$" << current.A 
+					 << " $" << current.C ;
 			 break;
 		  case OP_INC_N:
+			 cout  << "$" << current.C;
 			 break;
 		  case OP_DEC_N:
+			 cout  << "$" << current.C;
 			 break;
 		  }
 		cout << endl;
@@ -121,9 +104,8 @@ VM::list ()
 int 
 VM::execute ()
 {
-  string ins;
-  double ind;
-  int right; /* its is used in sub or div operations */
+  string input_s;
+  double input_d;
   Instruction executing;
   while (true)
 	 {
@@ -133,85 +115,85 @@ VM::execute ()
 			 /* aritmetica opcodes numeros */
 		  case OP_ADD_N:
 			 RN(executing.C,
-				 current_context->num_table[executing.A] +
-				 current_context->num_table[executing.B]);
+				 current_context->get_num (executing.A) +
+				 current_context->get_num (executing.B));
 			 current_context->pc++;
 			 break;
 		  case OP_SUB_N:
 			 RN(executing.C,
-				 current_context->num_table[executing.A] -
-				 current_context->num_table[executing.B]);
+				 current_context->get_num (executing.A) -
+				 current_context->get_num (executing.B));
 			 current_context->pc++;
 			 break;
 		  case OP_MULT_N:
 			 RN(executing.C,
-				 current_context->num_table[executing.A] *
-				 current_context->num_table[executing.B]);
+				 current_context->get_num (executing.A) *
+				 current_context->get_num (executing.B));
 			 current_context->pc++;
 			 break;
 		  case OP_DIV_N:
 			 RN(executing.C,
-				 current_context->num_table[executing.A] /
-				 current_context->num_table[executing.B]);
+				 current_context->get_num (executing.A) /
+				 current_context->get_num (executing.B));
 			 current_context->pc++;
 			 break;
 		  case OP_MOD_N:
 			 RN(executing.C,
-				 static_cast<int>(current_context->num_table[executing.A]) %
-				 static_cast<int>(current_context->num_table[executing.B]));
+				 static_cast<int>(current_context->get_num (executing.A)) %
+				 static_cast<int>(current_context->get_num (executing.B)));
 			 current_context->pc++;
 			 break;
 		  case OP_POW_N:
-			 RN(executing.C, pow (current_context->num_table[executing.A],
-											 current_context->num_table[executing.B]));
+			 RN(executing.C, pow (current_context->get_num (executing.A),
+										 current_context->get_num (executing.B)));
 			 current_context->pc++;
 			 break;
 		  case OP_NEG_N:			  /* TODO: melhorar esse neg */
-			 RN(executing.A, -current_context->num_table[executing.A]);
+			 RN(executing.A, -current_context->get_num (executing.A));
 			 current_context->pc++;
 			 break;
 		  case OP_ABS_N:
-			 RN(executing.A, fabs (current_context->num_table[executing.A]));
+			 RN(executing.A, fabs (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_SIN_N:
-			 RN(executing.C, sin (current_context->num_table[executing.A]));
+			 RN(executing.C, sin (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_COS_N:
-			 RN(executing.C, cos (current_context->num_table[executing.A]));
+			 RN(executing.C, cos (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_TAN_N:
-			 RN(executing.C, tan (current_context->num_table[executing.A]));
+			 RN(executing.C, tan (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_ASIN_N:
-			 RN(executing.C, asin (current_context->num_table[executing.A]));
+			 RN(executing.C, asin (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_ACOS_N:
-			 RN(executing.C, acos (current_context->num_table[executing.A]));
+			 RN(executing.C, acos (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_ATAN_N:
-			 RN(executing.C, atan (current_context->num_table[executing.A]));
+			 RN(executing.C, atan (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_LOG_N:
-			 RN(executing.C, log (current_context->num_table[executing.A]));
+			 RN(executing.C, log (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_SQRT_N:
-			 RN(executing.C, sqrt (current_context->num_table[executing.A]));
+			 RN(executing.C, sqrt (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_CEIL_N:
-			 RN(executing.C, ceil (current_context->num_table[executing.A]));
+			 RN(executing.C, ceil (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_FLOOR_N:
-			 RN(executing.C, floor (current_context->num_table[executing.A]));
+			 RN(executing.C, floor (current_context->get_num (executing.A)));
 			 current_context->pc++;
 			 break;
 		  case OP_INC_N:
@@ -304,19 +286,19 @@ VM::execute ()
 			 break;
 		  case OP_INPUT_S:
 			 cin >> ins;
-			 RS(executing.C, ins);
+			 RS(executing.C, input_s);
 			 current_context->pc++;
 			 break;
 		  case OP_INPUT_N:
 			 cin >> ind;
-			 RN(executing.C, ind);
+			 RN(executing.C, input_d);
 			 current_context->pc++;
 			 break;
 			 /* end IO */
 
 			 /* REgisters manipulation */
 		  case OP_MOV_N:
-			 RN(executing.B, current_context->num_table[executing.A]);
+			 RN(executing.B, current_context->get_num (executing.A));
 			 current_context->pc++;
 			 break;
 		  case OP_MOV_S:
@@ -330,7 +312,7 @@ VM::execute ()
 			 break;
 		  case OP_STORE_N:
 			 RN(executing.C, 
-				 current_context->num_table[executing.A]);
+				 current_context->get_num (executing.A));
 			 current_context->pc++;
 			 break;
 			 /* fim Registers manipulation */

@@ -36,7 +36,7 @@ enum Opcode
   OP_TAN_N,							  /* tan_n   A - C */
 
   /* genric */
-  OP_GOTO,							  /* goto    - - C */
+  OP_GOTO,							  /* goto    A - - */
   OP_HALT,							  /* halt    - - - */
   OP_NOP,							  /* nop     - - - */
 
@@ -71,7 +71,7 @@ enum Opcode
   OP_PUSH,
   OP_PUTS,
   OP_RESET,
-  OP_SUB,
+  OP_SUB
 };
 
 static const char *
@@ -89,8 +89,8 @@ mneumonic[] = {
   "inc_n",
   "log_n",
   "mod_n",
+  "mult_n",
   "neg_n",
-  "nult_n",
   "pow_n",
   "sin_n",
   "sqrt_n",
@@ -99,7 +99,7 @@ mneumonic[] = {
 
   "goto",
   "halt",
-  "nop"
+  "nop",
 
   "input_n",
   "input_s",
@@ -126,7 +126,7 @@ mneumonic[] = {
   "push",
   "puts",
   "reset",
-  "sub",
+  "sub"
 };
 
 #endif

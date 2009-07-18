@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 09:10:34 BRT>
+ *   Modified: <2009-07-18 11:27:15 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -10,6 +10,8 @@
 #include "instruction.h"
 #include <cstring>
 #include <cstdlib>
+
+#define EOS '\0'
 
 #include <iostream>
 using std::cout;
@@ -55,13 +57,18 @@ public:
   {
 	 int len = strlen(string);
 	 strcpy ((string_table + current_string_pos), string);
-	 string_table[current_string_pos + len] = '\0';
+	 string_table[current_string_pos + len] = EOS;
 	 current_string_pos = len + 1;
   }
 
-  char * get_string (int n)
+  inline char * get_string (int n)
   {
 	 return string_table + n;
+  }
+
+  inline double get_num (int n)
+  {
+	 return num_table[n];
   }
 
   void load_file (string file_name) 
