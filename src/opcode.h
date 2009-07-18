@@ -9,7 +9,10 @@
 
 /* obs: Em Store o operando A é um ponteiro para um numero
         ou um ponteiro para uma string nas tabelas de strings
-		  e numeros.*/
+		  e numeros.
+		  
+		  Em charat_s B é um inteiro.
+*/
 
 enum Opcode
 {
@@ -56,6 +59,7 @@ enum Opcode
 
   /* string */
   OP_CONCAT_S,						  /* concat_s A B C */
+  OP_CHARAT_S,						  /* charat_s A B C */
 
   /* deprecated */
   /* não usem esses opcodes */
@@ -114,6 +118,7 @@ mneumonic[] = {
   "store_s",
 
   "concat_s",
+  "charat_s",
   /* deprecated */
   "add",
   "clsp",							  /* limpa a pilha */

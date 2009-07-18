@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 12:51:27 BRT>
+ *   Modified: <2009-07-18 14:15:08 BRT>
  */
 
 #include "vm.h"
@@ -11,12 +11,10 @@ VM::~VM ()
   reset ();
 }
 
-
 /* load code_section into memory */
 void
 VM::load (string progname)
 {
-  running_file_name = progname;
   current_context = new ExecContext ();
   current_context->load_file (progname);
 }
@@ -96,6 +94,11 @@ VM::list ()
 		  case OP_DEC_N:
 			 cout  << "$" << current.C;
 			 break;
+		  case OP_CHARAT_S:
+			 cout << current_context->get_string (current.A)
+					<< " " << current.B << " $" << current.C;
+			 break;
+
 		  }
 		cout << endl;
 	 }
@@ -104,6 +107,9 @@ VM::list ()
 int 
 VM::execute ()
 {
+  string s_aux1;
+  string s_aux2;
+  char *ch_aux1;
   string input_s;
   double input_d;
   Instruction executing;
@@ -132,9 +138,16 @@ VM::execute ()
 			 current_context->pc++;
 			 break;
 		  case OP_DIV_N:
+			 /* Colocar como exception */
+			 if (current_context->get_num (executing.B) == 0)
+				{
+				  error_emitter.emit (ZERO_DIVISION);
+				  abort ();
+				}
 			 RN(executing.C,
 				 current_context->get_num (executing.A) /
 				 current_context->get_num (executing.B));
+
 			 current_context->pc++;
 			 break;
 		  case OP_MOD_N:
@@ -285,12 +298,12 @@ VM::execute ()
 			 current_context->pc++;
 			 break;
 		  case OP_INPUT_S:
-			 cin >> ins;
+			 cin >> input_s;
 			 RS(executing.C, input_s);
 			 current_context->pc++;
 			 break;
 		  case OP_INPUT_N:
-			 cin >> ind;
+			 cin >> input_d;
 			 RN(executing.C, input_d);
 			 current_context->pc++;
 			 break;
@@ -319,9 +332,28 @@ VM::execute ()
 
 			 /* string */
 		  case OP_CONCAT_S:
-			 string s1 = RS(executing.A);
-			 string s2 = RS(executing.B);
-			 RS(executing.C, s1 + s2);
+			 s_aux1 = RS(executing.A);
+			 s_aux2 = RS(executing.B);
+			 RS(executing.C, s_aux1 + s_aux2);
+			 current_context->pc++;
+			 break;
+			 /* store_s "hello" $1 */
+			 /* charat_s $1 1 $0 */
+		  case OP_CHARAT_S:
+			 s_aux1 = RS(executing.A);
+			 ch_aux1 = new char[2];
+
+			 try
+			 	{
+				  sprintf (ch_aux1, "%c", s_aux1.at(executing.B));
+			 	}
+			 catch (out_of_range e)
+			 	{
+				  error_emitter.emit (OUT_OF_RANGE);
+			 	  current_context->pc++;
+			 	}
+
+			 RS(executing.C, string (ch_aux1));
 			 current_context->pc++;
 			 break;
 			 /* fim string */

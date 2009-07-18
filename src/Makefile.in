@@ -45,7 +45,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_twister_OBJECTS = vm.$(OBJEXT) Twister.$(OBJEXT) \
-	instruction.$(OBJEXT) ExecContext.$(OBJEXT)
+	instruction.$(OBJEXT) ExecContext.$(OBJEXT) Error.$(OBJEXT)
 twister_OBJECTS = $(am_twister_OBJECTS)
 twister_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@
@@ -155,7 +155,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-twister_SOURCES = vm.cpp Twister.cpp instruction.cpp ExecContext.cpp
+twister_SOURCES = vm.cpp Twister.cpp instruction.cpp ExecContext.cpp Error.cpp
 noinst_HEADERS = vm.h instruction.h opcode.h NotRecognizedFileException.h BadFileException.h
 SUBDIRS = assembler
 all: all-recursive
@@ -224,6 +224,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Error.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ExecContext.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Twister.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/instruction.Po@am__quote@
