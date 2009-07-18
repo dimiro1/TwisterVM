@@ -1,5 +1,5 @@
 bin_PROGRAMS = twister
-twister_SOURCES = vm.cpp Twister.cpp instruction.cpp ExecContext.cpp Error.cpp
-noinst_HEADERS = vm.h instruction.h opcode.h NotRecognizedFileException.h BadFileException.h
+twister_SOURCES = vm.cpp Twister.cpp instruction.cpp exec_context.cpp error.cpp
+noinst_HEADERS = vm.h instruction.h opcode.h not_recognized_file_exception.h bad_file_exception.h
 
 SUBDIRS = assembler

@@ -6,10 +6,10 @@
 #ifndef VM_H
 #define VM_H
 
-#include "ExecContext.h"
+#include "exec_context.h"
 #include "opcode.h"
 #include "instruction.h"
-#include "Error.h"
+#include "error.h"
 
 #include <cstdio>
 #include <iostream>

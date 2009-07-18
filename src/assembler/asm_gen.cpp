@@ -1,10 +1,10 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-14 15:06:06 BRT>
+ *   Modified: <2009-07-18 20:37:04 BRT>
  */
 
-#include "AsmGen.h"
+#include "asm_gen.h"
 
 AsmGen::AsmGen (string _output_file_name) 
   : output_file_name (_output_file_name), 

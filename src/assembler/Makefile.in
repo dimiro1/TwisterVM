@@ -44,7 +44,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_twisterc_OBJECTS = AsmGen.$(OBJEXT) Parser.$(OBJEXT) \
+am_twisterc_OBJECTS = asm_gen.$(OBJEXT) Parser.$(OBJEXT) \
 	Scanner.$(OBJEXT) Twisterc.$(OBJEXT) instruction.$(OBJEXT)
 twisterc_OBJECTS = $(am_twisterc_OBJECTS)
 twisterc_LDADD = $(LDADD)
@@ -145,8 +145,8 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-twisterc_SOURCES = AsmGen.cpp Parser.cpp Scanner.cpp Twisterc.cpp $(top_srcdir)/src/instruction.cpp
-noinst_HEADERS = AsmGen.h Scanner.h Parser.h
+twisterc_SOURCES = asm_gen.cpp Parser.cpp Scanner.cpp Twisterc.cpp $(top_srcdir)/src/instruction.cpp
+noinst_HEADERS = asm_gen.h Scanner.h Parser.h
 INCLUDES = -I$(top_srcdir)/src
 twisterc_atg = Twisterc.atg
 frames_dir = /usr/share/coco-cpp
@@ -221,10 +221,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AsmGen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Parser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scanner.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Twisterc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asm_gen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/instruction.Po@am__quote@
 
 .cpp.o:

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 16:38:30 BRT>
+ *   Modified: <2009-07-18 20:39:45 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -16,8 +16,8 @@ using std::ifstream;
 #include <new>
 using std::bad_alloc;
 
-#include "NotRecognizedFileException.h"
-#include "BadFileException.h"
+#include "not_recognized_file_exception.h"
+#include "bad_file_exception.h"
 
 /* mantem informações que estão sendo executadas */
 class ExecContext {

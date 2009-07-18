@@ -1,10 +1,10 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 14:06:56 BRT>
+ *   Modified: <2009-07-18 20:38:34 BRT>
  */
 
-#include "Error.h"
+#include "error.h"
 
 void Error::emit (ERRORS err)
 {

@@ -3,7 +3,7 @@
 #if !defined(COCO_PARSER_H__)
 #define COCO_PARSER_H__
 
-#include "AsmGen.h"
+#include "asm_gen.h"
 #include <ctype.h>
 #include <iostream>
 using namespace std;

@@ -1,6 +1,6 @@
 bin_PROGRAMS = twisterc
-twisterc_SOURCES = AsmGen.cpp Parser.cpp Scanner.cpp Twisterc.cpp $(top_srcdir)/src/instruction.cpp
-noinst_HEADERS = AsmGen.h Scanner.h Parser.h
+twisterc_SOURCES = asm_gen.cpp Parser.cpp Scanner.cpp Twisterc.cpp $(top_srcdir)/src/instruction.cpp
+noinst_HEADERS = asm_gen.h Scanner.h Parser.h
 
 INCLUDES = -I$(top_srcdir)/src
 
