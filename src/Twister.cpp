@@ -79,13 +79,18 @@ main (int argc, char **argv)
 	 }
   else
 	 {
-		try {
-		  vm.load (argv[0]);
-		} catch (NotRecognizedFileException e) {
-		  cout << e.what () << endl;
-		} catch (BadFileException e) {
-		  cout << e.what () << endl;
-		}
+		try
+		  {
+			 vm.load (string (argv[0]));
+		  } 
+		catch (NotRecognizedFileException e)
+		  {
+			 cout << e.what () << endl;
+		  } 
+		catch (BadFileException e) 
+		  {
+			 cout << e.what () << endl;
+		  }
 
 		if (lflag)
 		  vm.list ();

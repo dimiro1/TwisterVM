@@ -16,9 +16,9 @@ public:
   Instruction (Opcode _opcode, int _A, int _B, int _C);
 
   Opcode opcode;
-  unsigned int A;
-  unsigned int B;
-  unsigned int C;
+  unsigned int A : 12;
+  unsigned int B : 12;
+  unsigned int C : 12;
 };
 
 /* TODO: esta classe deixará de esistir */

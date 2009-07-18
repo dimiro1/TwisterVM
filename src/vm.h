@@ -10,10 +10,6 @@
 #include "opcode.h"
 #include "instruction.h"
 
-/* Exceptions */
-#include "NotRecognizedFileException.h"
-#include "BadFileException.h"
-
 #include <cstdio>
 #include <iostream>
 
@@ -28,9 +24,6 @@ using std::cerr;
 #include <iomanip>
 using std::hex;
 
-#include <fstream>
-using std::ifstream;
-
 #include <map>
 #include <stack>
 
@@ -42,8 +35,7 @@ public:
 
   ~VM ();
 
-  int load (char *progname) 
-	 throw (BadFileException, NotRecognizedFileException);
+  void load (string progname);
 
   int execute ();
   void list ();
@@ -59,7 +51,7 @@ private:
   ExecContext *current_context;  /* programa sendo executado */
 
   /* TODO: remover isso */
-  const char *running_file_name; /* arquivo sendo executado. */
+  string running_file_name; /* arquivo sendo executado. */
 
   void reset ();
   void reset_sp ();

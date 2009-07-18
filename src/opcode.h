@@ -1,112 +1,132 @@
 #ifndef _OPCODE_H_
 #define _OPCODE_H_
-#include <cstdlib>
+/* #include <cstdlib> */
+
+/* operandos */
+/* A -> operando principal - 12 bits unsigned int */
+/* B -> operando auxiliar - 12 bits unsigned int */
+/* C -> sempre operando de destino - 12 bits unsigned int */
+
+/* obs: Em Store o operando A é um ponteiro para um numero
+        ou um ponteiro para uma string nas tabelas de strings
+		  e numeros.*/
 
 enum Opcode
 {
   /* math */
-  OP_ADD_N,
-  OP_SUB_N,
-  OP_MULT_N,
-  OP_DIV_N,
-  OP_MOD_N,
-  OP_POW_N,
-  OP_NEG_N,
-  OP_ABS_N,
-  OP_SIN_N,
-  OP_COS_N,
-  OP_TAN_N,
-  OP_ASIN_N,
-  OP_ACOS_N,
-  OP_ATAN_N,
-  OP_LOG_N,
-  OP_SQRT_N,
-  OP_CEIL_N,
-  OP_FLOOR_N,
+  OP_ABS_N, 						  /* abs_n   A - C */
+  OP_ACOS_N,						  /* acos_n  A - C */
+  OP_ADD_N,							  /* add_n   A B C */
+  OP_ASIN_N,						  /* asin_n  A - C */
+  OP_ATAN_N,						  /* atan_n  A - C */
+  OP_CEIL_N,						  /* ceil_n  A - C */
+  OP_COS_N,							  /* cos_n   A - C */
+  OP_DEC_N,							  /* dec_n   - - C */
+  OP_DIV_N,							  /* div_n   A B C */
+  OP_FLOOR_N,						  /* floor_n A - C */
+  OP_INC_N,							  /* inc_n   - - C */
+  OP_LOG_N,							  /* log_n   A - C */
+  OP_MOD_N,							  /* mod_n   A B C */
+  OP_MULT_N,						  /* mult_n  A B C */
+  OP_NEG_N,							  /* neg_n   - - C */
+  OP_POW_N,							  /* pow_n   A - C */
+  OP_SIN_N,							  /* sin_n   A - C */
+  OP_SQRT_N,						  /* sqrt_n  A - C */
+  OP_SUB_N,							  /* sub_n   A B C */
+  OP_TAN_N,							  /* tan_n   A - C */
 
   /* genric */
-  OP_NOP,				// no operation
-  OP_GOTO,
-  OP_HALT,
+  OP_GOTO,							  /* goto    - - C */
+  OP_HALT,							  /* halt    - - - */
+  OP_NOP,							  /* nop     - - - */
 
   /* IO */
-  OP_PRINT_S,
-  OP_PRINT_N,
-  OP_PUT_S,
-  OP_PUT_N,
-  OP_INPUT_S,
-  OP_INPUT_N,
+  OP_INPUT_N,						  /* input_n - - C */
+  OP_INPUT_S,						  /* input_s - - C */
+  OP_PRINT_N,						  /* print_n A - - */
+  OP_PRINT_S,						  /* print_s A - - */
+  OP_PUT_N,							  /* put_n   A - - */
+  OP_PUT_S,							  /* put_s   A - - */
 
   /* registers */
-  OP_MOV_N,
-  OP_MOV_S,
-  OP_STORE_N,
-  OP_STORE_S,
+  OP_MOV_N,							  /* mov_n   A - C */
+  OP_MOV_S,							  /* mov_s   A - C */
+  OP_STORE_N,						  /* store_n A - C */
+  OP_STORE_S,						  /* store_s A - C */
 
   /* string */
-  OP_CONCAT_S,
+  OP_CONCAT_S,						  /* concat_s A B C */
 
   /* deprecated */
+  /* não usem esses opcodes */
+  /* estão presentes apenas para que o projeto compile. */
+  OP_ADD,
   OP_CLSP,							  /* limpa a pilha */
-  OP_DIV,
   OP_DCARD,						  /* Discarta o topo da pilha */
+  OP_DIV,
   OP_GETOP,			// for puts and print
   OP_MULT,
   OP_POP,
+  OP_PRINT,
   OP_PUSH,
   OP_PUTS,
   OP_RESET,
   OP_SUB,
-  OP_PRINT,
-  OP_ADD,
 };
 
-static const char *mneumonic[] = {
-  "add_n",
-  "sub_n",
-  "nult_n",
-  "div_n",
-  "mod_n",
-  "pow_n",
-  "neg_n",
+static const char *
+mneumonic[] = {
   "abs_n",
-  "sin_n",
-  "cos_n",
-  "tan_n",
-  "asin_n",
   "acos_n",
+  "add_n",
+  "asin_n",
   "atan_n",
-  "log_n",
-  "sqrt_n",
   "ceil_n",
+  "cos_n",
+  "dec_n",
+  "div_n",
   "floor_n",
-  "nop"
+  "inc_n",
+  "log_n",
+  "mod_n",
+  "neg_n",
+  "nult_n",
+  "pow_n",
+  "sin_n",
+  "sqrt_n",
+  "sub_n",
+  "tan_n",
+
   "goto",
   "halt",
-  "print_s",
-  "print_n",
-  "put_s",
-  "put_n",
-  "input_s",
+  "nop"
+
   "input_n",
+  "input_s",
+  "print_n",
+  "print_s",
+  "put_n",
+  "put_s",
+
   "mov_n",
   "mov_s",
   "store_n",
   "store_s",
+
   "concat_s",
   /* deprecated */
+  "add",
   "clsp",							  /* limpa a pilha */
-  "div",
   "dcard",						  /* discarta o topo da pilha */
+  "div",
   "getop",			// for puts and print
   "mult",
   "pop",
+  "print",
   "push",
   "puts",
   "reset",
   "sub",
-  "print",
-  "add",
 };
 
 #endif

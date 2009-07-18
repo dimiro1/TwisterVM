@@ -13,39 +13,12 @@ VM::~VM ()
 
 
 /* load code_section into memory */
-int 
-VM::load (char *progname) throw (BadFileException, NotRecognizedFileException)
+void
+VM::load (string progname)
 {
   running_file_name = progname;
   current_context = new ExecContext ();
-  ifstream infile (running_file_name, ios::binary);
-  
-  if (!infile) 
-	 throw BadFileException (progname);
-
-  /* tenta pegar o numero mágico */
-  infile.read (reinterpret_cast<char *>(&current_context->magic), sizeof (unsigned int));
-  if (current_context->magic != MAGIC_VERSION_NUM)
-	 throw NotRecognizedFileException (progname);
-
-  /* ler tabelas estaticas */
-  /* strings */
-  infile.read ( reinterpret_cast<char *>(&current_context->string_table_len), sizeof (unsigned int));
-  /* TODO: testar se ocorreu alocação correta */
-  current_context->string_table = new char[current_context->string_table_len];
-  infile.read ( reinterpret_cast<char *>(current_context->string_table), current_context->string_table_len * sizeof (char));
-  /* numeros */
-  infile.read ( reinterpret_cast<char *>(&current_context->num_table_len), sizeof (unsigned int));
-  /* TODO: testar se ocorreu alocação correta */
-  current_context->num_table = new double[current_context->num_table_len];
-  infile.read ( reinterpret_cast<char *>(current_context->num_table), current_context->num_table_len * sizeof (double));
-
-  /* ler codigo */
-  infile.read (reinterpret_cast<char *>(&current_context->code_len), sizeof (int));
-  /* TODO: testar se ocorreu alocação correta */
-  current_context->code_section = new Instruction[current_context->code_len];
-  infile.read (reinterpret_cast<char *>(current_context->code_section), current_context->code_len * sizeof (Instruction));
-  return 0;
+  current_context->load_file (progname);
 }
 
 
@@ -135,6 +108,10 @@ VM::list ()
 		  case OP_CEIL_N:
 			 break;
 		  case OP_FLOOR_N:
+			 break;
+		  case OP_INC_N:
+			 break;
+		  case OP_DEC_N:
 			 break;
 		  }
 		cout << endl;
@@ -237,6 +214,15 @@ VM::execute ()
 			 RN(executing.C, floor (current_context->num_table[executing.A]));
 			 current_context->pc++;
 			 break;
+		  case OP_INC_N:
+			 RN(executing.A, RN(executing.A) + 1);
+			 current_context->pc++;
+			 break;
+		  case OP_DEC_N:
+			 RN(executing.A, RN(executing.A) - 1);
+			 current_context->pc++;
+			 break;
+
 			 /* fim opcodes aritmetica numeros */
 
 			 /* deprecated opcodes */

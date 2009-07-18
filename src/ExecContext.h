@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-17 14:45:24 BRT>
+ *   Modified: <2009-07-18 09:10:34 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -9,7 +9,24 @@
 
 #include "instruction.h"
 #include <cstring>
+#include <cstdlib>
 
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+using std::ios;
+using std::cerr;
+
+#include <fstream>
+using std::ifstream;
+
+/* Exceptions */
+#include <new>
+using std::bad_alloc;
+
+#include "NotRecognizedFileException.h"
+#include "BadFileException.h"
 
 /* mantem informações que estão sendo executadas */
 class ExecContext {
@@ -47,6 +64,8 @@ public:
 	 return string_table + n;
   }
 
+  void load_file (string file_name) 
+	 throw (BadFileException, NotRecognizedFileException, bad_alloc);
 };
 
 #endif /* _EXEC_CONTEXT_H_ */
