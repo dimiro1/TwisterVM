@@ -1,11 +1,11 @@
 #ifndef _INSTRUCTION_H_
 #define _INSTRUCTION_H_
 
+#include "global.h"
 #include <iostream>
 
 #include "opcode.h"
 #include <cstring>
-#define MAGIC_VERSION_NUM 0x01 // version 0.1
 
 class Instruction {
 public:

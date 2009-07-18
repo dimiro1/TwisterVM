@@ -1,25 +1,14 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 11:27:15 BRT>
+ *   Modified: <2009-07-18 16:38:30 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
 #define _EXEC_CONTEXT_H_
 
+#include "global.h"
 #include "instruction.h"
-#include <cstring>
-#include <cstdlib>
-
-#define EOS '\0'
-
-#include <iostream>
-using std::cout;
-using std::cin;
-using std::endl;
-using std::ios;
-using std::cerr;
-
 #include <fstream>
 using std::ifstream;
 
@@ -35,22 +24,21 @@ class ExecContext {
 public:
   ExecContext () : current_string_pos (0), pc (0) {}
 
-  /* TODO: mudar para char */
-  unsigned int magic;
+  unsigned char magic;
+  unsigned char has_string_table;
+  unsigned char has_num_table;
+  /* tables */
+  unsigned short string_table_len;
+  char *string_table;
+  unsigned short num_table_len;
+  double *num_table;
 
   /* code */
-  unsigned int code_len;
+  unsigned short code_len;
   Instruction *code_section;
 
   int pc;							  /* program counter */
-
-  /* tables */
-  unsigned int string_table_len;
-  char *string_table;
-  unsigned int num_table_len;
-  double *num_table;
-
-  unsigned int current_string_pos;
+  unsigned short current_string_pos;
 
   /* necessario apenas no assembler */
   void add_string (const char *string)
@@ -61,12 +49,12 @@ public:
 	 current_string_pos = len + 1;
   }
 
-  inline char * get_string (int n)
+  inline char * get_string (short n)
   {
 	 return string_table + n;
   }
 
-  inline double get_num (int n)
+  inline double get_num (short n)
   {
 	 return num_table[n];
   }
