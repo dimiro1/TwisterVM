@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-19 07:49:45 BRT>
+ *   Modified: <2009-07-19 08:17:55 BRT>
  */
 
 #include "vm.h"
@@ -43,13 +43,12 @@ VM::list ()
 {
   Instruction current;
 
-  cout << " Compiled with " << current_context->magic << endl
-		 << " (" << current_context->code_len
+  cout << " (" << current_context->header.code_len
 		 << " instructions, " 
-		 << sizeof (current_context->code_section) * current_context->code_len 
+		 << sizeof (current_context->code_section) * current_context->header.code_len 
 		 << " bytes at " 
 		 << hex << current_context->code_section << ")" << dec << endl;
-  for (int i = 0; i < current_context->code_len; i++)
+  for (int i = 0; i < current_context->header.code_len; i++)
 	 {
 		current = current_context->code_section[i];
 		cout << " " << i << ": " << mneumonic[current.opcode] << " ";

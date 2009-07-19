@@ -4,22 +4,27 @@
 #include <string>
 using std::string;
 
+#include <sstream>
+using std::ostringstream;
+
+
 class NotRecognizedFileException {
 public:
   NotRecognizedFileException (string file_name)
   {
-  	 msg = "Not recognized file.";
+	 ostringstream temp;
+	 temp << "\"" << file_name << "\"" << " is not a valid file!";
+	 msg = temp.str ();
   }
 
   NotRecognizedFileException (char *file_name)
   {
-  	 msg = "Not recognized file.";
+	 ostringstream temp;
+	 temp << "\"" << file_name << "\"" << " is not a valid file!";
+	 msg = temp.str ();
   }
   
-  string what ()
-  {
-	 return msg;
-  }
+  inline string what () { return msg; }
 
 private:
   string msg;

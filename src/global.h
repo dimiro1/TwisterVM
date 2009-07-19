@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 21:54:29 BRT>
+ *   Modified: <2009-07-19 08:07:48 BRT>
  */
 
 #ifndef _GLOBAL_H_
@@ -20,6 +20,10 @@ using std::cin;
 using std::endl;
 using std::ios;
 using std::cerr;
+
+#include <iomanip>
+using std::hex;
+using std::dec;
 
 #include <string>
 using std::string;

@@ -4,22 +4,26 @@
 #include <string>
 using std::string;
 
+#include <sstream>
+using std::ostringstream;
+
 class BadFileException {
 public:
   BadFileException (string file_name)
   {
-	 msg = "Can't open file.";
+	 ostringstream temp;
+	 temp << "\"" << file_name << "\"" << " could not be open!";
+	 msg = temp.str ();
   }
 
   BadFileException (char *file_name)
   {
-	 msg = "Can't open file.";
+	 ostringstream temp;
+	 temp << "\"" << file_name << "\"" << " could not be open!";
+	 msg = temp.str ();
   }
   
-  string what ()
-  {
-	 return msg;
-  }
+  inline string what () { return msg; }
 
 private:
   string msg;

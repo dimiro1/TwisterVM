@@ -23,10 +23,6 @@ using std::endl;
 using std::ios;
 using std::cerr;
 
-#include <iomanip>
-using std::hex;
-using std::dec;
-
 #include <string>
 #include <stdexcept>
 /* exception */
