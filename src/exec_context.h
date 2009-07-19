@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 20:39:45 BRT>
+ *   Modified: <2009-07-18 21:37:36 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -12,17 +12,11 @@
 #include <fstream>
 using std::ifstream;
 
-/* Exceptions */
-#include <new>
-using std::bad_alloc;
-
-#include "not_recognized_file_exception.h"
-#include "bad_file_exception.h"
-
 /* mantem informações que estão sendo executadas */
 class ExecContext {
 public:
   ExecContext () : current_string_pos (0), pc (0) {}
+  ~ExecContext ();
 
   unsigned char magic;
   unsigned char has_string_table;

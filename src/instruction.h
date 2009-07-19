@@ -18,7 +18,7 @@ public:
   Instruction (unsigned int _opcode, unsigned int _A, 
 					unsigned int _B, unsigned int _C);
 
-  unsigned int opcode;
+  unsigned int opcode : 8;
   unsigned int A : 12;
   unsigned int B : 12;
   unsigned int C : 12;

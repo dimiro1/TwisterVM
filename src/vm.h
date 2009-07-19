@@ -6,6 +6,7 @@
 #ifndef VM_H
 #define VM_H
 
+#include "global.h"
 #include "exec_context.h"
 #include "opcode.h"
 #include "instruction.h"
@@ -39,9 +40,7 @@ using std::out_of_range;
 
 class VM {
 public:
-
   ~VM ();
-
   void load (string progname);
 
   int execute ();

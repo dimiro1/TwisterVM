@@ -1,14 +1,14 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 14:15:08 BRT>
+ *   Modified: <2009-07-18 21:39:25 BRT>
  */
 
 #include "vm.h"
 
 VM::~VM ()
 {
-  reset ();
+  delete current_context;
 }
 
 /* load code_section into memory */
@@ -16,7 +16,25 @@ void
 VM::load (string progname)
 {
   current_context = new ExecContext ();
-  current_context->load_file (progname);
+  try
+	 {
+		current_context->load_file (progname);
+	 }
+  catch (BadFileException e)
+	 {
+		cerr << e.what () << endl;
+		abort ();
+	 }
+  catch (NotRecognizedFileException e)
+	 {
+		cerr << e.what () << endl;
+		abort ();
+	 }
+  catch (bad_alloc e)
+	 {
+		cerr << e.what () << endl;
+		abort ();
+	 }
 }
 
 

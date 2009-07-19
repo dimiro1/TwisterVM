@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 16:07:17 BRT>
+ *   Modified: <2009-07-18 21:37:45 BRT>
  */
 
 #ifndef _GLOBAL_H_
@@ -22,6 +22,13 @@ using std::string;
 
 #include <cstring>
 #include <cstdlib>
+
+/* Exceptions */
+#include <new>
+using std::bad_alloc;
+
+#include "not_recognized_file_exception.h"
+#include "bad_file_exception.h"
 
 
 #endif /* _GLOBAL_H_ */

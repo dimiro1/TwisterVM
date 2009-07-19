@@ -1,10 +1,17 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 20:38:27 BRT>
+ *   Modified: <2009-07-18 21:35:58 BRT>
  */
 
 #include "exec_context.h"
+
+ExecContext::~ExecContext ()
+{
+  delete string_table;
+  delete num_table;
+  delete code_section;
+}
 
 /* ARQUIVO */
 /* 
@@ -19,7 +26,7 @@
 	| num_table_len    |         16           |   2    |
 	| num_table        | num_table_len * 64   |        |
 	| code_len         |         16           |   2    |
-	| code             |    code_len * 96     |        |
+	| code             |    code_len * 44     |        |
 	----------------------------------------------------
  */
 void ExecContext::load_file (string file_name)

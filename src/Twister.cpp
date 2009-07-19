@@ -1,43 +1,45 @@
+#include <iostream>
+using std::cout;
+using std::cerr;
+
+#include <string>
+using std::string;
+
 #include <cstdio>
 #include <cstdlib>
 #include <getopt.h>
 #include "vm.h"
 
-static char *execname; // executable name
+class TwisterMain {
+public:
+  TwisterMain (string _stream_name);
+  void main (int argc, char **argv);
+  void show_copyright ();
+  void show_usage ();
 
-inline void
-showCopyright ()
+private:
+  VM vm;
+  string stream_name;
+  /* execute, list, help and copyright flags */
+  bool eflag;
+  bool lflag;
+  bool hflag;
+  bool cflag;
+};
+
+TwisterMain::TwisterMain (string _stream_name)
 {
-  cout << "TwisterVm - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl;
+  stream_name = _stream_name;
+  eflag = true;
+  lflag = false;
+  hflag = false;
+  cflag = false;
 }
 
-void
-showUsage ()
+void TwisterMain::main (int argc, char **argv)
 {
-
-  fprintf(stderr,
-  "usage: %s [options] [script file].\n"
-  "Available options are:\n"
-  "  -l [list] \t\tlist code\n"
-  "  -h [help]\t\tshow this help\n"
-  "  -c [copyright]\tcopyright information\n\n"
-  ,
-  execname);
-  fflush(stderr);
-  showCopyright();
-}
-
-/* execute, list, help and copyright flags */
-bool eflag, lflag, hflag, cflag;
-
-int
-main (int argc, char **argv)
-{
-  VM vm; // instantiate a new vm
   int option_index = 0;
   int c;
-
-  execname = argv[0];
 
   static struct option long_options[] = {
 	 {"copyright",   no_argument, 0, 'c'      },
@@ -69,19 +71,19 @@ main (int argc, char **argv)
   argv += optind;
   if (argc < 2 || hflag )
 	 {
-		showUsage ();
+		show_usage ();
 		exit (0);
 	 }
   if (cflag)
 	 {
-		showCopyright ();
+		show_copyright ();
 		exit (0);
 	 }
   else
 	 {
 		try
 		  {
-			 vm.load (string (argv[0]));
+			 vm.load (stream_name);
 		  } 
 		catch (NotRecognizedFileException e)
 		  {
@@ -96,6 +98,28 @@ main (int argc, char **argv)
 		  vm.list ();
 		if (eflag)
 		  vm.execute ();
-	 }
+	 }  
+}
+
+inline void TwisterMain::show_copyright ()
+{
+  cout << "TwisterVm - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl;
+}
+
+void TwisterMain::show_usage ()
+{
+  cerr << "usage: " << stream_name << " [options] [script file]." << endl
+		 << "Available options are:" << endl
+		 << "  -l [list] \t\tlist code" << endl
+		 << "  -h [help]\t\tshow this help" << endl
+		 << "  -c [copyright]\tcopyright information" << endl << endl;
+  show_copyright ();
+}
+
+int
+main (int argc, char **argv)
+{
+  TwisterMain tw (argv[1]);
+  tw.main (argc, argv);
   return 0;
 }
