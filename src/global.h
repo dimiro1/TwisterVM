@@ -1,13 +1,17 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 21:37:45 BRT>
+ *   Modified: <2009-07-18 21:54:29 BRT>
  */
 
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
 
-#define MAGIC_VERSION_NUM 0x01 // version 0.1
+/* version */
+#define VM_VERSION_MAJOR 0
+#define VM_VERSION_MINOR 2
+
+#define MAGIC_VERSION_NUM 0x02 // version 0.2
 #define EOS '\0'
 
 #include <iostream>
