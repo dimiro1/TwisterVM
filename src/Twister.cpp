@@ -46,7 +46,7 @@ void TwisterMain::main (int argc, char **argv)
 
   static struct option long_options[] = {
 	 {"copyright",   no_argument, 0, 'c'      },
-	 {"list", no_argument, 0, 'd'},
+	 {"list", no_argument, 0, 'l'},
 	 {"version", no_argument, 0, 'v'},
 	 {"help",        no_argument, 0, 'h'      },
 	 {0,0,0,0}
@@ -94,7 +94,7 @@ void TwisterMain::main (int argc, char **argv)
 	 {
 		try
 		  {
-			 vm.load (stream_name);
+			 vm.load (string (argv[0]));
 		  } 
 		catch (NotRecognizedFileException e)
 		  {

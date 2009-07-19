@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 21:39:25 BRT>
+ *   Modified: <2009-07-19 07:49:45 BRT>
  */
 
 #include "vm.h"
@@ -43,7 +43,8 @@ VM::list ()
 {
   Instruction current;
 
-  cout << " (" << current_context->code_len
+  cout << " Compiled with " << current_context->magic << endl
+		 << " (" << current_context->code_len
 		 << " instructions, " 
 		 << sizeof (current_context->code_section) * current_context->code_len 
 		 << " bytes at " 
