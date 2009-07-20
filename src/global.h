@@ -1,11 +1,17 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-19 08:07:48 BRT>
+ *   Modified: <2009-07-20 14:23:33 BRT>
  */
 
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <dispatch_config.h>
 
 /* version */
 #define VM_VERSION_MAJOR 0

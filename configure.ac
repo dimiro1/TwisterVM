@@ -1,4 +1,5 @@
 AC_INIT(TwisterVM, 0.1, dimiro1@gmail.com)
+AC_CONFIG_HEADER([config.h, dispatch_config.h])
 AM_INIT_AUTOMAKE(TwisterVM, 0.1)
 AM_MAINTAINER_MODE
 

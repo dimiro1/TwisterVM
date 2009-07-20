@@ -7,6 +7,8 @@
 #define VM_H
 
 #include "global.h"
+/* informações sobre dispatch de instruções */
+#include "dispatch.h"
 #include "exec_context.h"
 #include "opcode.h"
 #include "instruction.h"
@@ -39,13 +41,10 @@ public:
   ~VM ();
   void load (string progname);
 
-  void execute ();
-
-#ifdef HAVE_COMPUTED_GOTO
-  void dispatch_goto ();
-#else
-  void dispatch_switch ();
-#endif
+  inline void execute ()
+  {
+	 dispatch ();
+  }
 
   void list ();
   void list_sp ();
@@ -60,6 +59,7 @@ private:
   std::stack<float> sp;
   ExecContext *current_context;  /* programa sendo executado */
 
+  void dispatch ();
   void reset ();
   void reset_sp ();
   void push (float value);
