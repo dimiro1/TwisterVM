@@ -19,7 +19,7 @@ fi
 if test "x${COCOCPP_BIN}" = "x"; then
 	AC_MSG_ERROR(
 	[
-	  O programa "COCO/R" (ou cococpp) não foi instalado 
+	  O programa "COCO/R" (ou cococpp) não foi encontrado
 	  em seu sistema (PATH).
 	  TwisterVM precisa do COCO/R instalado.
 	])
