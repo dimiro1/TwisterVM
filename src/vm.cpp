@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-19 08:17:55 BRT>
+ *   Modified: <2009-07-20 13:14:46 BRT>
  */
 
 #include "vm.h"
@@ -80,7 +80,7 @@ VM::list ()
 		  case OP_INPUT_N: case OP_INPUT_S:
 			 cout  << "$" << current.C;
 			 break;
-		  case OP_GOTO:
+		  case OP_GOTO_T:
 			 cout  << "$" << current.A;
 			 break;
 		  case OP_ADD_N:  case OP_SUB_N:
@@ -122,261 +122,313 @@ VM::list ()
 	 }
 }
 
-int 
-VM::execute ()
+void VM::execute ()
 {
+#ifdef HAVE_COMPUTED_GOTO
+  dispatch_goto ();
+#else
+  dispatch_switch ();
+#endif
+}
+
+int VM::dispatch_goto ()
+{  
   string s_aux1;
   string s_aux2;
   char *ch_aux1;
   string input_s;
   double input_d;
   Instruction executing;
-  while (true)
-	 {
-		executing = current_context->code_section[current_context->pc];
-		switch (executing.opcode) 
-		  {
-			 /* aritmetica opcodes numeros */
-		  case OP_ADD_N:
-			 RN(executing.C,
-				 current_context->get_num (executing.A) +
-				 current_context->get_num (executing.B));
-			 current_context->pc++;
-			 break;
-		  case OP_SUB_N:
-			 RN(executing.C,
-				 current_context->get_num (executing.A) -
-				 current_context->get_num (executing.B));
-			 current_context->pc++;
-			 break;
-		  case OP_MULT_N:
-			 RN(executing.C,
-				 current_context->get_num (executing.A) *
-				 current_context->get_num (executing.B));
-			 current_context->pc++;
-			 break;
-		  case OP_DIV_N:
-			 /* Colocar como exception */
-			 if (current_context->get_num (executing.B) == 0)
-				{
-				  error_emitter.emit (ZERO_DIVISION);
-				  abort ();
-				}
-			 RN(executing.C,
-				 current_context->get_num (executing.A) /
-				 current_context->get_num (executing.B));
 
-			 current_context->pc++;
-			 break;
-		  case OP_MOD_N:
-			 RN(executing.C,
-				 static_cast<int>(current_context->get_num (executing.A)) %
-				 static_cast<int>(current_context->get_num (executing.B)));
-			 current_context->pc++;
-			 break;
-		  case OP_POW_N:
-			 RN(executing.C, pow (current_context->get_num (executing.A),
-										 current_context->get_num (executing.B)));
-			 current_context->pc++;
-			 break;
-		  case OP_NEG_N:			  /* TODO: melhorar esse neg */
-			 RN(executing.A, -current_context->get_num (executing.A));
-			 current_context->pc++;
-			 break;
-		  case OP_ABS_N:
-			 RN(executing.A, fabs (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_SIN_N:
-			 RN(executing.C, sin (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_COS_N:
-			 RN(executing.C, cos (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_TAN_N:
-			 RN(executing.C, tan (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_ASIN_N:
-			 RN(executing.C, asin (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_ACOS_N:
-			 RN(executing.C, acos (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_ATAN_N:
-			 RN(executing.C, atan (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_LOG_N:
-			 RN(executing.C, log (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_SQRT_N:
-			 RN(executing.C, sqrt (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_CEIL_N:
-			 RN(executing.C, ceil (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_FLOOR_N:
-			 RN(executing.C, floor (current_context->get_num (executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_INC_N:
-			 RN(executing.A, RN(executing.A) + 1);
-			 current_context->pc++;
-			 break;
-		  case OP_DEC_N:
-			 RN(executing.A, RN(executing.A) - 1);
-			 current_context->pc++;
-			 break;
+  /* see opcodes.h */
+  SWITCH_OPCODES;
+  GOTO_NEXT_INSTR;
 
-			 /* fim opcodes aritmetica numeros */
+  CASE (add_n)
+  {
+	 RN(executing.C,
+		 current_context->get_num (executing.A) +
+		 current_context->get_num (executing.B));
+    current_context->pc++;
+    GOTO_NEXT_INSTR;
+  }
 
-			 /* deprecated opcodes */
-		  case OP_ADD:
-			 /* push (pop () + pop ()); */
-			 /* pc++; */
-			 break;
-		  case OP_CLSP:
-			 /* reset_sp (); */
-			 /* pc++; */
-			 break;
-		  case OP_DIV:
-			 /* right = pop (); */
-			 /* push (pop () / right); */
-			 /* pc++; */
-			 break;
-		  case OP_DCARD:
-			 /* pop (); */
-			 /* pc++; */
-			 break;
-		  case OP_GETOP:				  /* não esta concluida */
-			 /* top (); */
-			 /* pc++; */
-			 break;
-		  case OP_MULT:
-			 /* push (pop () * pop ()); */
-			 /* pc++; */
-			 break;
-		  case OP_POP:
-			 /* pop (); */
-			 /* pc++; */
-			 break;
-		  case OP_PUSH:
-			 /* push (running.operand); */
-			 /* pc++; */
-			 break;
-		  case OP_PUTS:
-			 /* cout << top () << endl; */
-			 /* pc++; */
-			 break;
-		  case OP_RESET:
-			 /* reset (); */
-			 /* pc++; */
-			 break;
-		  case OP_SUB:
-			 /* right = pop (); */
-			 /* push (pop () - right); */
-			 /* pc++; */
-			 break;
-			 /* fim deprecated opcodes */
+  CASE (sub_n)
+  {
+	 RN(executing.C,
+		 current_context->get_num (executing.A) -
+		 current_context->get_num (executing.B));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
 
-			 /* generic */
-		  case OP_NOP:
-			 current_context->pc++;
-			 break;
-		  case OP_GOTO:
-			 break;
-		  case OP_HALT:
-			 exit (0);					  /* sai normalmente */
-			 break;
-			 /* fim generic */
+  CASE (mult_n)
+  {
+	 RN(executing.C,
+		 current_context->get_num (executing.A) *
+		 current_context->get_num (executing.B));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
 
-			 /* IO */
-		  case OP_PRINT_S:
-			 cout << RS(executing.A);
-			 current_context->pc++;
-			 break;
-		  case OP_PRINT_N:
-			 cout << RN(executing.A);
-			 current_context->pc++;
-			 break;
-		  case OP_PUT_S:
-			 cout << RS(executing.A) << endl;
-			 current_context->pc++;
-			 break;
-		  case OP_PUT_N:
-			 cout << RN(executing.A) << endl;
-			 current_context->pc++;
-			 break;
-		  case OP_INPUT_S:
-			 cin >> input_s;
-			 RS(executing.C, input_s);
-			 current_context->pc++;
-			 break;
-		  case OP_INPUT_N:
-			 cin >> input_d;
-			 RN(executing.C, input_d);
-			 current_context->pc++;
-			 break;
-			 /* end IO */
+  CASE (div_n)
+  {
+	 /* Colocar como exception */
+	 if (current_context->get_num (executing.B) == 0)
+		{
+		  error_emitter.emit (ZERO_DIVISION);
+		  abort ();
+		}
+	 RN(executing.C,
+		 current_context->get_num (executing.A) /
+		 current_context->get_num (executing.B));
 
-			 /* REgisters manipulation */
-		  case OP_MOV_N:
-			 RN(executing.B, current_context->get_num (executing.A));
-			 current_context->pc++;
-			 break;
-		  case OP_MOV_S:
-			 RS(executing.B, current_context->get_string(executing.A));
-			 current_context->pc++;
-			 break;
-		  case OP_STORE_S:
-			 RS(executing.C, 
-				 string (current_context->get_string(executing.A)));
-			 current_context->pc++;
-			 break;
-		  case OP_STORE_N:
-			 RN(executing.C, 
-				 current_context->get_num (executing.A));
-			 current_context->pc++;
-			 break;
-			 /* fim Registers manipulation */
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
 
-			 /* string */
-		  case OP_CONCAT_S:
-			 s_aux1 = RS(executing.A);
-			 s_aux2 = RS(executing.B);
-			 RS(executing.C, s_aux1 + s_aux2);
-			 current_context->pc++;
-			 break;
-			 /* store_s "hello" $1 */
-			 /* charat_s $1 1 $0 */
-		  case OP_CHARAT_S:
-			 s_aux1 = RS(executing.A);
-			 ch_aux1 = new char[2];
+  CASE (mod_n)
+  {
+	 RN(executing.C,
+		 static_cast<int>(current_context->get_num (executing.A)) %
+		 static_cast<int>(current_context->get_num (executing.B)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+	 CASE(pow_n)
+		RN(executing.C, pow (current_context->get_num (executing.A),
+									current_context->get_num (executing.B)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
 
-			 try
-			 	{
-				  sprintf (ch_aux1, "%c", s_aux1.at(executing.B));
-			 	}
-			 catch (out_of_range e)
-			 	{
-				  error_emitter.emit (OUT_OF_RANGE);
-			 	  current_context->pc++;
-			 	}
+  CASE (neg_n)			  /* todo: melhorar esse neg */
+  {
+	 RN(executing.A, -current_context->get_num (executing.A));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
 
-			 RS(executing.C, string (ch_aux1));
-			 current_context->pc++;
-			 break;
-			 /* fim string */
-		  }
-	 }
+  CASE (abs_n)
+  {
+	 RN(executing.A, fabs (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (sin_n)
+  {
+	 RN(executing.C, sin (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (cos_n)
+  {
+	 RN(executing.C, cos (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (tan_n)
+  {
+	 RN(executing.C, tan (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (asin_n)
+  {
+	 RN(executing.C, asin (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (acos_n)
+  {
+	 RN(executing.C, acos (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (atan_n)
+  {
+	 RN(executing.C, atan (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (log_n)
+  {
+	 RN(executing.C, log (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (sqrt_n)
+  {
+	 RN(executing.C, sqrt (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (ceil_n) 
+  {
+	 RN(executing.C, ceil (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (floor_n)
+  {
+	 RN(executing.C, floor (current_context->get_num (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (inc_n) 
+  {
+	 RN(executing.A, RN(executing.A) + 1);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (dec_n)
+  {
+	 RN(executing.A, RN(executing.A) - 1);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  /* fim opcodes aritmetica numeros */
+
+  /* generic */
+  CASE (nop)
+  {
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (goto_t)
+  {
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (halt)
+	 exit (0);					  /* sai normalmente */
+  /* fim generic */
+
+  /* IO */
+  CASE (print_s)
+  {
+	 cout << RS(executing.A);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (print_n)
+  {
+	 cout << RN(executing.A);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (put_s)
+  {
+	 cout << RS(executing.A) << endl;
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (put_n)
+  {
+	 cout << RN(executing.A) << endl;
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (input_s)
+  {
+	 cin >> input_s;
+	 RS(executing.C, input_s);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+			 
+  CASE (input_n)
+  {
+	 cin >> input_d;
+	 RN(executing.C, input_d);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+  /* end IO */
+
+  /* REgisters manipulation */
+  CASE (mov_n)
+  {
+	 RN(executing.B, current_context->get_num (executing.A));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (mov_s)
+  {
+	 RS(executing.B, current_context->get_string(executing.A));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (store_s)
+  {
+	 RS(executing.C, 
+		 string (current_context->get_string(executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+
+  CASE (store_n)
+  {
+	 RN(executing.C, 
+		 current_context->get_num (executing.A));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+  /* fim Registers manipulation */
+
+  /* string */
+
+  CASE (concat_s)
+  {
+	 s_aux1 = RS(executing.A);
+	 s_aux2 = RS(executing.B);
+	 RS(executing.C, s_aux1 + s_aux2);
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+  /* store_s "hello" $1 */
+  /* charat_s $1 1 $0 */
+
+  CASE (charat_s)
+  {
+	 s_aux1 = RS(executing.A);
+	 ch_aux1 = new char[2];
+
+	 try
+		{
+		  sprintf (ch_aux1, "%c", s_aux1.at(executing.B));
+		}
+	 catch (out_of_range e)
+		{
+		  error_emitter.emit (OUT_OF_RANGE);
+		  current_context->pc++;
+		}
+
+	 RS(executing.C, string (ch_aux1));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR;
+  }
+  /* fim string */
+
   return 0; // nunca alcançado, espero!
 }
 

@@ -39,7 +39,14 @@ public:
   ~VM ();
   void load (string progname);
 
-  int execute ();
+  void execute ();
+
+#ifdef HAVE_COMPUTED_GOTO
+  void dispatch_goto ();
+#else
+  void dispatch_switch ();
+#endif
+
   void list ();
   void list_sp ();
 

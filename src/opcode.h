@@ -39,7 +39,7 @@ enum Opcode
   OP_TAN_N,							  /* tan_n   A - C */
 
   /* genric */
-  OP_GOTO,							  /* goto    A - - */
+  OP_GOTO_T,						  /* goto    A - - */
   OP_HALT,							  /* halt    - - - */
   OP_NOP,							  /* nop     - - - */
 
@@ -78,6 +78,69 @@ enum Opcode
   OP_SUB
 };
 
+#ifdef HAVE_COMPUTED_GOTO
+/*
+Dispatch de instruções.
+Computed Goto
+
+goto computado é um recurso de alguns compiladores c que trata labels como
+data que pode ser armazenado em ponteiros void*.
+
+Cada opcode é apenas um label, armazenado em um enorme vetor.
+executar uma instrução é apenas usar o indice do opcode e executar o label, realizando o goto.
+
+Isto é incrivelmente mais rápido que usar o grande switch.
+*/
+
+/* This is only used in vm.cpp, never use this in other place */
+#define SWITCH_OPCODES static const void\
+	 *label_targets[] = {\
+	 &&abs_n,\
+	 &&acos_n,\
+	 &&add_n,\
+	 &&asin_n,\
+	 &&atan_n,\
+	 &&ceil_n,\
+	 &&cos_n,\
+	 &&dec_n,\
+	 &&div_n,\
+	 &&floor_n,\
+	 &&inc_n,\
+	 &&log_n,\
+	 &&mod_n,\
+	 &&mult_n,\
+	 &&neg_n,\
+	 &&pow_n,\
+	 &&sin_n,\
+	 &&sqrt_n,\
+	 &&sub_n,\
+	 &&tan_n,\
+	 &&goto_t,\
+	 &&halt,\
+	 &&nop,\
+	 &&input_n,\
+	 &&input_s,\
+	 &&print_n,\
+	 &&print_s,\
+	 &&put_n,\
+	 &&put_s,\
+	 &&mov_n,\
+	 &&mov_s,\
+	 &&store_n,\
+	 &&store_s,\
+	 &&concat_s,\
+	 &&charat_s\
+  }
+
+/* This is only used in vm.cpp, never use this in other place */
+#define GOTO_NEXT_INSTR executing = current_context->code_section[current_context->pc];\
+  goto *label_targets[executing.opcode]
+
+/* This is only used in vm.cpp, never use this in other place */
+#define CASE(op) op:
+
+#endif
+
 static const char *
 mneumonic[] = {
   "abs_n",
@@ -101,7 +164,7 @@ mneumonic[] = {
   "sub_n",
   "tan_n",
 
-  "goto",
+  "goto_t",
   "halt",
   "nop",
 

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 20:37:04 BRT>
+ *   Modified: <2009-07-20 10:33:16 BRT>
  */
 
 #include "asm_gen.h"
@@ -69,7 +69,7 @@ void AsmGen::emit_getop ()
 /* TODO: Corrigir essa função, o goto deve receber un inteiro. */
 void AsmGen::emit_goto (float _operand)
 {
-  assembled_file->add_instruction (Instruction (OP_GOTO, _operand));
+  assembled_file->add_instruction (Instruction (OP_GOTO_T, _operand));
 }
 
 void AsmGen::emit_halt ()
