@@ -1,13 +1,13 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 14:31:18 BRT>
+ *   Modified: <2009-07-20 18:15:25 BRT>
  */
 
 #ifndef _DISPATCH_H_
 #define _DISPATCH_H_
 
-#ifdef HAVE_COMPUTED_GOTO								\
+#ifdef HAVE_COMPUTED_GOTO
 /*
   Dispatch de instruções.
   Computed Goto
