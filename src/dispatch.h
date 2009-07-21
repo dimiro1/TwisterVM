@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 00:02:24 BRT>
+ *   Modified: <2009-07-21 10:05:44 BRT>
  */
 
 #ifndef _DISPATCH_H_
@@ -9,7 +9,11 @@
 
 #include "opcode.h"
 
+/* GNUC suport computed goto */
+#ifdef __GNUC__
 #define HAVE_COMPUTED_GOTO
+#endif
+
 #ifdef HAVE_COMPUTED_GOTO
 /*
   Dispatch de instruções.

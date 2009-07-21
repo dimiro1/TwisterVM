@@ -1689,8 +1689,6 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-ac_config_headers="$ac_config_headers config.h, dispatch_config.h"
-
 am__api_version='1.10'
 
 ac_aux_dir=
@@ -2195,6 +2193,8 @@ fi
 
   MAINT=$MAINTAINER_MODE_TRUE
 
+
+ac_config_headers="$ac_config_headers config.h"
 
 
 ac_ext=cpp
@@ -3748,8 +3748,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "config.h,") CONFIG_HEADERS="$CONFIG_HEADERS config.h," ;;
-    "dispatch_config.h") CONFIG_HEADERS="$CONFIG_HEADERS dispatch_config.h" ;;
+    "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
