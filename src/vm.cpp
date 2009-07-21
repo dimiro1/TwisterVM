@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 08:14:24 BRT>
+ *   Modified: <2009-07-21 09:59:05 BRT>
  */
 
 #include "vm.h"
@@ -526,6 +526,7 @@ void VM::dispatch ()
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
+
   /* fim string */
   /* opcodes antigos. */
   CASE (ADD)
