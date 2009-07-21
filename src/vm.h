@@ -1,8 +1,9 @@
 /*
- * vm.h
- * A simple VM implementation
- * Copyright (c) 2009 Claudemiro Alves Feitosa Neto
+ *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
+ *   <dimiro1@gmail.com>
+ *   Modified: <2009-07-20 22:26:40 BRT>
  */
+
 #ifndef VM_H
 #define VM_H
 
@@ -10,7 +11,6 @@
 /* informações sobre dispatch de instruções */
 #include "dispatch.h"
 #include "exec_context.h"
-#include "opcode.h"
 #include "instruction.h"
 #include "error.h"
 

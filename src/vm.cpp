@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 14:08:29 BRT>
+ *   Modified: <2009-07-20 22:32:09 BRT>
  */
 
 #include "vm.h"
@@ -135,7 +135,7 @@ void VM::dispatch ()
   BEGIN_SWITCH
   GOTO_NEXT_INSTR
 
-  CASE (OP_ADD_N)
+  CASE (ADD_N)
 	 RN(executing.C,
 		 current_context->get_num (executing.A) +
 		 current_context->get_num (executing.B));
@@ -144,7 +144,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE (OP_SUB_N)
+  CASE (SUB_N)
 	 RN(executing.C,
 		 current_context->get_num (executing.A) -
 		 current_context->get_num (executing.B));
@@ -153,7 +153,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE (OP_MULT_N)
+  CASE (MULT_N)
 	 RN(executing.C,
 		 current_context->get_num (executing.A) *
 		 current_context->get_num (executing.B));
@@ -162,7 +162,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE (OP_DIV_N)
+  CASE (DIV_N)
 	 /* Colocar como exception */
 	 if (current_context->get_num (executing.B) == 0)
 		{
@@ -178,7 +178,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE (OP_MOD_N)
+  CASE (MOD_N)
 	 RN(executing.C,
 		 static_cast<int>(current_context->get_num (executing.A)) %
 		 static_cast<int>(current_context->get_num (executing.B)));
@@ -187,7 +187,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE(OP_POW_N)
+  CASE(POW_N)
 	 RN(executing.C, pow (current_context->get_num (executing.A),
 								 current_context->get_num (executing.B)));
 	 current_context->pc++;
@@ -195,98 +195,98 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE (OP_NEG_N)			  /* todo: melhorar esse neg */
+  CASE (NEG_N)			  /* TODO: melhorar esse neg */
 	 RN(executing.A, -current_context->get_num (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_ABS_N)
+  CASE (ABS_N)
 	 RN(executing.A, fabs (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_SIN_N)
+  CASE (SIN_N)
 	 RN(executing.C, sin (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_COS_N)
+  CASE (COS_N)
 	 RN(executing.C, cos (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_TAN_N)
+  CASE (TAN_N)
 	 RN(executing.C, tan (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_ASIN_N)
+  CASE (ASIN_N)
 	 RN(executing.C, asin (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_ACOS_N)
+  CASE (ACOS_N)
 	 RN(executing.C, acos (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_ATAN_N)
+  CASE (ATAN_N)
 	 RN(executing.C, atan (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_LOG_N)
+  CASE (LOG_N)
 	 RN(executing.C, log (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_SQRT_N)
+  CASE (SQRT_N)
 	 RN(executing.C, sqrt (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_CEIL_N) 
+  CASE (CEIL_N) 
 	 RN(executing.C, ceil (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_FLOOR_N)
+  CASE (FLOOR_N)
 	 RN(executing.C, floor (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_INC_N)
+  CASE (INC_N)
 	 RN(executing.A, RN(executing.A) + 1);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_DEC_N)
+  CASE (DEC_N)
 	 RN(executing.A, RN(executing.A) - 1);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -296,53 +296,53 @@ void VM::dispatch ()
   /* fim opcodes aritmetica numeros */
 
   /* generic */
-  CASE (OP_NOP)
+  CASE (NOP)
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_GOTO_T)
+  CASE (GOTO_T)
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_HALT)
+  CASE (HALT)
 	 exit (0);					  /* sai normalmente */
 	 BREAK
   END_CASE
   /* fim generic */
 
   /* IO */
-  CASE (OP_PRINT_S)
+  CASE (PRINT_S)
 	 cout << RS(executing.A);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_PRINT_N)
+  CASE (PRINT_N)
 	 cout << RN(executing.A);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_PUT_S)
+  CASE (PUT_S)
 	 cout << RS(executing.A) << endl;
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_PUT_N)
+  CASE (PUT_N)
 	 cout << RN(executing.A) << endl;
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_INPUT_S)
+  CASE (INPUT_S)
 	 cin >> input_s;
 	 RS(executing.C, input_s);
 	 current_context->pc++;
@@ -350,7 +350,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 			 
-  CASE (OP_INPUT_N)
+  CASE (INPUT_N)
 	 cin >> input_d;
 	 RN(executing.C, input_d);
 	 current_context->pc++;
@@ -360,21 +360,21 @@ void VM::dispatch ()
   /* end IO */
 
   /* REgisters manipulation */
-  CASE (OP_MOV_N)
+  CASE (MOV_N)
 	 RN(executing.B, current_context->get_num (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_MOV_S)
+  CASE (MOV_S)
 	 RS(executing.B, current_context->get_string(executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (OP_STORE_S)
+  CASE (STORE_S)
 	 RS(executing.C, 
 		 string (current_context->get_string(executing.A)));
 	 current_context->pc++;
@@ -382,7 +382,7 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
 
-  CASE (OP_STORE_N)
+  CASE (STORE_N)
 	 RN(executing.C, 
 		 current_context->get_num (executing.A));
 	 current_context->pc++;
@@ -393,7 +393,7 @@ void VM::dispatch ()
 
   /* string */
 
-  CASE (OP_CONCAT_S)
+  CASE (CONCAT_S)
 	 s_aux1 = RS(executing.A);
 	 s_aux2 = RS(executing.B);
 	 RS(executing.C, s_aux1 + s_aux2);
@@ -404,7 +404,7 @@ void VM::dispatch ()
   /* store_s "hello" $1 */
   /* charat_s $1 1 $0 */
 
-  CASE (OP_CHARAT_S)
+  CASE (CHARAT_S)
 	 s_aux1 = RS(executing.A);
 	 ch_aux1 = new char[2];
 
@@ -424,6 +424,55 @@ void VM::dispatch ()
 	 BREAK
   END_CASE
   /* fim string */
+  /* opcodes antigos. */
+  CASE (ADD)
+	 BREAK
+  END_CASE
+
+  CASE (CLSP)
+	 BREAK
+  END_CASE
+
+  CASE (DCARD)
+	 BREAK
+  END_CASE
+
+  CASE (DIV)
+	 BREAK
+  END_CASE
+
+  CASE (GETOP)
+	 BREAK
+  END_CASE
+
+  CASE (MULT)
+	 BREAK
+  END_CASE
+
+  CASE (POP)
+	 BREAK
+  END_CASE
+
+  CASE (PRINT)
+	 BREAK
+  END_CASE
+
+  CASE (PUSH)
+	 BREAK
+  END_CASE
+
+  CASE (PUTS)
+	 BREAK
+  END_CASE
+
+  CASE (RESET)
+	 BREAK
+  END_CASE
+
+  CASE (SUB)
+	 BREAK
+  END_CASE
+
   END_SWITCH
 }
 

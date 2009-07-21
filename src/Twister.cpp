@@ -1,3 +1,9 @@
+/*
+ *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
+ *   <dimiro1@gmail.com>
+ *   Modified: <2009-07-20 19:49:51 BRT>
+ */
+
 #include "global.h"
 #include <iostream>
 using std::cout;

@@ -1,4 +1,6 @@
 (B) Adicionar o Nome do arquivo fonte no arquivo compilado.
 (C) Adicionar execução concorrente dentro do interpretador.
 (B) Documentar o código.
-(A) Corrigir o assembler
+(A) Corrigir o assembler.
+(B) Adicionar bibliotecas de io e manipulação de strings.
+(C) Reduzir o tamanho dos bytecodes.

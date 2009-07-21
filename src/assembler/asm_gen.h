@@ -1,3 +1,9 @@
+/*
+ *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
+ *   <dimiro1@gmail.com>
+ *   Modified: <2009-07-20 19:51:33 BRT>
+ */
+
 #ifndef _ASM_GEN_H_
 #define _ASM_GEN_H_
 
