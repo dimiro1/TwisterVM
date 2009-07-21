@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-19 08:19:20 BRT>
+ *   Modified: <2009-07-20 23:39:40 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -15,9 +15,13 @@ using std::ifstream;
 class Header {
 public:
   unsigned char magic;
-  unsigned short string_table_len : 12;
-  unsigned short num_table_len : 12;
-  unsigned short code_len : 12;
+  /* vm version */
+  unsigned short major_version;
+  unsigned short minor_version;
+
+  unsigned short string_table_len;
+  unsigned short num_table_len;
+  unsigned short code_len;
 };
 
 /* mantem informações que estão sendo executadas */

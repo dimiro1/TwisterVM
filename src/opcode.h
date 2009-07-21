@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 22:27:57 BRT>
+ *   Modified: <2009-07-20 23:51:37 BRT>
  */
 
 /* sempre inclua dispatch, não inclua opcode.h diretamente */
@@ -105,7 +105,7 @@
 	 OP (SQRT_N),											\
 	 OP (SUB_N),											\
 	 OP (TAN_N),											\
-	 OP (GOTO_T),											\
+	 OP (GOTO),												\
 	 OP (HALT),												\
 	 OP (NOP),												\
 	 OP (INPUT_N),											\

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 22:32:09 BRT>
+ *   Modified: <2009-07-21 00:02:34 BRT>
  */
 
 #include "vm.h"
@@ -12,8 +12,7 @@ VM::~VM ()
 }
 
 /* load code_section into memory */
-void
-VM::load (string progname)
+void VM::load (string progname)
 {
   current_context = new ExecContext ();
   try
@@ -38,16 +37,15 @@ VM::load (string progname)
 }
 
 
-void 
-VM::list ()
+void VM::list ()
 {
   Instruction current;
 
-  cout << " (" << current_context->header.code_len
-		 << " instructions, " 
-		 << sizeof (current_context->code_section) * current_context->header.code_len 
-		 << " bytes at " 
-		 << hex << current_context->code_section << ")" << dec << endl;
+  cout << " twisterc v" << current_context->header.major_version
+		 << "." << current_context->header.minor_version 
+		 << " (" << current_context->header.code_len
+		 << " instructions)" << endl;
+  
   for (int i = 0; i < current_context->header.code_len; i++)
 	 {
 		current = current_context->code_section[i];
@@ -80,7 +78,7 @@ VM::list ()
 		  case OP_INPUT_N: case OP_INPUT_S:
 			 cout  << "$" << current.C;
 			 break;
-		  case OP_GOTO_T:
+		  case OP_GOTO:
 			 cout  << "$" << current.A;
 			 break;
 		  case OP_ADD_N:  case OP_SUB_N:
@@ -133,9 +131,11 @@ void VM::dispatch ()
 
   /* see opcodes.h */
   BEGIN_SWITCH
-  GOTO_NEXT_INSTR
 
   CASE (ADD_N)
+	 #ifdef DEBUG
+	 puts ("add_n");
+	 #endif
 	 RN(executing.C,
 		 current_context->get_num (executing.A) +
 		 current_context->get_num (executing.B));
@@ -145,6 +145,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (SUB_N)
+	 #ifdef DEBUG
+	 puts ("sub_n");
+	 #endif
 	 RN(executing.C,
 		 current_context->get_num (executing.A) -
 		 current_context->get_num (executing.B));
@@ -154,6 +157,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (MULT_N)
+	 #ifdef DEBUG
+	 puts ("mult_n");
+	 #endif
 	 RN(executing.C,
 		 current_context->get_num (executing.A) *
 		 current_context->get_num (executing.B));
@@ -163,6 +169,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (DIV_N)
+	 #ifdef DEBUG
+	 puts ("div_n");
+	 #endif
 	 /* Colocar como exception */
 	 if (current_context->get_num (executing.B) == 0)
 		{
@@ -179,6 +188,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (MOD_N)
+	 #ifdef DEBUG
+	 puts ("mod_n");
+	 #endif
 	 RN(executing.C,
 		 static_cast<int>(current_context->get_num (executing.A)) %
 		 static_cast<int>(current_context->get_num (executing.B)));
@@ -188,6 +200,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE(POW_N)
+	 #ifdef DEBUG
+	 puts ("pow_n");
+	 #endif
 	 RN(executing.C, pow (current_context->get_num (executing.A),
 								 current_context->get_num (executing.B)));
 	 current_context->pc++;
@@ -196,6 +211,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (NEG_N)			  /* TODO: melhorar esse neg */
+	 #ifdef DEBUG
+	 puts ("neg_n");
+	 #endif
 	 RN(executing.A, -current_context->get_num (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -203,6 +221,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (ABS_N)
+	 #ifdef DEBUG
+	 puts ("abs_n");
+	 #endif
 	 RN(executing.A, fabs (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -210,6 +231,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (SIN_N)
+	 #ifdef DEBUG
+	 puts ("sin_n");
+	 #endif
 	 RN(executing.C, sin (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -217,6 +241,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (COS_N)
+	 #ifdef DEBUG
+	 puts ("cos_n");
+	 #endif
 	 RN(executing.C, cos (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -224,6 +251,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (TAN_N)
+	 #ifdef DEBUG
+	 puts ("tan_n");
+	 #endif
 	 RN(executing.C, tan (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -231,6 +261,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (ASIN_N)
+	 #ifdef DEBUG
+	 puts ("asin_n");
+	 #endif
 	 RN(executing.C, asin (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -238,6 +271,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (ACOS_N)
+	 #ifdef DEBUG
+	 puts ("acos_n");
+	 #endif
 	 RN(executing.C, acos (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -245,6 +281,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (ATAN_N)
+	 #ifdef DEBUG
+	 puts ("atan_n");
+	 #endif
 	 RN(executing.C, atan (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -252,6 +291,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (LOG_N)
+	 #ifdef DEBUG
+	 puts ("log_n");
+	 #endif
 	 RN(executing.C, log (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -259,6 +301,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (SQRT_N)
+	 #ifdef DEBUG
+	 puts ("sqrt_n");
+	 #endif
 	 RN(executing.C, sqrt (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -266,6 +311,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (CEIL_N) 
+	 #ifdef DEBUG
+	 puts ("ceil_n");
+	 #endif
 	 RN(executing.C, ceil (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -273,6 +321,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (FLOOR_N)
+	 #ifdef DEBUG
+	 puts ("floor_n");
+	 #endif
 	 RN(executing.C, floor (current_context->get_num (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -280,6 +331,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (INC_N)
+	 #ifdef DEBUG
+	 puts ("inc_n");
+	 #endif
 	 RN(executing.A, RN(executing.A) + 1);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -287,6 +341,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (DEC_N)
+	 #ifdef DEBUG
+	 puts ("dec_n");
+	 #endif
 	 RN(executing.A, RN(executing.A) - 1);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -297,17 +354,26 @@ void VM::dispatch ()
 
   /* generic */
   CASE (NOP)
+	 #ifdef DEBUG
+	 puts ("nop");
+	 #endif
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
-  CASE (GOTO_T)
+  CASE (GOTO)
+	 #ifdef DEBUG
+	 puts ("goto");
+	 #endif
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
 
   CASE (HALT)
+	 #ifdef DEBUG
+	 puts ("halt");
+	 #endif
 	 exit (0);					  /* sai normalmente */
 	 BREAK
   END_CASE
@@ -315,6 +381,9 @@ void VM::dispatch ()
 
   /* IO */
   CASE (PRINT_S)
+	 #ifdef DEBUG
+	 puts ("print_s");
+	 #endif
 	 cout << RS(executing.A);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -322,6 +391,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (PRINT_N)
+	 #ifdef DEBUG
+	 puts ("print_n");
+	 #endif
 	 cout << RN(executing.A);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -329,6 +401,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (PUT_S)
+	 #ifdef DEBUG
+	 puts ("put_s");
+	 #endif
 	 cout << RS(executing.A) << endl;
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -336,6 +411,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (PUT_N)
+	 #ifdef DEBUG
+	 puts ("put_n");
+	 #endif
 	 cout << RN(executing.A) << endl;
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -343,6 +421,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (INPUT_S)
+	 #ifdef DEBUG
+	 puts ("input_s");
+	 #endif
 	 cin >> input_s;
 	 RS(executing.C, input_s);
 	 current_context->pc++;
@@ -351,6 +432,9 @@ void VM::dispatch ()
   END_CASE
 			 
   CASE (INPUT_N)
+	 #ifdef DEBUG
+	 puts ("input_n");
+	 #endif
 	 cin >> input_d;
 	 RN(executing.C, input_d);
 	 current_context->pc++;
@@ -361,6 +445,9 @@ void VM::dispatch ()
 
   /* REgisters manipulation */
   CASE (MOV_N)
+	 #ifdef DEBUG
+	 puts ("mov_n");
+	 #endif
 	 RN(executing.B, current_context->get_num (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -368,6 +455,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (MOV_S)
+	 #ifdef DEBUG
+	 puts ("mov_s");
+	 #endif
 	 RS(executing.B, current_context->get_string(executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -375,6 +465,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (STORE_S)
+	 #ifdef DEBUG
+	 puts ("store_s");
+	 #endif
 	 RS(executing.C, 
 		 string (current_context->get_string(executing.A)));
 	 current_context->pc++;
@@ -383,6 +476,9 @@ void VM::dispatch ()
   END_CASE
 
   CASE (STORE_N)
+	 #ifdef DEBUG
+	 puts ("store_n");
+	 #endif
 	 RN(executing.C, 
 		 current_context->get_num (executing.A));
 	 current_context->pc++;
@@ -394,6 +490,9 @@ void VM::dispatch ()
   /* string */
 
   CASE (CONCAT_S)
+	 #ifdef DEBUG
+	 puts ("concat_s");
+	 #endif
 	 s_aux1 = RS(executing.A);
 	 s_aux2 = RS(executing.B);
 	 RS(executing.C, s_aux1 + s_aux2);
@@ -405,6 +504,9 @@ void VM::dispatch ()
   /* charat_s $1 1 $0 */
 
   CASE (CHARAT_S)
+	 #ifdef DEBUG
+	 puts ("charat_s");
+	 #endif
 	 s_aux1 = RS(executing.A);
 	 ch_aux1 = new char[2];
 

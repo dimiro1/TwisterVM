@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 22:29:10 BRT>
+ *   Modified: <2009-07-21 00:02:24 BRT>
  */
 
 #ifndef _DISPATCH_H_
@@ -34,14 +34,15 @@
 #define OP(op) &&LOP_ ## op
 #endif
 
-#define BEGIN_SWITCH static const void				\
-  *label_targets[] = {									\
-	 OPCODES													\
-  };
-
 /* This is only used in vm.cpp, never use this in other place */
 #define GOTO_NEXT_INSTR executing = current_context->code_section[current_context->pc]; \
   goto *label_targets[executing.opcode];
+
+#define BEGIN_SWITCH static const void				\
+  *label_targets[] = {									\
+	 OPCODES													\
+  };															\
+  GOTO_NEXT_INSTR
 
 /* This is only used in vm.cpp, never use this in other place */
 #define CASE(op) LOP_ ## op:								\

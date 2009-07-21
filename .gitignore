@@ -5,6 +5,8 @@
 *.old
 *.twc
 *.a
+config.h,
+config.h,.in
 test/runtests
 autoscan.log
 Makefile
