@@ -1,21 +1,12 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 11:19:28 BRT>
+ *   Modified: <2009-07-21 13:47:56 BRT>
  */
 
 #include "global.h"
-#include <iostream>
-using std::cout;
-using std::cerr;
-
-#include <string>
-using std::string;
-
-#include <cstdio>
-#include <cstdlib>
-#include <getopt.h>
 #include "vm.h"
+#include <getopt.h>
 
 class TwisterMain {
 public:
@@ -47,34 +38,37 @@ void TwisterMain::main (int argc, char **argv)
   int c;
  
   static struct option long_options[] = {
-	 {"copyright",   no_argument, 0, 'c'      },
+	 {"copyright", no_argument, 0, 'c'},
 	 {"list", no_argument, 0, 'l'},
 	 {"version", no_argument, 0, 'v'},
-	 {"help",        no_argument, 0, 'h'      },
-	 {0,0,0,0}
+	 {"help", no_argument, 0, 'h'},
+	 {0, 0, 0, 0}
   };
 
-  while( (c = getopt_long( argc, argv, "vclh", long_options, &option_index )) != -1) {
-	 switch( c ) {
-	 case 'c':
-		cflag = true;
-		break;
-	 case 'v':
-		vflag = true;
-		break;
-	 case 'l':
-		eflag = false;
-		lflag = true;
-		break;
-	 case 'h':
-	 case '?':
-		hflag = true;
-		break;
-	 default:
-		hflag = true;
-		break;
+  while ( (c = getopt_long ( argc, argv, "vclh", 
+									  long_options, &option_index )) != -1)
+	 {
+		switch (c)
+		  {
+		  case 'c':
+			 cflag = true;
+			 break;
+		  case 'v':
+			 vflag = true;
+			 break;
+		  case 'l':
+			 eflag = false;
+			 lflag = true;
+			 break;
+		  case 'h':
+		  case '?':
+			 hflag = true;
+			 break;
+		  default:
+			 hflag = true;
+			 break;
+		  }
 	 }
-  }
 
   stream_name = argv[0];
   argv += optind;
@@ -95,18 +89,15 @@ void TwisterMain::main (int argc, char **argv)
 	 }
   else
 	 {
-		try
-		  {
-			 vm.load (string (argv[0]));
-		  } 
-		catch (NotRecognizedFileException e)
-		  {
-			 cout << e.what () << endl;
-		  } 
-		catch (BadFileException e) 
-		  {
-			 cout << e.what () << endl;
-		  }
+		try {
+		  vm.load (string (argv[0]));
+		} 
+		catch (NotRecognizedFileException e) {
+		  cout << e.what () << endl;
+		} 
+		catch (BadFileException e) {
+		  cout << e.what () << endl;
+		}
 
 		if (lflag)
 		  vm.list ();

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 11:16:02 BRT>
+ *   Modified: <2009-07-21 13:49:03 BRT>
  */
 
 #include "vm.h"
@@ -11,29 +11,30 @@ VM::~VM ()
   delete current_context;
 }
 
+void VM::execute ()
+{
+  dispatch ();
+}
+
 /* load code_section into memory */
 void VM::load (string progname)
 {
   current_context = new ExecContext ();
-  try
-    {
-      current_context->load_file (progname);
-    }
-  catch (BadFileException e)
-    {
-      cerr << e.what () << endl;
-      abort ();
-    }
-  catch (NotRecognizedFileException e)
-    {
-      cerr << e.what () << endl;
-      abort ();
-    }
-  catch (bad_alloc e)
-    {
-      cerr << e.what () << endl;
-      abort ();
-    }
+  try {
+	 current_context->load_file (progname);
+  }
+  catch (BadFileException e) {
+	 cerr << e.what () << endl;
+	 abort ();
+  }
+  catch (NotRecognizedFileException e) {
+	 cerr << e.what () << endl;
+	 abort ();
+  }
+  catch (bad_alloc e) {
+	 cerr << e.what () << endl;
+	 abort ();
+  }
 }
 
 
@@ -145,11 +146,11 @@ void VM::list ()
 
 void VM::dispatch ()
 {
-  string s_aux1;
-  string s_aux2;
+  STRING s_aux1;
+  STRING s_aux2;
   char *ch_aux1;
-  string input_s;
-  double input_d;
+  STRING input_s;
+  NUMBER input_d;
   Instruction executing;
 
   /* see opcodes.h */
@@ -494,7 +495,7 @@ void VM::dispatch ()
     puts ("store_s");
     #endif
     RS(executing.C,
-       string (current_context->get_string(executing.A)));
+       STRING (current_context->get_string(executing.A)));
     current_context->pc++;
     GOTO_NEXT_INSTR
     BREAK
@@ -535,17 +536,15 @@ void VM::dispatch ()
     s_aux1 = RS(executing.A);
     ch_aux1 = new char[2];
 
-    try
-      {
-        sprintf (ch_aux1, "%c", s_aux1.at(executing.B));
-      }
-    catch (out_of_range e)
-      {
-        error_emitter.emit (OUT_OF_RANGE);
-        current_context->pc++;
-      }
+    try {
+		sprintf (ch_aux1, "%c", s_aux1.at(executing.B));
+    }
+    catch (out_of_range e) {
+		error_emitter.emit (OUT_OF_RANGE);
+		current_context->pc++;
+	 }
 
-    RS(executing.C, string (ch_aux1));
+    RS(executing.C, STRING (ch_aux1));
     current_context->pc++;
     GOTO_NEXT_INSTR
     BREAK
@@ -867,51 +866,24 @@ void VM::dispatch ()
   END_SWITCH
 }
 
-// empty the sp
-// reset the program counter
-inline void
-VM::reset ()
-{
-  /* pc = 0; */
-  reset_sp ();
+inline STRING VM::RS (int i)
+{ 
+	 return s_registers[i]; 
 }
 
-inline void
-VM::reset_sp ()
-{
-  while (!sp.empty ())
-    sp.pop ();
+inline NUMBER VM::RN (int i)
+{ 
+	 return n_registers[i];
 }
 
-/* sp manipulation */
-/* need changes */
-void
-VM::list_sp ()
-{
-  cout << " [ SP ] " << endl;
-  while (!sp.empty ())
-    printf(" [%-4g] \n", sp.top ());
-  cout << endl;
+/* registers sets */
+inline void VM::RS (int i, STRING s)
+{ 
+	 s_registers[i] = s; 
 }
 
-/* inline because the overhead; much faster */
-inline void
-VM::push (float value)
-{
-  sp.push (value);
+inline void VM::RN (int i, NUMBER n) 
+{ 
+	 n_registers[i] = n;
 }
 
-// returns the element at top of the sp
-inline float
-VM::pop ()
-{
-  float element = sp.top ();
-  sp.pop ();
-  return element;
-}
-
-inline float
-VM::top ()
-{
-  return sp.top ();
-}

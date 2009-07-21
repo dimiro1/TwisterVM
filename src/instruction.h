@@ -2,10 +2,7 @@
 #define _INSTRUCTION_H_
 
 #include "global.h"
-#include <iostream>
-
 #include "opcode.h"
-#include <cstring>
 
 class Instruction {
 public:

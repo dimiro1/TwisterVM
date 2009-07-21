@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 22:26:40 BRT>
+ *   Modified: <2009-07-21 13:35:36 BRT>
  */
 
 #ifndef VM_H
@@ -12,79 +12,30 @@
 #include "dispatch.h"
 #include "exec_context.h"
 #include "instruction.h"
-#include "error.h"
-
-#include <cstdio>
-#include <iostream>
-
-#include <cmath>
-
-using std::cout;
-using std::cin;
-using std::endl;
-using std::ios;
-using std::cerr;
-
-#include <string>
-#include <stdexcept>
-/* exception */
-using std::out_of_range;
-
-#include <map>
-#include <stack>
-
-/* Memory type */
-/* typedef std::set<Object *> Memory; */
 
 class VM {
 public:
   ~VM ();
   void load (string progname);
-
-  inline void execute ()
-  {
-	 dispatch ();
-  }
-
+  void execute ();
   void list ();
-  void list_sp ();
-
+    
 private:
   /* Registers */
-  std::map<int, string, std::less<int> > s_registers; /* string_registers */
-  std::map<int, double, std::less<int> > n_registers; /* number_registers */
+  std::map<int, STRING, std::less<int> > s_registers; /* string_registers */
+  std::map<int, NUMBER, std::less<int> > n_registers; /* number_registers */
   Error error_emitter;
 
-  /* TODO: fazer com que a pilha guarde todos os tipos primitivos */
-  std::stack<float> sp;
   ExecContext *current_context;  /* programa sendo executado */
-
   void dispatch ();
-  void reset ();
-  void reset_sp ();
-  void push (float value);
-  float pop ();
-  float top (); // get the element in sp top, but dont pop it
 
   /* registers gets */
-  inline string RS (int i)
-  { 
-	 return s_registers[i]; 
-  }
-  inline double RN (int i)
-  { 
-	 return n_registers[i];
-  }
+  inline STRING RS (int i);
+  inline NUMBER RN (int i);
 
   /* registers sets */
-  inline void RS (int i, string s)
-  { 
-	 s_registers[i] = s; 
-  }
-  inline void RN (int i, double n) 
-  { 
-	 n_registers[i] = n;
-  }
+  inline void RS (int i, STRING s);
+  inline void RN (int i, NUMBER n);
 };
 
 #endif

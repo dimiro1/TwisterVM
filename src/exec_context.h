@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 08:12:55 BRT>
+ *   Modified: <2009-07-21 13:57:09 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -9,8 +9,6 @@
 
 #include "global.h"
 #include "instruction.h"
-#include <fstream>
-using std::ifstream;
 
 class Header {
 public:
@@ -34,8 +32,8 @@ public:
   Header header;
   /* tables */
   char *string_table;
-  double *num_table;
-  short *label_table;
+  NUMBER *num_table;
+  LABEL *label_table;
   /* code */
   Instruction *code_section;
 
@@ -56,12 +54,12 @@ public:
 	 return string_table + n;
   }
 
-  inline double get_num (short n)
+  inline NUMBER get_num (short n)
   {
 	 return num_table[n];
   }
 
-  inline short get_label (short n)
+  inline LABEL get_label (short n)
   {
 	 return label_table[n];
   }

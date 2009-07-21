@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 08:10:24 BRT>
+ *   Modified: <2009-07-21 13:54:23 BRT>
  */
 
 #include "exec_context.h"
@@ -53,15 +53,13 @@ void ExecContext::load_file (string file_name)
 
   if (header.string_table_len > 0)
 	 {
-		try
-		  {
-			 string_table = new char[header.string_table_len];
-		  }
-		catch (bad_alloc e)
-		  {
-			 cerr << "Unable to allocate memory to string_table!" << endl;
-			 abort ();
-		  }
+		try {
+		  string_table = new char[header.string_table_len];
+		}
+		catch (bad_alloc e) {
+		  cerr << "Unable to allocate memory to string_table!" << endl;
+		  abort ();
+		}
 		infile.read ( reinterpret_cast<char *>(string_table),
 						  header.string_table_len * sizeof (char));
 	 }
@@ -69,48 +67,42 @@ void ExecContext::load_file (string file_name)
   /* numeros */
   if (header.num_table_len > 0)
 	 {
-		try
-		  {
-			 num_table = new double[header.num_table_len];
-		  }
-		catch (bad_alloc e)
-		  {
-			 cerr << "Unable to allocate memory to num_table!" << endl;
-			 abort ();
-		  }
+		try {
+		  num_table = new NUMBER[header.num_table_len];
+		}
+		catch (bad_alloc e) {
+		  cerr << "Unable to allocate memory to num_table!" << endl;
+		  abort ();
+		}
 
 		infile.read ( reinterpret_cast<char *>(num_table),
-						  header.num_table_len * sizeof (double));
+						  header.num_table_len * sizeof (NUMBER));
 	 }
 
   /* labels */
   if (header.label_table_len > 0)
 	 {
-		try
-		  {
-			 label_table = new short[header.label_table_len];
-		  }
-		catch (bad_alloc e)
-		  {
-			 cerr << "Unable to allocate memory to label_table!" << endl;
-			 abort ();
-		  }
+		try {
+		  label_table = new LABEL[header.label_table_len];
+		}
+		catch (bad_alloc e) {
+		  cerr << "Unable to allocate memory to label_table!" << endl;
+		  abort ();
+		}
 
 		infile.read ( reinterpret_cast<char *>(label_table),
-						  header.label_table_len * sizeof (short));
+						  header.label_table_len * sizeof (LABEL));
 	 }
 
 
   /* ler codigo */
-  try
-	 {
-		code_section = new Instruction[header.code_len];
-	 }
-  catch (bad_alloc e)
-	 {
-		cerr << "Unable to allocate memory to code_section!" << endl;
-		abort ();
-	 }
+  try {
+	 code_section = new Instruction[header.code_len];
+  }
+  catch (bad_alloc e) {
+	 cerr << "Unable to allocate memory to code_section!" << endl;
+	 abort ();
+  }
 
   infile.read (reinterpret_cast<char *>(code_section),
 					header.code_len * sizeof (Instruction));
