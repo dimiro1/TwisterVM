@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 23:51:37 BRT>
+ *   Modified: <2009-07-21 08:15:34 BRT>
  */
 
 /* sempre inclua dispatch, não inclua opcode.h diretamente */
@@ -158,7 +158,7 @@ mneumonic[] = {
   "sub_n",
   "tan_n",
 
-  "goto_t",
+  "goto",
   "halt",
   "nop",
 

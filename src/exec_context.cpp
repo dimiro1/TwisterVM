@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-19 08:49:19 BRT>
+ *   Modified: <2009-07-21 08:10:24 BRT>
  */
 
 #include "exec_context.h"
@@ -82,6 +82,24 @@ void ExecContext::load_file (string file_name)
 		infile.read ( reinterpret_cast<char *>(num_table),
 						  header.num_table_len * sizeof (double));
 	 }
+
+  /* labels */
+  if (header.label_table_len > 0)
+	 {
+		try
+		  {
+			 label_table = new short[header.label_table_len];
+		  }
+		catch (bad_alloc e)
+		  {
+			 cerr << "Unable to allocate memory to label_table!" << endl;
+			 abort ();
+		  }
+
+		infile.read ( reinterpret_cast<char *>(label_table),
+						  header.label_table_len * sizeof (short));
+	 }
+
 
   /* ler codigo */
   try

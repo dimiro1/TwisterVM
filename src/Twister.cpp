@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 19:49:51 BRT>
+ *   Modified: <2009-07-21 07:58:44 BRT>
  */
 
 #include "global.h"
@@ -19,7 +19,13 @@ using std::string;
 
 class TwisterMain {
 public:
-  TwisterMain (string _stream_name);
+  TwisterMain ()
+	 : eflag (true),
+		vflag (false),
+		lflag (false),
+		hflag (false),
+		cflag (false) {}
+
   void main (int argc, char **argv);
   void show_copyright ();
   void show_usage ();
@@ -35,21 +41,11 @@ private:
   bool cflag;
 };
 
-TwisterMain::TwisterMain (string _stream_name)
-{
-  stream_name = _stream_name;
-  eflag = true;
-  vflag = false;
-  lflag = false;
-  hflag = false;
-  cflag = false;
-}
-
 void TwisterMain::main (int argc, char **argv)
 {
   int option_index = 0;
   int c;
-
+ 
   static struct option long_options[] = {
 	 {"copyright",   no_argument, 0, 'c'      },
 	 {"list", no_argument, 0, 'l'},
@@ -80,6 +76,7 @@ void TwisterMain::main (int argc, char **argv)
 	 }
   }
 
+  stream_name = argv[0];
   argv += optind;
   if (argc < 2 || hflag )
 	 {
@@ -136,13 +133,18 @@ void TwisterMain::show_usage ()
 		 << "  -v [version] \tlist code" << endl
 		 << "  -h [help]\t\tshow this help" << endl
 		 << "  -c [copyright]\tcopyright information" << endl << endl;
+#ifdef HAVE_COMPUTED_GOTO
+  cout << "Computed goto activated." << endl;
+#else
+  cout << "Computed goto desactivated." << endl;
+#endif
   show_copyright ();
 }
 
 int
 main (int argc, char **argv)
 {
-  TwisterMain tw (argv[1]);
+  TwisterMain tw;
   tw.main (argc, argv);
   return 0;
 }

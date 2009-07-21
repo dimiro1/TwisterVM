@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 00:02:34 BRT>
+ *   Modified: <2009-07-21 08:14:24 BRT>
  */
 
 #include "vm.h"
@@ -79,7 +79,7 @@ void VM::list ()
 			 cout  << "$" << current.C;
 			 break;
 		  case OP_GOTO:
-			 cout  << "$" << current.A;
+			 cout << current_context->get_label(current.A);
 			 break;
 		  case OP_ADD_N:  case OP_SUB_N:
 		  case OP_MULT_N: case OP_DIV_N:
@@ -366,6 +366,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("goto");
 	 #endif
+	 current_context->pc = current_context->get_label (executing.A);
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE

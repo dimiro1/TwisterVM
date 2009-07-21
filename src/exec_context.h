@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-20 23:39:40 BRT>
+ *   Modified: <2009-07-21 08:12:55 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -21,6 +21,7 @@ public:
 
   unsigned short string_table_len;
   unsigned short num_table_len;
+  unsigned short label_table_len;
   unsigned short code_len;
 };
 
@@ -34,6 +35,7 @@ public:
   /* tables */
   char *string_table;
   double *num_table;
+  short *label_table;
   /* code */
   Instruction *code_section;
 
@@ -57,6 +59,11 @@ public:
   inline double get_num (short n)
   {
 	 return num_table[n];
+  }
+
+  inline short get_label (short n)
+  {
+	 return label_table[n];
   }
 
   void load_file (string file_name) 
