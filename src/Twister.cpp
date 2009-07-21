@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 07:58:44 BRT>
+ *   Modified: <2009-07-21 11:19:28 BRT>
  */
 
 #include "global.h"
@@ -117,7 +117,14 @@ void TwisterMain::main (int argc, char **argv)
 
 inline void TwisterMain::show_version ()
 {
-  cout << VM_VERSION_MAJOR << "." << VM_VERSION_MINOR << endl;
+    cout << "TwisterVm v" << VM_VERSION_MAJOR 
+         << "." << VM_VERSION_MINOR 
+#ifdef HAVE_COMPUTED_GOTO
+         << " (Computed goto activated)" << endl;
+#else
+         << " (Computed goto desactivated)" << endl;
+#endif
+
 }
 
 inline void TwisterMain::show_copyright ()
@@ -133,11 +140,6 @@ void TwisterMain::show_usage ()
 		 << "  -v [version] \tlist code" << endl
 		 << "  -h [help]\t\tshow this help" << endl
 		 << "  -c [copyright]\tcopyright information" << endl << endl;
-#ifdef HAVE_COMPUTED_GOTO
-  cout << "Computed goto activated." << endl;
-#else
-  cout << "Computed goto desactivated." << endl;
-#endif
   show_copyright ();
 }
 

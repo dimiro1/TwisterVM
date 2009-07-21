@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 10:03:15 BRT>
+ *   Modified: <2009-07-21 10:41:23 BRT>
  */
 
 /* sempre inclua dispatch, não inclua opcode.h diretamente */
@@ -125,6 +125,27 @@
         /* string */                            \
         OP (CONCAT_S),                          \
         OP (CHARAT_S),                          \
+        /* relational */                        \
+        OP (LT_S),                              \
+        OP (GT_S),                              \
+        OP (LTE_S),                             \
+        OP (GTE_S),                             \
+        OP (EQ_S),                              \
+        OP (LT_N),                              \
+        OP (GT_N),                              \
+        OP (LTE_N),                             \
+        OP (GTE_N),                             \
+        OP (EQ_N),                              \
+        OP (NOT_LT_S),                          \
+        OP (NOT_GT_S),                          \
+        OP (NOT_LTE_S),                         \
+        OP (NOT_GTE_S),                         \
+        OP (NOT_EQ_S),                          \
+        OP (NOT_LT_N),                          \
+        OP (NOT_GT_N),                          \
+        OP (NOT_LTE_N),                         \
+        OP (NOT_GTE_N),                         \
+        OP (NOT_EQ_N),                          \
         /* old */                               \
         OP (ADD),                               \
         OP (CLSP),                              \
@@ -182,6 +203,28 @@ mneumonic[] = {
 
     "concat_s",
     "charat_s",
+
+    "lt_s",                       /* lt_s $1 $2 LABEL */
+    "gt_s",
+    "lte_s",
+    "gte_s",
+    "eq_s",
+    "lt_n",
+    "gt_n",
+    "lte_n",
+    "gte_n",
+    "eq_n",
+
+    "not_lt_s",                       /* lt_s $1 $2 LABEL */
+    "not_gt_s",
+    "not_lte_s",
+    "not_gte_s",
+    "not_eq_s",
+    "not_lt_n",
+    "not_gt_n",
+    "not_lte_n",
+    "not_gte_n",
+    "not_eq_n",
 
     /* deprecated */
     "add",

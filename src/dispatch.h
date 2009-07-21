@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 10:05:44 BRT>
+ *   Modified: <2009-07-21 11:17:00 BRT>
  */
 
 #ifndef _DISPATCH_H_
@@ -50,7 +50,7 @@
 
 /* This is only used in vm.cpp, never use this in other place */
 #define CASE(op) LOP_ ## op:								\
-  {
+    {
 
 #define END_SWITCH  /* nothing */
 #define BREAK 	     /* nothing */
@@ -63,7 +63,7 @@
 	 {
 
 #define CASE(op) case OP_ ## op:							\
-  {
+    {
 
 #define BREAK break;
 #define GOTO_NEXT_INSTR /* nothing */
