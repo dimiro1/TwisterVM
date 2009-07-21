@@ -1,16 +1,19 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:54:23 BRT>
+ *   Modified: <2009-07-21 14:46:46 BRT>
  */
 
 #include "exec_context.h"
 
 ExecContext::~ExecContext ()
 {
-  delete string_table;
-  delete num_table;
-  delete code_section;
+  if (header.string_table_len > 0)
+	 delete string_table;
+  if (header.num_table_len > 0)
+	 delete num_table;
+  if (header.code_len > 0)
+	 delete code_section;
 }
 
 /* ARQUIVO */

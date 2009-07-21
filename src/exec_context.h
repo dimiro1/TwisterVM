@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:57:09 BRT>
+ *   Modified: <2009-07-21 15:56:54 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -12,6 +12,12 @@
 
 class Header {
 public:
+  Header ()
+	 : string_table_len (0),
+		num_table_len (0),
+		label_table_len (0),
+		code_len (0) {}
+
   unsigned char magic;
   /* vm version */
   unsigned short major_version;
@@ -46,7 +52,7 @@ public:
 	 int len = strlen(string);
 	 strcpy ((string_table + current_string_pos), string);
 	 string_table[current_string_pos + len] = EOS;
-	 current_string_pos = len + 1;
+	 current_string_pos += (len + 1);
   }
 
   inline char * get_string (short n)

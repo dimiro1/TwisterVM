@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:49:03 BRT>
+ *   Modified: <2009-07-21 14:13:28 BRT>
  */
 
 #include "vm.h"
@@ -20,6 +20,7 @@ void VM::execute ()
 void VM::load (string progname)
 {
   current_context = new ExecContext ();
+
   try {
 	 current_context->load_file (progname);
   }
