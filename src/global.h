@@ -1,9 +1,10 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:37:22 BRT>
+ *   Modified: <2009-07-22 10:09:28 BRT>
  */
 
+/* Mão modifique a sequencia de includes. */
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
 
@@ -45,12 +46,14 @@ using std::bad_alloc;
 using std::out_of_range;
 
 #include <map>
+#include <vector>
 
 #include "not_recognized_file_exception.h"
 #include "bad_file_exception.h"
 
 #include <cmath>
 #include "error.h"
+
 /* VM types */
 #include "types.h"
 

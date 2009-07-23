@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 11:17:00 BRT>
+ *   Modified: <2009-07-21 16:33:34 BRT>
  */
 
 #ifndef _DISPATCH_H_
@@ -35,6 +35,7 @@
 /* This is only used in vm.cpp, never use this in other place */
 #ifdef OP
 #undef OP
+
 #define OP(op) &&LOP_ ## op
 #endif
 

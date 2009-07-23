@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 10:41:23 BRT>
+ *   Modified: <2009-07-22 10:20:31 BRT>
  */
 
 /* sempre inclua dispatch, não inclua opcode.h diretamente */
@@ -86,159 +86,158 @@
 #define OP(op) OP_##op
 
 #define OPCODES OP (ABS_N),							\
-        /* Math */                              \
-        OP (ACOS_N),                            \
-        OP (ADD_N),                             \
-        OP (ASIN_N),                            \
-        OP (ATAN_N),                            \
-        OP (CEIL_N),                            \
-        OP (COS_N),                             \
-        OP (DEC_N),                             \
-        OP (DIV_N),                             \
-        OP (FLOOR_N),                           \
-        OP (INC_N),                             \
-        OP (LOG_N),                             \
-        OP (MOD_N),                             \
-        OP (MULT_N),                            \
-        OP (NEG_N),                             \
-        OP (POW_N),                             \
-        OP (SIN_N),                             \
-        OP (SQRT_N),                            \
-        OP (SUB_N),                             \
-        OP (TAN_N),                             \
-        /* generic */                           \
-        OP (GOTO),                              \
-        OP (HALT),                              \
-        OP (NOP),                               \
-        /* io */                                \
-        OP (INPUT_N),                           \
-        OP (INPUT_S),                           \
-        OP (PRINT_N),                           \
-        OP (PRINT_S),                           \
-        OP (PUT_N),                             \
-        OP (PUT_S),                             \
-        /* register */                          \
-        OP (MOV_N),                             \
-        OP (MOV_S),                             \
-        OP (STORE_N),                           \
-        OP (STORE_S),                           \
-        /* string */                            \
-        OP (CONCAT_S),                          \
-        OP (CHARAT_S),                          \
-        /* relational */                        \
-        OP (LT_S),                              \
-        OP (GT_S),                              \
-        OP (LTE_S),                             \
-        OP (GTE_S),                             \
-        OP (EQ_S),                              \
-        OP (LT_N),                              \
-        OP (GT_N),                              \
-        OP (LTE_N),                             \
-        OP (GTE_N),                             \
-        OP (EQ_N),                              \
-        OP (NOT_LT_S),                          \
-        OP (NOT_GT_S),                          \
-        OP (NOT_LTE_S),                         \
-        OP (NOT_GTE_S),                         \
-        OP (NOT_EQ_S),                          \
-        OP (NOT_LT_N),                          \
-        OP (NOT_GT_N),                          \
-        OP (NOT_LTE_N),                         \
-        OP (NOT_GTE_N),                         \
-        OP (NOT_EQ_N),                          \
-        /* old */                               \
-        OP (ADD),                               \
-        OP (CLSP),                              \
-        OP (DCARD),                             \
-        OP (DIV),                               \
-        OP (GETOP),                             \
-        OP (MULT),                              \
-        OP (POP),                               \
-        OP (PRINT),                             \
-        OP (PUSH),                              \
-        OP (PUTS),                              \
-        OP (RESET),                             \
-        OP (SUB)
+	 OP (ACOS_N),											\
+	 OP (ADD_N),											\
+	 OP (ASIN_N),											\
+	 OP (ATAN_N),											\
+	 OP (CEIL_N),											\
+	 OP (COS_N),											\
+	 OP (DEC_N),											\
+	 OP (DIV_N),											\
+	 OP (FLOOR_N),											\
+	 OP (INC_N),											\
+	 OP (LOG_N),											\
+	 OP (MOD_N),											\
+	 OP (MULT_N),											\
+	 OP (NEG_N),											\
+	 OP (POW_N),											\
+	 OP (SIN_N),											\
+	 OP (SQRT_N),											\
+	 OP (SUB_N),											\
+	 OP (TAN_N),											\
+	 /* generic */											\
+	 OP (GOTO),												\
+	 OP (HALT),												\
+	 OP (NOP),												\
+	 /* io */												\
+	 OP (INPUT_N),											\
+	 OP (INPUT_S),											\
+	 OP (PRINT_N),											\
+	 OP (PRINT_S),											\
+	 OP (PUT_N),											\
+	 OP (PUT_S),											\
+	 /* register */										\
+	 OP (MOV_N),											\
+	 OP (MOV_S),											\
+	 OP (STORE_N),											\
+	 OP (STORE_S),											\
+	 /* string */											\
+	 OP (CONCAT_S),										\
+	 OP (CHARAT_S),										\
+	 /* relational */										\
+	 OP (LT_S),												\
+	 OP (GT_S),												\
+	 OP (LTE_S),											\
+	 OP (GTE_S),											\
+	 OP (EQ_S),												\
+	 OP (LT_N),												\
+	 OP (GT_N),												\
+	 OP (LTE_N),											\
+	 OP (GTE_N),											\
+	 OP (EQ_N),												\
+	 OP (NOT_LT_S),										\
+	 OP (NOT_GT_S),										\
+	 OP (NOT_LTE_S),										\
+	 OP (NOT_GTE_S),										\
+	 OP (NOT_EQ_S),										\
+	 OP (NOT_LT_N),										\
+	 OP (NOT_GT_N),										\
+	 OP (NOT_LTE_N),										\
+	 OP (NOT_GTE_N),										\
+	 OP (NOT_EQ_N),										\
+	 /* old */												\
+	 OP (ADD),												\
+	 OP (CLSP),												\
+	 OP (DCARD),											\
+	 OP (DIV),												\
+	 OP (GETOP),											\
+	 OP (MULT),												\
+	 OP (POP),												\
+	 OP (PRINT),											\
+	 OP (PUSH),												\
+	 OP (PUTS),												\
+	 OP (RESET),											\
+	 OP (SUB)
 
 enum Opcode { OPCODES };
 
 static const char *
 mneumonic[] = {
-    "abs_n",
-    "acos_n",
-    "add_n",
-    "asin_n",
-    "atan_n",
-    "ceil_n",
-    "cos_n",
-    "dec_n",
-    "div_n",
-    "floor_n",
-    "inc_n",
-    "log_n",
-    "mod_n",
-    "mult_n",
-    "neg_n",
-    "pow_n",
-    "sin_n",
-    "sqrt_n",
-    "sub_n",
-    "tan_n",
+  "abs_n",
+  "acos_n",
+  "add_n",
+  "asin_n",
+  "atan_n",
+  "ceil_n",
+  "cos_n",
+  "dec_n",
+  "div_n",
+  "floor_n",
+  "inc_n",
+  "log_n",
+  "mod_n",
+  "mult_n",
+  "neg_n",
+  "pow_n",
+  "sin_n",
+  "sqrt_n",
+  "sub_n",
+  "tan_n",
 
-    "goto",
-    "halt",
-    "nop",
+  "goto",
+  "halt",
+  "nop",
 
-    "input_n",
-    "input_s",
-    "print_n",
-    "print_s",
-    "put_n",
-    "put_s",
+  "input_n",
+  "input_s",
+  "print_n",
+  "print_s",
+  "put_n",
+  "put_s",
 
-    "mov_n",
-    "mov_s",
-    "store_n",
-    "store_s",
+  "mov_n",
+  "mov_s",
+  "store_n",
+  "store_s",
 
-    "concat_s",
-    "charat_s",
+  "concat_s",
+  "charat_s",
 
-    "lt_s",                       /* lt_s $1 $2 LABEL */
-    "gt_s",
-    "lte_s",
-    "gte_s",
-    "eq_s",
-    "lt_n",
-    "gt_n",
-    "lte_n",
-    "gte_n",
-    "eq_n",
+  "lt_s",                       /* lt_s $1 $2 LABEL */
+  "gt_s",
+  "lte_s",
+  "gte_s",
+  "eq_s",
+  "lt_n",
+  "gt_n",
+  "lte_n",
+  "gte_n",
+  "eq_n",
 
-    "not_lt_s",                       /* lt_s $1 $2 LABEL */
-    "not_gt_s",
-    "not_lte_s",
-    "not_gte_s",
-    "not_eq_s",
-    "not_lt_n",
-    "not_gt_n",
-    "not_lte_n",
-    "not_gte_n",
-    "not_eq_n",
+  "not_lt_s",                       /* lt_s $1 $2 LABEL */
+  "not_gt_s",
+  "not_lte_s",
+  "not_gte_s",
+  "not_eq_s",
+  "not_lt_n",
+  "not_gt_n",
+  "not_lte_n",
+  "not_gte_n",
+  "not_eq_n",
 
-    /* deprecated */
-    "add",
-    "clsp",							  /* limpa a pilha */
-    "dcard",						  /* discarta o topo da pilha */
-    "div",
-    "getop",			// for puts and print
-    "mult",
-    "pop",
-    "print",
-    "push",
-    "puts",
-    "reset",
-    "sub"
+  /* deprecated */
+  "add",
+  "clsp",							  /* limpa a pilha */
+  "dcard",						  /* discarta o topo da pilha */
+  "div",
+  "getop",			// for puts and print
+  "mult",
+  "pop",
+  "print",
+  "push",
+  "puts",
+  "reset",
+  "sub"
 };
 
 #endif

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:35:36 BRT>
+ *   Modified: <2009-07-22 10:19:12 BRT>
  */
 
 #ifndef VM_H

@@ -1,9 +1,5 @@
-.options
-  @size 3
-.end
-
-.code
-  store_s $0 "hello World"
-  store_i $1 10
+.main
+  store_s "hello World" $0
   halt
 .end
+
