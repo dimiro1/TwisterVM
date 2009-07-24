@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-22 10:19:12 BRT>
+ *   Modified: <2009-07-23 20:48:06 BRT>
  */
 
 #ifndef VM_H
@@ -19,7 +19,7 @@ public:
   void load (string progname);
   void execute ();
   void list ();
-    
+
 private:
   /* Registers */
   std::map<int, STRING, std::less<int> > s_registers; /* string_registers */

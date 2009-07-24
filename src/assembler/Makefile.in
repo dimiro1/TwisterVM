@@ -46,7 +46,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_twisterc_OBJECTS = asm_gen.$(OBJEXT) Parser.$(OBJEXT) \
-	Scanner.$(OBJEXT) Twisterc.$(OBJEXT) instruction.$(OBJEXT)
+	Scanner.$(OBJEXT) Twisterc.$(OBJEXT) exec_context.$(OBJEXT) \
+	instruction.$(OBJEXT)
 twisterc_OBJECTS = $(am_twisterc_OBJECTS)
 twisterc_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -146,7 +147,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-twisterc_SOURCES = asm_gen.cpp Parser.cpp Scanner.cpp Twisterc.cpp $(top_srcdir)/src/instruction.cpp
+twisterc_SOURCES = asm_gen.cpp Parser.cpp Scanner.cpp Twisterc.cpp $(top_srcdir)/src/exec_context.cpp $(top_srcdir)/src/instruction.cpp
 noinst_HEADERS = asm_gen.h Scanner.h Parser.h
 INCLUDES = -I$(top_srcdir)/src
 twisterc_atg = Twisterc.atg
@@ -226,6 +227,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scanner.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Twisterc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asm_gen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exec_context.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/instruction.Po@am__quote@
 
 .cpp.o:
@@ -241,6 +243,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+exec_context.o: $(top_srcdir)/src/exec_context.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT exec_context.o -MD -MP -MF $(DEPDIR)/exec_context.Tpo -c -o exec_context.o `test -f '$(top_srcdir)/src/exec_context.cpp' || echo '$(srcdir)/'`$(top_srcdir)/src/exec_context.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/exec_context.Tpo $(DEPDIR)/exec_context.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/src/exec_context.cpp' object='exec_context.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o exec_context.o `test -f '$(top_srcdir)/src/exec_context.cpp' || echo '$(srcdir)/'`$(top_srcdir)/src/exec_context.cpp
+
+exec_context.obj: $(top_srcdir)/src/exec_context.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT exec_context.obj -MD -MP -MF $(DEPDIR)/exec_context.Tpo -c -o exec_context.obj `if test -f '$(top_srcdir)/src/exec_context.cpp'; then $(CYGPATH_W) '$(top_srcdir)/src/exec_context.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/exec_context.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/exec_context.Tpo $(DEPDIR)/exec_context.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/src/exec_context.cpp' object='exec_context.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o exec_context.obj `if test -f '$(top_srcdir)/src/exec_context.cpp'; then $(CYGPATH_W) '$(top_srcdir)/src/exec_context.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/exec_context.cpp'; fi`
 
 instruction.o: $(top_srcdir)/src/instruction.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT instruction.o -MD -MP -MF $(DEPDIR)/instruction.Tpo -c -o instruction.o `test -f '$(top_srcdir)/src/instruction.cpp' || echo '$(srcdir)/'`$(top_srcdir)/src/instruction.cpp

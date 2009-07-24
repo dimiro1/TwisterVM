@@ -9,10 +9,10 @@ public:
   Instruction ();
   Instruction (unsigned int _opcode);
   Instruction (unsigned int _opcode, unsigned int _A);
-  Instruction (unsigned int _opcode, unsigned int _A, 
-					unsigned int _B);
+  Instruction (unsigned int _opcode, unsigned int _A,
+					unsigned int _C);
 
-  Instruction (unsigned int _opcode, unsigned int _A, 
+  Instruction (unsigned int _opcode, unsigned int _A,
 					unsigned int _B, unsigned int _C);
 
   unsigned int opcode : 8;
@@ -21,7 +21,6 @@ public:
   unsigned int C : 12;
 };
 
-/* TODO: esta classe deixará de esistir */
 class TwcFile {
 public:
   TwcFile (int _code_len);

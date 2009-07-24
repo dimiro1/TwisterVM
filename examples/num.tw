@@ -1,0 +1,5 @@
+.main
+  store_n 10 $0
+  put_n $0
+  halt
+.end

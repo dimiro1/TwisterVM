@@ -64,30 +64,12 @@ AsmGen *gen;
 
 	void Twisterc();
 	void OptionsSection();
-	void StaticSection();
 	void CodeSection();
 	void OptionsOptionsSection();
-	void StaticOptions();
 	void CodeInstruction();
-	void Add();
-	void Clsp();
-	void Dcard();
-	void Div();
-	void Getop();
-	void Goto();
-	void Halt();
-	void Label();
-	void Mult();
-	void Nop();
-	void Pop();
-	void Print();
-	void Push();
-	void Puts();
-	void Reset();
-	void Sub();
-	void Store_i();
-	void Store_s();
 	void Register(int &n);
+	void Label(string &label_name);
+	void LabelDec(string &label_name);
 
 	void Parse();
 

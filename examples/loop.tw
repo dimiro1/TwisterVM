@@ -1,0 +1,11 @@
+.main
+  store_n 1 $1
+  store_n 10 $2
+LOOP:
+  eq_n $1 $2 DONE
+  put_n $1
+  inc_n $1
+  goto LOOP
+DONE:
+  halt
+.end

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 15:56:54 BRT>
+ *   Modified: <2009-07-24 16:02:01 BRT>
  */
 
 #ifndef _EXEC_CONTEXT_H_
@@ -15,7 +15,6 @@ public:
   Header ()
 	 : string_table_len (0),
 		num_table_len (0),
-		label_table_len (0),
 		code_len (0) {}
 
   unsigned char magic;
@@ -25,35 +24,51 @@ public:
 
   unsigned short string_table_len;
   unsigned short num_table_len;
-  unsigned short label_table_len;
   unsigned short code_len;
 };
 
 /* mantem informações que estão sendo executadas */
+/* TODO: mudar o nome para TwcFile */
+/* TODO: Criar uma classe para manter as informações que estão em execução.
+         Uma especie de Processo.
+*/
 class ExecContext {
 public:
-  ExecContext () : current_string_pos (0), pc (0) {}
+  ExecContext ()
+	 : current_string_pos (0),
+		current_num_pos (0),
+		pc (0) {}
   ~ExecContext ();
 
   Header header;
   /* tables */
   char *string_table;
   NUMBER *num_table;
-  LABEL *label_table;
   /* code */
   Instruction *code_section;
 
   int pc;							  /* program counter */
   unsigned short current_string_pos;
+  unsigned short current_num_pos;
 
   /* necessario apenas no assembler */
-  void add_string (const char *string)
+  int add_string (const char *string)
   {
-	 int len = strlen(string);
-	 strcpy ((string_table + current_string_pos), string);
+	 int offset = current_string_pos;
+	 int len = strlen (string) - 2; /* remove aspas */
+	 strncpy ((string_table + current_string_pos), &string[1], len);
 	 string_table[current_string_pos + len] = EOS;
 	 current_string_pos += (len + 1);
+	 return offset;
   }
+
+  int add_num (NUMBER n)
+  {
+	 int offset = current_num_pos;
+	 num_table[current_num_pos++] = n;
+	 return offset;
+  }
+
 
   inline char * get_string (short n)
   {
@@ -65,12 +80,8 @@ public:
 	 return num_table[n];
   }
 
-  inline LABEL get_label (short n)
-  {
-	 return label_table[n];
-  }
-
-  void load_file (string file_name) 
+  /* FIXME: Responsabilidade da VM */
+  void load_file (string file_name)
 	 throw (BadFileException, NotRecognizedFileException, bad_alloc);
 };
 

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:44:21 BRT>
+ *   Modified: <2009-07-24 09:05:06 BRT>
  */
 
 #include "instruction.h"
@@ -30,15 +30,17 @@ Instruction::Instruction (unsigned int _opcode, unsigned int _A)
 	C = NULL;
 }
 
-Instruction::Instruction (unsigned int _opcode, unsigned int _A, unsigned int _B)
+Instruction::Instruction (unsigned int _opcode,
+								  unsigned int _A,
+								  unsigned int _C)
 {
    opcode = _opcode;
    A = _A;
-	B = _B;
-	C = NULL;
+	B = NULL;
+	C = _C;
 }
 
-Instruction::Instruction (unsigned int _opcode, unsigned int _A, 
+Instruction::Instruction (unsigned int _opcode, unsigned int _A,
 								  unsigned int _B, unsigned int _C)
 {
    opcode = _opcode;

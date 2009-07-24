@@ -1,0 +1,23 @@
+# fox.tw
+# programa exemplo
+.main
+  store_s "The quick " $0
+  store_s "brown fox " $1
+  store_s "jumps" $2
+  concat_s $0 $1 $0
+  print_s $0
+  input_s $1
+  eq_s $1 $2 IFLABEL
+  store_s "does not " $3
+  store_s "jump" $2
+  concat_s $0 $3 $0
+  concat_s $0 $2 $0
+  goto ENDLABEL
+IFLABEL:
+  concat_s $0 $1 $0
+ENDLABEL:
+  store_s " over the lazy dog" $2
+  concat_s $0 $2 $0
+  put_s $0
+  halt
+.end

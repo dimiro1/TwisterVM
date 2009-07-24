@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-22 10:20:31 BRT>
+ *   Modified: <2009-07-24 15:25:16 BRT>
  */
 
 /* sempre inclua dispatch, não inclua opcode.h diretamente */
@@ -144,20 +144,7 @@
 	 OP (NOT_GT_N),										\
 	 OP (NOT_LTE_N),										\
 	 OP (NOT_GTE_N),										\
-	 OP (NOT_EQ_N),										\
-	 /* old */												\
-	 OP (ADD),												\
-	 OP (CLSP),												\
-	 OP (DCARD),											\
-	 OP (DIV),												\
-	 OP (GETOP),											\
-	 OP (MULT),												\
-	 OP (POP),												\
-	 OP (PRINT),											\
-	 OP (PUSH),												\
-	 OP (PUTS),												\
-	 OP (RESET),											\
-	 OP (SUB)
+	 OP (NOT_EQ_N)
 
 enum Opcode { OPCODES };
 
@@ -223,21 +210,7 @@ mneumonic[] = {
   "not_gt_n",
   "not_lte_n",
   "not_gte_n",
-  "not_eq_n",
-
-  /* deprecated */
-  "add",
-  "clsp",							  /* limpa a pilha */
-  "dcard",						  /* discarta o topo da pilha */
-  "div",
-  "getop",			// for puts and print
-  "mult",
-  "pop",
-  "print",
-  "push",
-  "puts",
-  "reset",
-  "sub"
+  "not_eq_n"
 };
 
 #endif
