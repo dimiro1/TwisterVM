@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-25 10:26:14 BRT>
+ *   Modified: <2009-07-25 15:23:50 BRT>
  */
 
 #ifndef _ASM_GEN_H_
@@ -159,17 +159,33 @@ public:
   inline void add_instruction (unsigned int _opcode, int _A, int _B, string _label_name)
   {
 	 if (label_defined (_label_name))
-		instruction_table.push_back (Instruction (_opcode, _A, _B, get_label_offset (_label_name)));
+		{
+		  Instruction i (_opcode, _A, _B, get_label_offset (_label_name));
+		  i.label_defined = true;
+		  instruction_table.push_back (i);
+		}
 	 else
-		instruction_table.push_back (Instruction (_opcode, _A, _B, get_label_index (_label_name)));
+		{
+		  Instruction i (_opcode, _A, _B, get_label_index (_label_name));
+		  i.label_defined = false;
+		  instruction_table.push_back (i);
+		}
   }
 
   inline void add_instruction (unsigned int _opcode, string _label_name)
   {
 	 if (label_defined (_label_name))
-		instruction_table.push_back (Instruction (_opcode, get_label_offset (_label_name)));
+		{
+		  Instruction i (_opcode, get_label_offset (_label_name));
+		  i.label_defined = true;
+		  instruction_table.push_back (i);
+		}
 	 else
-		instruction_table.push_back (Instruction (_opcode, get_label_index (_label_name)));
+		{
+		  Instruction i (_opcode, get_label_index (_label_name));
+		  i.label_defined = false;
+		  instruction_table.push_back (i);
+		}
   }
 
 

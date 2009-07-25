@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-25 10:37:51 BRT>
+ *   Modified: <2009-07-25 15:23:25 BRT>
  */
 
 #include "asm_gen.h"
@@ -203,41 +203,47 @@ void AsmGen::update_references_to_label_table (string _name)
   std::vector<LabelDec>::iterator i_label;
   std::vector<Instruction>::iterator i_code;
   int index;
-  LabelDec *l_temp;
   index = get_label_index (_name);
 
-  for (i_code = instruction_table.begin ();
-		 i_code != instruction_table.end (); i_code++)
-	 {
-		switch ((*i_code).opcode)
+  if (label_table[index].defined == false)
+  	 {
+		/* cout << label_table[index].name << endl; */
+		for (i_code = instruction_table.begin ();
+			  i_code != instruction_table.end (); i_code++)
 		  {
-		  case OP_GOTO:
-			 if ((*i_code).A == index)
-				(*i_code).A = label_table[index].offset;
-			 break;
-		  case OP_LT_S:
-		  case OP_GT_S:
-		  case OP_LTE_S:
-		  case OP_GTE_S:
-		  case OP_EQ_S:
-		  case OP_NOT_LT_S:
-		  case OP_NOT_GT_S:
-		  case OP_NOT_LTE_S:
-		  case OP_NOT_GTE_S:
-		  case OP_NOT_EQ_S:
-		  case OP_LT_N:
-		  case OP_GT_N:
-		  case OP_LTE_N:
-		  case OP_GTE_N:
-		  case OP_EQ_N:
-		  case OP_NOT_LT_N:
-		  case OP_NOT_GT_N:
-		  case OP_NOT_LTE_N:
-		  case OP_NOT_GTE_N:
-		  case OP_NOT_EQ_N:
-			 if ((*i_code).C == index)
-				(*i_code).C = label_table[index].offset;
-			 break;
+			 if ((*i_code).label_defined == false)
+				{
+				  switch ((*i_code).opcode)
+					 {
+					 case OP_GOTO:
+						if ((*i_code).A == index)
+						  (*i_code).A = label_table[index].offset;
+						break;
+					 case OP_LT_S:
+					 case OP_GT_S:
+					 case OP_LTE_S:
+					 case OP_GTE_S:
+					 case OP_EQ_S:
+					 case OP_NOT_LT_S:
+					 case OP_NOT_GT_S:
+					 case OP_NOT_LTE_S:
+					 case OP_NOT_GTE_S:
+					 case OP_NOT_EQ_S:
+					 case OP_LT_N:
+					 case OP_GT_N:
+					 case OP_LTE_N:
+					 case OP_GTE_N:
+					 case OP_EQ_N:
+					 case OP_NOT_LT_N:
+					 case OP_NOT_GT_N:
+					 case OP_NOT_LTE_N:
+					 case OP_NOT_GTE_N:
+					 case OP_NOT_EQ_N:
+						if ((*i_code).C == index)
+						  (*i_code).C = label_table[index].offset;
+						break;
+					 }
+				}
 		  }
 	 }
 }
@@ -258,7 +264,7 @@ int AsmGen::get_label_offset (string _name)
 /* verifica se o label foi definido */
 bool AsmGen::label_defined (string _name)
 {
-  std::vector<LabelDec>::iterator i_label;
+  std::vector<LabelDec>::const_iterator i_label;
   for (i_label = label_table.begin ();
 		 i_label != label_table.end (); i_label++)
 	 {
@@ -308,11 +314,15 @@ bool AsmGen::add_label (string _name, bool _defined)
 		if ((*i_label).name == _name)
 		  {
 			 (*i_label).offset = current_code_line;
+			 update_references_to_label_table (_name);
 			 (*i_label).defined = true;
 			 return false;
 		  }
 	 }
-  label_table.push_back (LabelDec (_name, current_code_line, _defined, current_label_index));
+  /* cout << _name << endl; */
+  /* cout << current_code_line << endl; */
+  /* cout << current_label_index << endl; */
+  label_table.push_back (LabelDec (_name, current_code_line, true, current_label_index));
   current_label_index++;
   return true;
 }

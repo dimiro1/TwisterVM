@@ -1,0 +1,6 @@
+# hello world program
+.main
+  store_s "Hello World" $0
+  put_s $0
+  halt
+.end

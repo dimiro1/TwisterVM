@@ -19,6 +19,8 @@ public:
   unsigned int A : 12;
   unsigned int B : 12;
   unsigned int C : 12;
+  /* isso não é muito legal, usado apenas no assembler */
+  bool label_defined;			  /* informa se o label foi definido. */
 };
 
 class TwcFile {

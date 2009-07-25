@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-24 09:05:06 BRT>
+ *   Modified: <2009-07-25 14:14:25 BRT>
  */
 
 #include "instruction.h"
@@ -12,6 +12,7 @@ Instruction::Instruction ()
    A = NULL;
 	B = NULL;
 	C = NULL;
+	label_defined = false;
 }
 
 Instruction::Instruction (unsigned int _opcode)
@@ -20,6 +21,7 @@ Instruction::Instruction (unsigned int _opcode)
    A = NULL;
 	B = NULL;
 	C = NULL;
+	label_defined = false;
 }
 
 Instruction::Instruction (unsigned int _opcode, unsigned int _A)
@@ -28,6 +30,7 @@ Instruction::Instruction (unsigned int _opcode, unsigned int _A)
    A = _A;
 	B = NULL;
 	C = NULL;
+	label_defined = false;
 }
 
 Instruction::Instruction (unsigned int _opcode,
@@ -38,6 +41,7 @@ Instruction::Instruction (unsigned int _opcode,
    A = _A;
 	B = NULL;
 	C = _C;
+	label_defined = false;
 }
 
 Instruction::Instruction (unsigned int _opcode, unsigned int _A,
@@ -47,6 +51,7 @@ Instruction::Instruction (unsigned int _opcode, unsigned int _A,
    A = _A;
 	B = _B;
 	C = _C;
+	label_defined = false;
 }
 
 TwcFile::TwcFile (int _code_len)

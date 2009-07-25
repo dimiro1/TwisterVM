@@ -96,23 +96,20 @@ void Parser::CodeInstruction() {
 		case 8: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_ABS_N, A, B, C); 
+			gen->add_instruction (OP_ABS_N, A, C); 
 			break;
 		}
 		case 9: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_ACOS_N, A, B, C); 
+			gen->add_instruction (OP_ACOS_N, A, C); 
 			break;
 		}
 		case 10: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
 			gen->add_instruction (OP_ADD_N, A, B, C); 
 			break;
@@ -120,39 +117,35 @@ void Parser::CodeInstruction() {
 		case 11: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_ASIN_N, A, B, C); 
+			gen->add_instruction (OP_ASIN_N, A, C); 
 			break;
 		}
 		case 12: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_ATAN_N, A, B, C); 
+			gen->add_instruction (OP_ATAN_N, A, C); 
 			break;
 		}
 		case 13: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_CEIL_N, A, B, C); 
+			gen->add_instruction (OP_CEIL_N, A, C); 
 			break;
 		}
 		case 14: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_COS_N, A, B, C); 
+			gen->add_instruction (OP_COS_N, A, C); 
 			break;
 		}
 		case 15: {
 			Get();
-			Register(C);
-			gen->add_instruction (OP_DEC_N, A, B, C); 
+			Register(A);
+			gen->add_instruction (OP_DEC_N, A); 
 			break;
 		}
 		case 16: {
@@ -166,9 +159,8 @@ void Parser::CodeInstruction() {
 		case 17: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_FLOOR_N, A, B, C); 
+			gen->add_instruction (OP_FLOOR_N, A, C); 
 			break;
 		}
 		case 18: {
@@ -180,9 +172,8 @@ void Parser::CodeInstruction() {
 		case 19: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_LOG_N, A, B, C); 
+			gen->add_instruction (OP_LOG_N, A, C); 
 			break;
 		}
 		case 20: {
@@ -218,17 +209,15 @@ void Parser::CodeInstruction() {
 		case 24: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_SIN_N, A, B, C); 
+			gen->add_instruction (OP_SIN_N, A, C); 
 			break;
 		}
 		case 25: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_SQRT_N, A, B, C); 
+			gen->add_instruction (OP_SQRT_N, A, C); 
 			break;
 		}
 		case 26: {
@@ -242,9 +231,8 @@ void Parser::CodeInstruction() {
 		case 27: {
 			Get();
 			Register(A);
-			Register(B);
 			Register(C);
-			gen->add_instruction (OP_TAN_N, A, B, C); 
+			gen->add_instruction (OP_TAN_N, A, C); 
 			break;
 		}
 		case 28: {
@@ -532,7 +520,6 @@ void Parser::CodeInstruction() {
 			LabelDec(label_name);
 			gen->dec_code_line ();
 			gen->add_label (label_name, true);
-			gen->update_references_to_label_table (label_name);
 			
 			break;
 		}

@@ -48,30 +48,30 @@ COMPILER Twisterc
 
                         // opcode        A           B          C
 		CodeInstruction (. int A, B, C; string label_name; gen->inc_code_line (); .) 
-                        = "abs_n"     Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_ABS_N, A, B, C); .)
-								| "acos_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_ACOS_N, A, B, C); .)
-								| "add_n"	  Register<A> Register<B> Register<C>
+                        = "abs_n"     Register<A> Register<C>
+                                      (. gen->add_instruction (OP_ABS_N, A, C); .)
+								| "acos_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_ACOS_N, A, C); .)
+								| "add_n"	  Register<A> Register<C>
                                       (. gen->add_instruction (OP_ADD_N, A, B, C); .)
-								| "asin_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_ASIN_N, A, B, C); .)
-								| "atan_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_ATAN_N, A, B, C); .)
-								| "ceil_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_CEIL_N, A, B, C); .)
-								| "cos_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_COS_N, A, B, C); .)
-								| "dec_n"							  Register<C>
-                                      (. gen->add_instruction (OP_DEC_N, A, B, C); .)
+								| "asin_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_ASIN_N, A, C); .)
+								| "atan_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_ATAN_N, A, C); .)
+								| "ceil_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_CEIL_N, A, C); .)
+								| "cos_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_COS_N, A, C); .)
+								| "dec_n"     Register<A>
+                                      (. gen->add_instruction (OP_DEC_N, A); .)
 								| "div_n"	  Register<A> Register<B> Register<C>
                                       (. gen->add_instruction (OP_DIV_N, A, B, C); .)
-								| "floor_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_FLOOR_N, A, B, C); .)
+								| "floor_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_FLOOR_N, A, C); .)
 								| "inc_n"     Register<A>
                                       (. gen->add_instruction (OP_INC_N, A); .)
-								| "log_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_LOG_N, A, B, C); .)
+								| "log_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_LOG_N, A, C); .)
 								| "mod_n"	  Register<A> Register<B> Register<C>
                                       (. gen->add_instruction (OP_MOD_N, A, B, C); .)
 								| "mult_n"	  Register<A> Register<B> Register<C>
@@ -80,14 +80,14 @@ COMPILER Twisterc
                                       (. gen->add_instruction (OP_NEG_N, A); .)
 								| "pow_n"	  Register<A> Register<B> Register<C>
                                       (. gen->add_instruction (OP_POW_N, A, B, C); .)
-								| "sin_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_SIN_N, A, B, C); .)
-								| "sqrt_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_SQRT_N, A, B, C); .)
+								| "sin_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_SIN_N, A, C); .)
+								| "sqrt_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_SQRT_N, A, C); .)
 								| "sub_n"	  Register<A> Register<B> Register<C>
                                       (. gen->add_instruction (OP_SUB_N, A, B, C); .)
-								| "tan_n"	  Register<A> Register<B> Register<C>
-                                      (. gen->add_instruction (OP_TAN_N, A, B, C); .)
+								| "tan_n"	  Register<A> Register<C>
+                                      (. gen->add_instruction (OP_TAN_N, A, C); .)
                         | "goto"      Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GOTO, label_name); .)
@@ -189,7 +189,6 @@ COMPILER Twisterc
                         | LabelDec<label_name> (. 
                                                   gen->dec_code_line ();
                                                   gen->add_label (label_name, true);
-                                                  gen->update_references_to_label_table (label_name);
                                                 .)
 						.
 

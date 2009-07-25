@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-25 10:51:21 BRT>
+ *   Modified: <2009-07-25 16:13:14 BRT>
  */
 
 #include "vm.h"
@@ -359,7 +359,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("inc_n");
 	 #endif
-	 RN (executing.A, RN (executing.A) + 1);
+	 RN (executing.A, (RN (executing.A) + 1));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -369,7 +369,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("dec_n");
 	 #endif
-	 RN (executing.A, RN (executing.A) - 1);
+	 RN (executing.A, (RN (executing.A) - 1));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -474,7 +474,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("mov_n");
 	 #endif
-	 RN (executing.B, RN (executing.A));
+	 RN (executing.C, RN (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -484,7 +484,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("mov_s");
 	 #endif
-	 RS (executing.B, RS (executing.A));
+	 RS (executing.C, RS (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK

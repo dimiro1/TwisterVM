@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-22 10:09:28 BRT>
+ *   Modified: <2009-07-25 16:10:25 BRT>
  */
 
 /* Mão modifique a sequencia de includes. */
@@ -32,6 +32,7 @@ using std::ifstream;
 #include <iomanip>
 using std::hex;
 using std::dec;
+using std::setprecision;
 
 #include <string>
 using std::string;

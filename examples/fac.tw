@@ -1,0 +1,32 @@
+# calcula o fatorial de 1 a 30
+# fac = $0
+# temp = $1
+# n = $2
+# max = $3
+# temp = $4
+# ini = $5
+.main
+  store_s "Factorial of " $6
+  store_s " is " $7
+  store_n 1 $2
+  store_n 1 $5
+  store_n 30 $3
+LOOP:
+  store_n 1 $0
+  mov_n $2 $1 # temp = n
+  gt_n $2 $3 END
+  print_s $6
+  print_n $2
+  print_s $7
+  inc_n $2
+FAC:
+  lte_n $1 $5 DISPLAY
+  mult_n $0 $1 $0
+  dec_n $1
+  goto FAC
+DISPLAY:
+  put_n $0
+  goto LOOP
+END:
+  halt
+.end
