@@ -12,14 +12,14 @@
   store_s " = " $7
 FOR1:
   inc_n $1
-  not_lte_n $1 $3 EXIT # if !(i <= tam) goto END
+  gt_n $1 $3 EXIT # if (i > tam) goto END
   store_s "Tabuada do " $4
   print_s $4
   put_n $1
   store_n 0 $2
 FOR2:
   inc_n $2
-  not_lte_n $2 $3 FOR1 # if !(j <= tam) goto LOOP1
+  gt_n $2 $3 FOR1 # if (j > tam) goto LOOP1
   mult_n $1 $2 $5
   print_n $1
   print_s $6
