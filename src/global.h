@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-25 16:10:25 BRT>
+ *   Modified: <2009-07-25 17:04:03 BRT>
  */
 
 /* Mão modifique a sequencia de includes. */
@@ -14,9 +14,9 @@
 
 /* version */
 #define VM_VERSION_MAJOR 0
-#define VM_VERSION_MINOR 2
+#define VM_VERSION_MINOR 5
 
-#define MAGIC_VERSION_NUM 0x02 // version 0.2
+#define MAGIC_VERSION_NUM 0x05 // version 0.5
 #define EOS '\0'
 
 #include <iostream>

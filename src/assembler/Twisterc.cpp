@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-24 21:41:23 BRT>
+ *   Modified: <2009-07-25 17:07:13 BRT>
  */
 
 #include "Scanner.h"
@@ -64,7 +64,8 @@ void TwistercMain::show_usage ()
 		 << "  -o <outfilename> \tplace the output in <outfilename>" << endl
 		 << "  -c\t\t\tshow copyright" << endl
 		 << "  -v\t\t\tshow version" << endl
-		 << "  -[h?]\t\t\tshow this help" << endl;
+		 << "  -h\t\t\tshow this help" << endl;
+  show_copyright ();
 }
 
 void TwistercMain::main (int argc, char **argv)
@@ -79,7 +80,6 @@ void TwistercMain::main (int argc, char **argv)
 			 out_file_name = optarg;
 			 break;
 		  case 'h':
-		  case '?':
 			 hflag = true;
 			 break;
 		  case 'c':

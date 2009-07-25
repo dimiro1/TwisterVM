@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-24 21:41:33 BRT>
+ *   Modified: <2009-07-25 17:11:57 BRT>
  */
 
 #include "global.h"
@@ -45,8 +45,8 @@ void TwisterMain::main (int argc, char **argv)
 	 {0, 0, 0, 0}
   };
 
-  while ( (c = getopt_long ( argc, argv, "vclh",
-									  long_options, &option_index )) != -1)
+  while ((c = getopt_long ( argc, argv, "vclh",
+									 long_options, &option_index )) != -1)
 	 {
 		switch (c)
 		  {
@@ -61,7 +61,6 @@ void TwisterMain::main (int argc, char **argv)
 			 lflag = true;
 			 break;
 		  case 'h':
-		  case '?':
 			 hflag = true;
 			 break;
 		  default:
@@ -128,7 +127,7 @@ void TwisterMain::show_usage ()
   cerr << "usage: " << stream_name << " [options] [twcfile]." << endl
 		 << "Available options are:" << endl
 		 << "  -l [list] \t\tlist code" << endl
-		 << "  -v [version] \tshow version" << endl
+		 << "  -v [version] \t\tshow version" << endl
 		 << "  -h [help]\t\tshow this help" << endl
 		 << "  -c [copyright]\tcopyright information" << endl << endl;
   show_copyright ();
