@@ -116,7 +116,7 @@ COMPILER Twisterc
                                                           (. n = atof (coco_string_create_char (t->val));
                                                              index = gen->add_num (n); .)
                                                                           Register<C>
-                                      (. gen->add_instruction (OP_STORE_N, index, C); .)
+                                         (. gen->add_instruction (OP_STORE_N, index, C); .)
 
                         | "store_s" (. int index; .)   STRING (. index = gen->add_string (string (coco_string_create_char (t->val))); .)
                                                               Register<C>

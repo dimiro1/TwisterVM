@@ -1,0 +1,10 @@
+# simple cat example
+# Control-c to stop
+.main
+LOOP:
+  input_s $1
+  put_s $1
+  goto LOOP
+DONE:
+  halt
+.end

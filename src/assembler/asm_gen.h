@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-24 19:50:54 BRT>
+ *   Modified: <2009-07-25 10:26:14 BRT>
  */
 
 #ifndef _ASM_GEN_H_
@@ -105,8 +105,16 @@ public:
 
 class AsmGen {
 public:
-  AsmGen (string _output_file_name);
-  ~AsmGen ();
+  AsmGen (string _output_file_name)
+	 : output_file_name (_output_file_name),
+		default_extension (".twc"),
+		current_code_line (0),
+		current_label_index (0) {}
+
+  ~AsmGen ()
+  {
+	 delete output;
+  }
 
   void assemble ();
   void set_output_file_name (const char *_file_name);
@@ -176,12 +184,12 @@ public:
 private:
   int current_code_line;		  /* atual linha de codigo. */
   int current_label_index;
-  TwcFile *assembled_file;
   string output_file_name;
   ofstream *output;
   string default_extension;
   ExecContext context;
 
+  /* tabelas temporarias */
   std::vector<StringDec> string_table;
   std::vector<NumDec> num_table;
   std::vector<LabelDec> label_table;

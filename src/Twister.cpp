@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-21 13:47:56 BRT>
+ *   Modified: <2009-07-24 21:41:33 BRT>
  */
 
 #include "global.h"
@@ -36,7 +36,7 @@ void TwisterMain::main (int argc, char **argv)
 {
   int option_index = 0;
   int c;
- 
+
   static struct option long_options[] = {
 	 {"copyright", no_argument, 0, 'c'},
 	 {"list", no_argument, 0, 'l'},
@@ -45,7 +45,7 @@ void TwisterMain::main (int argc, char **argv)
 	 {0, 0, 0, 0}
   };
 
-  while ( (c = getopt_long ( argc, argv, "vclh", 
+  while ( (c = getopt_long ( argc, argv, "vclh",
 									  long_options, &option_index )) != -1)
 	 {
 		switch (c)
@@ -91,10 +91,10 @@ void TwisterMain::main (int argc, char **argv)
 	 {
 		try {
 		  vm.load (string (argv[0]));
-		} 
+		}
 		catch (NotRecognizedFileException e) {
 		  cout << e.what () << endl;
-		} 
+		}
 		catch (BadFileException e) {
 		  cout << e.what () << endl;
 		}
@@ -103,13 +103,13 @@ void TwisterMain::main (int argc, char **argv)
 		  vm.list ();
 		if (eflag)
 		  vm.execute ();
-	 }  
+	 }
 }
 
 inline void TwisterMain::show_version ()
 {
-    cout << "TwisterVm v" << VM_VERSION_MAJOR 
-         << "." << VM_VERSION_MINOR 
+    cout << "TwisterVm v" << VM_VERSION_MAJOR
+         << "." << VM_VERSION_MINOR
 #ifdef HAVE_COMPUTED_GOTO
          << " (Computed goto activated)" << endl;
 #else
@@ -125,10 +125,10 @@ inline void TwisterMain::show_copyright ()
 
 void TwisterMain::show_usage ()
 {
-  cerr << "usage: " << stream_name << " [options] [script file]." << endl
+  cerr << "usage: " << stream_name << " [options] [twcfile]." << endl
 		 << "Available options are:" << endl
 		 << "  -l [list] \t\tlist code" << endl
-		 << "  -v [version] \tlist code" << endl
+		 << "  -v [version] \tshow version" << endl
 		 << "  -h [help]\t\tshow this help" << endl
 		 << "  -c [copyright]\tcopyright information" << endl << endl;
   show_copyright ();

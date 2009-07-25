@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-24 20:05:18 BRT>
+ *   Modified: <2009-07-25 10:51:21 BRT>
  */
 
 #include "vm.h"
@@ -161,9 +161,9 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("add_n");
 	 #endif
-	 RN(executing.C,
-		 current_context->get_num (executing.A) +
-		 current_context->get_num (executing.B));
+	 RN (executing.C,
+		 RN (executing.A) +
+		 RN (executing.B));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -174,9 +174,9 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("sub_n");
 	 #endif
-	 RN(executing.C,
-		 current_context->get_num (executing.A) -
-		 current_context->get_num (executing.B));
+	 RN (executing.C,
+		 RN (executing.A) -
+		 RN (executing.B));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -186,9 +186,9 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("mult_n");
 	 #endif
-	 RN(executing.C,
-		 current_context->get_num (executing.A) *
-		 current_context->get_num (executing.B));
+	 RN (executing.C,
+		 RN (executing.A) *
+		 RN (executing.B));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -204,10 +204,9 @@ void VM::dispatch ()
 		  error_emitter.emit (ZERO_DIVISION);
 		  abort ();
 		}
-	 RN(executing.C,
-		 current_context->get_num (executing.A) /
-		 current_context->get_num (executing.B));
-
+	 RN (executing.C,
+		 RN (executing.A) /
+		 RN (executing.B));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -217,9 +216,9 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("mod_n");
 	 #endif
-	 RN(executing.C,
-		 static_cast<int>(current_context->get_num (executing.A)) %
-		 static_cast<int>(current_context->get_num (executing.B)));
+	 RN (executing.C,
+		 static_cast<int>(RN (executing.A)) %
+		 static_cast<int>(RN (executing.B)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -229,8 +228,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("pow_n");
 	 #endif
-	 RN(executing.C, pow (current_context->get_num (executing.A),
-								 current_context->get_num (executing.B)));
+	 RN (executing.C, pow (RN (executing.A),
+								 RN (executing.B)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -240,7 +239,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("neg_n");
 	 #endif
-	 RN(executing.A, -current_context->get_num (executing.A));
+	 RN (executing.A, -RN (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -250,7 +249,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("abs_n");
 	 #endif
-	 RN(executing.A, fabs (current_context->get_num (executing.A)));
+	 RN (executing.A, fabs (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -260,7 +259,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("sin_n");
 	 #endif
-	 RN(executing.C, sin (current_context->get_num (executing.A)));
+	 RN (executing.C, sin (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -270,7 +269,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("cos_n");
 	 #endif
-	 RN(executing.C, cos (current_context->get_num (executing.A)));
+	 RN (executing.C, cos (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -280,7 +279,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("tan_n");
 	 #endif
-	 RN(executing.C, tan (current_context->get_num (executing.A)));
+	 RN (executing.C, tan (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -290,7 +289,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("asin_n");
 	 #endif
-	 RN(executing.C, asin (current_context->get_num (executing.A)));
+	 RN (executing.C, asin (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -300,7 +299,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("acos_n");
 	 #endif
-	 RN(executing.C, acos (current_context->get_num (executing.A)));
+	 RN (executing.C, acos (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -310,7 +309,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("atan_n");
 	 #endif
-	 RN(executing.C, atan (current_context->get_num (executing.A)));
+	 RN (executing.C, atan (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -320,7 +319,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("log_n");
 	 #endif
-	 RN(executing.C, log (current_context->get_num (executing.A)));
+	 RN (executing.C, log (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -330,7 +329,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("sqrt_n");
 	 #endif
-	 RN(executing.C, sqrt (current_context->get_num (executing.A)));
+	 RN (executing.C, sqrt (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -340,7 +339,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("ceil_n");
 	 #endif
-	 RN(executing.C, ceil (current_context->get_num (executing.A)));
+	 RN (executing.C, ceil (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -350,7 +349,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("floor_n");
 	 #endif
-	 RN(executing.C, floor (current_context->get_num (executing.A)));
+	 RN (executing.C, floor (RN (executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -360,7 +359,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("inc_n");
 	 #endif
-	 RN(executing.A, RN(executing.A) + 1);
+	 RN (executing.A, RN (executing.A) + 1);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -370,7 +369,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("dec_n");
 	 #endif
-	 RN(executing.A, RN(executing.A) - 1);
+	 RN (executing.A, RN (executing.A) - 1);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -411,7 +410,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("print_s");
 	 #endif
-	 cout << RS(executing.A);
+	 cout << RS (executing.A);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -421,7 +420,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("print_n");
 	 #endif
-	 cout << RN(executing.A);
+	 cout << RN (executing.A);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -431,7 +430,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("put_s");
 	 #endif
-	 cout << RS(executing.A) << endl;
+	 cout << RS (executing.A) << endl;
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -441,7 +440,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("put_n");
 	 #endif
-	 cout << RN(executing.A) << endl;
+	 cout << RN (executing.A) << endl;
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -452,7 +451,7 @@ void VM::dispatch ()
 	 puts ("input_s");
 	 #endif
 	 cin >> input_s;
-	 RS(executing.A, input_s);
+	 RS (executing.A, input_s);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -463,7 +462,7 @@ void VM::dispatch ()
 	 puts ("input_n");
 	 #endif
 	 cin >> input_d;
-	 RN(executing.A, input_d);
+	 RN (executing.A, input_d);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -475,7 +474,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("mov_n");
 	 #endif
-	 RN(executing.B, current_context->get_num (executing.A));
+	 RN (executing.B, RN (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -485,7 +484,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("mov_s");
 	 #endif
-	 RS(executing.B, current_context->get_string(executing.A));
+	 RS (executing.B, RS (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -495,7 +494,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("store_s");
 	 #endif
-	 RS(executing.C,
+	 RS (executing.C,
 		 STRING (current_context->get_string(executing.A)));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -506,7 +505,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("store_n");
 	 #endif
-	 RN(executing.C,
+	 RN (executing.C,
 		 current_context->get_num (executing.A));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -520,9 +519,9 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("concat_s");
 	 #endif
-	 s_aux1 = RS(executing.A);
-	 s_aux2 = RS(executing.B);
-	 RS(executing.C, s_aux1 + s_aux2);
+	 s_aux1 = RS (executing.A);
+	 s_aux2 = RS (executing.B);
+	 RS (executing.C, s_aux1 + s_aux2);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -534,10 +533,11 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("charat_s");
 	 #endif
-	 s_aux1 = RS(executing.A);
+	 s_aux1 = RS (executing.A);
 	 ch_aux1 = new char[2];
 
 	 try {
+		/* converte caractere inteiro em char * */
 		sprintf (ch_aux1, "%c", s_aux1.at(executing.B));
 	 }
 	 catch (out_of_range e) {
@@ -545,7 +545,7 @@ void VM::dispatch ()
 		current_context->pc++;
 	 }
 
-	 RS(executing.C, STRING (ch_aux1));
+	 RS (executing.C, STRING (ch_aux1));
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -556,8 +556,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("lt_s");
 	 #endif
-	 if (RS(executing.A) <
-		  RS(executing.B))
+	 if (RS (executing.A) <
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -569,8 +569,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("gt_s");
 	 #endif
-	 if (RS(executing.A) >
-		  RS(executing.B))
+	 if (RS (executing.A) >
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -582,8 +582,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("lte_s");
 	 #endif
-	 if (RS(executing.A) <=
-		  RS(executing.B))
+	 if (RS (executing.A) <=
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -595,8 +595,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("gte_s");
 	 #endif
-	 if (RS(executing.A) >=
-		  RS(executing.B))
+	 if (RS (executing.A) >=
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -608,8 +608,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("eq_s");
 	 #endif
-	 if (RS(executing.A) ==
-		  RS(executing.B))
+	 if (RS (executing.A) ==
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -621,8 +621,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("lt_n");
 	 #endif
-	 if (RN(executing.A) <
-		  RN(executing.B))
+	 if (RN (executing.A) <
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -635,8 +635,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("gt_n");
 	 #endif
-	 if (RN(executing.A) >
-		  RN(executing.B))
+	 if (RN (executing.A) >
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -648,8 +648,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("lte_n");
 	 #endif
-	 if (RN(executing.A) <=
-		  RN(executing.B))
+	 if (RN (executing.A) <=
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -661,8 +661,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("gte_n");
 	 #endif
-	 if (RN(executing.A) >=
-		  RN(executing.B))
+	 if (RN (executing.A) >=
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -674,8 +674,11 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("eq_n");
 	 #endif
-	 if (RN(executing.A) ==
-		  RN(executing.B))
+	 /* cout << RN (executing.A) << endl; */
+	 /* cout << RN (4) << endl; */
+	 /* cout << executing.B << endl; */
+	 if (RN (executing.A) ==
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -688,8 +691,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_lt_s");
 	 #endif
-	 if (RS(executing.A) >=
-		  RS(executing.B))
+	 if (RS (executing.A) >=
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -701,8 +704,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_gt_s");
 	 #endif
-	 if (RS(executing.A) <=
-		  RS(executing.B))
+	 if (RS (executing.A) <=
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -714,8 +717,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_lte_s");
 	 #endif
-	 if (RS(executing.A) >
-		  RS(executing.B))
+	 if (RS (executing.A) >
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -727,8 +730,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_gte_s");
 	 #endif
-	 if (RS(executing.A) <
-		  RS(executing.B))
+	 if (RS (executing.A) <
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -740,8 +743,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_eq_s");
 	 #endif
-	 if (RS(executing.A) !=
-		  RS(executing.B))
+	 if (RS (executing.A) !=
+		  RS (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -753,8 +756,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_lt_n");
 	 #endif
-	 if (RS(executing.A) >=
-		  RS(executing.B))
+	 if (RN (executing.A) >=
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -767,8 +770,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_gt_n");
 	 #endif
-	 if (RS(executing.A) <=
-		  RS(executing.B))
+	 if (RN (executing.A) <=
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -780,8 +783,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_lte_n");
 	 #endif
-	 if (RS(executing.A) >
-		  RS(executing.B))
+	 if (RN (executing.A) >
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -793,8 +796,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("not_gte_n");
 	 #endif
-	 if (RS(executing.A) <
-		  RS(executing.B))
+	 if (RN (executing.A) <
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
@@ -806,8 +809,8 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts (not_"eq_n");
 	 #endif
-	 if (RS(executing.A) !=
-		  RS(executing.B))
+	 if (RN (executing.A) !=
+		  RN (executing.B))
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;
