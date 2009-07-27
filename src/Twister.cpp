@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:56:07 BRT>
+ *   Modified: <2009-07-27 17:17:19 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -122,6 +122,7 @@ inline void TwisterMain::show_version ()
 {
     cout << "TwisterVm v" << VM_VERSION_MAJOR
          << "." << VM_VERSION_MINOR
+			<< "." << VM_VERSION_PATH
 #ifdef HAVE_COMPUTED_GOTO
          << " (Computed goto activated)" << endl;
 #else

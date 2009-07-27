@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 09:12:22 BRT>
+ *   Modified: <2009-07-27 17:15:40 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -133,13 +133,22 @@ void AsmGen::report_label_table ()
 {
   std::vector<LabelDec>::const_iterator i;
   cout << "-------------------- LABEL TABLE --------------------" << endl;
-  cout << "length: " << label_table.size () << endl;
+  cout << "lenght: " << label_table.size () << endl;
   for (i = label_table.begin ();
 		 i != label_table.end (); i++)
 	 {
 		cout << "offset: " << (*i).offset
 			  << " - " << (*i).name << endl;
 	 }
+}
+
+/* exibe informações sobre instruções */
+void AsmGen::report_code ()
+{
+  cout << "-------------------- INSTRUCTIONS TABLE --------------------" << endl;
+  cout << "lenght: " << instruction_table.size ()
+		 << " (" << instruction_table.size () * sizeof (Instruction)
+		 << " bytes)" << endl;
 }
 
 /* atualiza as referencias para as strings no codigo */
@@ -234,6 +243,8 @@ void AsmGen::update_references_to_label_table (string _name)
 					 case OP_NOT_LTE_N:
 					 case OP_NOT_GTE_N:
 					 case OP_NOT_EQ_N:
+					 case OP_ZERO_N:
+					 case OP_NOT_ZERO_N:
 						if ((*i_code).C == index)
 						  (*i_code).C = label_table[index].offset;
 						break;
@@ -326,6 +337,7 @@ void AsmGen::assemble ()
   context.header.magic = MAGIC_VERSION_NUM;
   context.header.major_version = VM_VERSION_MAJOR;
   context.header.minor_version = VM_VERSION_MINOR;
+  context.header.path_version = VM_VERSION_PATH;
 
   mount_string_table ();
   mount_num_table ();
@@ -337,6 +349,8 @@ void AsmGen::assemble ()
 	 report_num_table ();
   if (label_table.size () > 0)
 	 report_label_table ();
+
+  report_code ();
 
   output = new ofstream (output_file_name.c_str(), ios::binary);
 

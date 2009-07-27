@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 08:02:09 BRT>
+ *   Modified: <2009-07-27 16:27:10 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -185,6 +185,22 @@ public:
 		}
   }
 
+  inline void add_instruction (unsigned int _opcode, int _A, string _label_name)
+  {
+	 if (label_defined (_label_name))
+		{
+		  Instruction i (_opcode, _A, get_label_offset (_label_name));
+		  i.label_defined = true;
+		  instruction_table.push_back (i);
+		}
+	 else
+		{
+		  Instruction i (_opcode, _A, get_label_index (_label_name));
+		  i.label_defined = false;
+		  instruction_table.push_back (i);
+		}
+  }
+
   inline void add_instruction (unsigned int _opcode, string _label_name)
   {
 	 if (label_defined (_label_name))
@@ -231,6 +247,7 @@ private:
   void report_num_table ();
   void report_label_table ();
   void mount_code_table ();
+  void report_code ();
 
   /* aloca espaço para as tabelas */
   void alloc_string_table_section (int _len);

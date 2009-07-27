@@ -203,6 +203,12 @@ COMPILER Twisterc
                         | "not_eq_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_EQ_N, A, B, label_name); .)
+                        | "zero_n"  Register<A> Label<label_name>
+                                      (. gen->add_label (label_name);
+                                         gen->add_instruction (OP_ZERO_N, A, label_name); .)
+                        | "not_zero_n"  Register<A> Label<label_name>
+                                      (. gen->add_label (label_name);
+                                         gen->add_instruction (OP_NOT_ZERO_N, A, label_name); .)
                         | LabelDec<label_name> (. 
                                                   gen->dec_code_line ();
                                                   gen->add_label (label_name, true);

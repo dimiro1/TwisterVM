@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:58:50 BRT>
+ *   Modified: <2009-07-27 17:16:02 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ public:
   /* vm version */
   unsigned short major_version;
   unsigned short minor_version;
+  unsigned short path_version;
 
   unsigned short string_table_len;
   unsigned short num_table_len;

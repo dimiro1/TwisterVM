@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 10:57:15 BRT>
+ *   Modified: <2009-07-27 16:18:30 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -135,6 +135,10 @@ void VM::list ()
 			 case OP_CHARAT_S:
 				cout << current_context->get_string (current.A)
 					  << " " << current.B << " $" << current.C;
+				break;
+		  case OP_ZERO_N: case OP_NOT_ZERO_N:
+				cout  << "$" << current.A
+						<< " " << current.C;
 				break;
 			 case OP_LT_S:
 			 case OP_GT_S:
@@ -857,10 +861,34 @@ void VM::dispatch ()
 
   CASE (NOT_EQ_N)
 	 #ifdef DEBUG
-	 puts (not_"eq_n");
+	 puts ("not_eq_n");
 	 #endif
 	 if (RN (executing.A) !=
 		  RN (executing.B))
+		  current_context->pc = executing.C;
+	 else
+		  current_context->pc++;
+	 GOTO_NEXT_INSTR
+	 BREAK
+  END_CASE
+
+  CASE (ZERO_N)
+	 #ifdef DEBUG
+	 puts ("zero_n");
+	 #endif
+	 if (RN (executing.A) == 0)
+		  current_context->pc = executing.C;
+	 else
+		  current_context->pc++;
+	 GOTO_NEXT_INSTR
+	 BREAK
+  END_CASE
+
+  CASE (NOT_ZERO_N)
+	 #ifdef DEBUG
+	 puts ("zero_n");
+	 #endif
+	 if (RN (executing.A) != 0)
 		  current_context->pc = executing.C;
 	 else
 		  current_context->pc++;

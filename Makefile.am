@@ -1,6 +1,6 @@
 SUBDIRS = src
 
-EXTRA_DIST = examples $(DIST_ALPHA)
+EXTRA_DIST = examples editor
 
 if MAINTAINER_MODE
   CFLAGS = -g -I.

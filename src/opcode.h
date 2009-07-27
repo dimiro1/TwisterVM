@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 09:20:59 BRT>
+ *   Modified: <2009-07-27 16:01:08 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -85,7 +85,9 @@
 	 OP (NOT_GT_N),										\
 	 OP (NOT_LTE_N),										\
 	 OP (NOT_GTE_N),										\
-	 OP (NOT_EQ_N)
+	 OP (NOT_EQ_N),										\
+	 OP (ZERO_N),											\
+	 OP (NOT_ZERO_N)
 
 enum Opcode { OPCODES };
 
@@ -153,7 +155,9 @@ mneumonic[] = {
   "not_gt_n",
   "not_lte_n",
   "not_gte_n",
-  "not_eq_n"
+  "not_eq_n",
+  "zero_n",
+  "not_zero_n"
 };
 
 #endif
