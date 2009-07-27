@@ -1,0 +1,25 @@
+# fahrenheint to celcius table
+# celcius = 5 * (fah - 32) / 9
+.main
+  store_s "FAH - CELCIUS" $0
+  store_n 0 $0 # n
+  store_n 20 $1 # inc
+  store_n 300 $2 # max
+  store_n 32 $3
+  store_n 5 $6
+  store_n 9 $7
+  store_s " - " $4
+  put_s $0
+LOOP:
+  gt_n $0 $2 END
+  print_n $0
+  print_s $4
+  sub_n $0 $3 $5 # $5 celcius
+  mult_n $5 $6 $5
+  div_n $5 $7 $5
+  put_n $5
+  add_n $0 $1 $0
+  goto LOOP
+END:
+  halt
+.end

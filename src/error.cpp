@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:59:30 BRT>
+ *   Modified: <2009-07-27 09:38:05 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,6 +28,12 @@ void Error::emit (ERRORS err)
 		break;
 	 case ZERO_DIVISION:
 		cerr << "error: division by zero." << endl;
+		break;
+	 case COMMAND_NOT_FOUND:
+		cerr << "error: command not found." << endl;
+		break;
+	 case ENV_NOT_FOUND:
+		cerr << "error: environment variable not found." << endl;
 		break;
 	 }
 }

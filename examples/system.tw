@@ -2,7 +2,9 @@
 .main
   store_s "clear" $0
   store_s "ls" $1
+  store_s "plx" $2 				  # not found
   system_s $0
   system_s $1
+  system_s $2
   halt
 .end

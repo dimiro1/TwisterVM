@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:56:28 BRT>
+ *   Modified: <2009-07-27 09:36:48 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -98,6 +98,10 @@ void VM::list ()
 				break;
 			 case OP_SYSTEM_S:
 				cout << "$" << current.A;
+				break;
+			 case OP_GETENV_S:
+				cout << "$" << current.A
+					  << " $" << current.C;
 				break;
 			 case OP_ADD_N:  case OP_SUB_N:
 			 case OP_MULT_N: case OP_DIV_N:
@@ -412,6 +416,21 @@ void VM::dispatch ()
 	 GOTO_NEXT_INSTR
 	 BREAK
   END_CASE
+
+  CASE (GETENV_S)
+	 #ifdef DEBUG
+	 puts ("getenv_s");
+	 #endif
+	 ch_aux1 = getenv (RS (executing.A).c_str ());
+	 if (ch_aux1 == NULL)
+		error_emitter.emit (ENV_NOT_FOUND);
+	 else
+		RS (executing.C, STRING (ch_aux1));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR
+	 BREAK
+  END_CASE
+
 
   CASE (GOTO)
 	 #ifdef DEBUG

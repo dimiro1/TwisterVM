@@ -1,3 +1,4 @@
 #!/bin/sh
-echo "autoreconf -i"
+rm -f config.cache
+rm -f acconfig.h
 autoreconf -i

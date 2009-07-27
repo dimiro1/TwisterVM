@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 08:01:59 BRT>
+ *   Modified: <2009-07-27 09:12:22 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ void AsmGen::mount_string_table ()
 /* exibe uma informação sobre a tabela de strings */
 void AsmGen::report_string_table ()
 {
-  std::vector<StringDec>::iterator i;
+  std::vector<StringDec>::const_iterator i;
   cout << "-------------------- STRING TABLE --------------------" << endl;
   cout << "lenght: " << context.header.string_table_len
 		 << " (" << context.header.string_table_len * sizeof (char)
@@ -85,7 +85,7 @@ void AsmGen::report_string_table ()
 /* exibe informações sobre a tabela de numeros */
 void AsmGen::report_num_table ()
 {
-  std::vector<NumDec>::iterator i;
+  std::vector<NumDec>::const_iterator i;
   cout << "-------------------- NUMBER TABLE --------------------" << endl;
   cout << "lenght: " << context.header.num_table_len
 		 << " (" << context.header.num_table_len * sizeof (NUMBER)
@@ -101,7 +101,7 @@ void AsmGen::report_num_table ()
 /* copia numeros da tabela temporaria para o contexto */
 void AsmGen::mount_num_table ()
 {
-  std::vector<NumDec>::iterator i;
+  std::vector<NumDec>::const_iterator i;
 
   /* aloca espaço para tabela de numeros */
   context.header.num_table_len = num_table.size ();
@@ -110,20 +110,7 @@ void AsmGen::mount_num_table ()
 
   for (i = num_table.begin();
 		 i != num_table.end (); i++)
-	 /* { */
-		/* cout << (*i).num << endl; */
-		/* int offset = 0; */
 		context.add_num ((*i).num);
-		/* cout << context.get_num (offset) << endl; */
-		/* cout << (*i).offset << endl; */
-		/* cout << offset << endl; */
-		/* (*i).offset = offset; */
-	 /* } */
-  /* for (int j = 0; j < context.header.num_table_len; ++j) */
-  /* 	 { */
-  /* 		cout << context.num_table[j] << endl; */
-  /* 	 } */
-  /* update_references_to_num_table (); */
 }
 
 /* copia codigo da tabela temporaria para o contexto */
@@ -177,7 +164,7 @@ void AsmGen::update_references_to_string_table ()
 	 }
 }
 
-/* adicionar string na tabela temporaria */
+/* adiciona string à tabela temporaria */
 int AsmGen::add_string (string _name)
 {
   std::vector<StringDec>::const_iterator i_string;
@@ -192,7 +179,7 @@ int AsmGen::add_string (string _name)
   return string_table.size () - 1; /* offset da string */
 }
 
-/* adicionar numero na tabela temporaria */
+/* adicionar numero à tabela temporaria */
 int AsmGen::add_num (NUMBER _num)
 {
   std::vector<NumDec>::const_iterator i_num;
@@ -202,10 +189,7 @@ int AsmGen::add_num (NUMBER _num)
 		if ((*i_num).num == _num)
 		  return (*i_num).offset;
 	 }
-  /* cout << num_table.size () << endl; */
   num_table.push_back (NumDec (_num, num_table.size ()));
-  /* cout << num_table[num_table.size () - 1].num << endl; */
-  /* cout << num_table.size () -1 << endl; */
   return num_table.size () - 1;
 }
 
@@ -213,14 +197,12 @@ int AsmGen::add_num (NUMBER _num)
 /* é chamando sempre que um label é definido. */
 void AsmGen::update_references_to_label_table (string _name)
 {
-  std::vector<LabelDec>::iterator i_label;
   std::vector<Instruction>::iterator i_code;
   int index;
   index = get_label_index (_name);
 
   if (label_table[index].defined == false)
   	 {
-		/* cout << label_table[index].name << endl; */
 		for (i_code = instruction_table.begin ();
 			  i_code != instruction_table.end (); i_code++)
 		  {
@@ -292,7 +274,7 @@ bool AsmGen::label_defined (string _name)
 /* em forward references */
 int AsmGen::get_label_index (string _name)
 {
-  std::vector<LabelDec>::iterator i_label;
+  std::vector<LabelDec>::const_iterator i_label;
   for (i_label = label_table.begin ();
 		 i_label != label_table.end (); i_label++)
 	 {
@@ -305,7 +287,7 @@ int AsmGen::get_label_index (string _name)
 /* adiciona um novo label, não definido */
 bool AsmGen::add_label (string _name)
 {
-  std::vector<LabelDec>::iterator i_label;
+  std::vector<LabelDec>::const_iterator i_label;
   for (i_label = label_table.begin ();
 		 i_label != label_table.end (); i_label++)
 	 {
@@ -332,10 +314,7 @@ bool AsmGen::add_label (string _name, bool _defined)
 			 return false;
 		  }
 	 }
-  /* cout << _name << endl; */
-  /* cout << current_code_line << endl; */
-  /* cout << current_label_index << endl; */
-  label_table.push_back (LabelDec (_name, current_code_line, true, current_label_index));
+  label_table.push_back (LabelDec (_name, current_code_line, _defined, current_label_index));
   current_label_index++;
   return true;
 }
@@ -348,19 +327,8 @@ void AsmGen::assemble ()
   context.header.major_version = VM_VERSION_MAJOR;
   context.header.minor_version = VM_VERSION_MINOR;
 
-
   mount_string_table ();
-  /* cout << "antes" << endl; */
-  /* for (int j = 0; j < context.header.num_table_len; ++j) */
-  /* 	 { */
-  /* 		cout << context.num_table[j] << endl; */
-  /* 	 } */
   mount_num_table ();
-  /* cout << "depois" << endl; */
-  /* for (int j = 0; j < context.header.num_table_len; ++j) */
-  /* 	 { */
-  /* 		cout << context.num_table[j] << endl; */
-  /* 	 } */
   mount_code_table ();
 
   if (context.header.string_table_len > 0)

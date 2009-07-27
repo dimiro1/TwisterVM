@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-18 14:12:33 BRT>
+ *   Modified: <2009-07-27 09:35:03 BRT>
  */
 
 #include <iostream>
@@ -14,7 +14,9 @@ using std::endl;
 enum ERRORS
 {
   OUT_OF_RANGE,
-  ZERO_DIVISION
+  ZERO_DIVISION,
+  COMMAND_NOT_FOUND,				  /* system */
+  ENV_NOT_FOUND
 };
 
 class Error {

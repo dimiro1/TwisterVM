@@ -3062,7 +3062,8 @@ test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 
 
-# Extract the first word of "cococpp", so it can be a program name with args.
+if test "x${MANTEINER_MODE}" = "x"; then
+  # Extract the first word of "cococpp", so it can be a program name with args.
 set dummy cococpp; ac_word=$2
 { echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
@@ -3103,8 +3104,8 @@ fi
 
 
 
-if test "x${COCOCPP}" = "x"; then
-	# Extract the first word of "cococpp", so it can be a program name with args.
+  if test "x${COCOCPP}" = "x"; then
+	  # Extract the first word of "cococpp", so it can be a program name with args.
 set dummy cococpp; ac_word=$2
 { echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
@@ -3144,23 +3145,24 @@ echo "${ECHO_T}no" >&6; }
 fi
 
 
-fi
+  fi
 
-if test "x${COCOCPP_BIN}" = "x"; then
-	{ { echo "$as_me:$LINENO: error:
-	  O programa \"COCO/R\" (ou cococpp) não foi encontrado
-	  em seu sistema (PATH).
-	  TwisterVM precisa do COCO/R instalado.
-	" >&5
+  if test "x${COCOCPP_BIN}" = "x"; then
+    { { echo "$as_me:$LINENO: error:
+	    O programa \"COCO/R\" (ou cococpp) não foi encontrado
+	    em seu sistema (PATH).
+	    TwisterVM precisa do COCO/R instalado.
+	 " >&5
 echo "$as_me: error:
-	  O programa \"COCO/R\" (ou cococpp) não foi encontrado
-	  em seu sistema (PATH).
-	  TwisterVM precisa do COCO/R instalado.
-	" >&2;}
+	    O programa \"COCO/R\" (ou cococpp) não foi encontrado
+	    em seu sistema (PATH).
+	    TwisterVM precisa do COCO/R instalado.
+	 " >&2;}
    { (exit 1); exit 1; }; }
+  fi
+
+
 fi
-
-
 
 ac_config_files="$ac_config_files Makefile src/Makefile src/assembler/Makefile"
 
@@ -4498,11 +4500,3 @@ if test "$no_create" != yes; then
 fi
 
 
-{ echo "$as_me:$LINENO:
-Sumario:
-	  cococpp	 : $COCOCPP_BIN
-" >&5
-echo "$as_me:
-Sumario:
-	  cococpp	 : $COCOCPP_BIN
-" >&6;}

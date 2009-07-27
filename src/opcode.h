@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 08:00:13 BRT>
+ *   Modified: <2009-07-27 09:20:59 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@
 	 OP (HALT),												\
 	 OP (NOP),												\
 	 OP (SYSTEM_S),										\
+	 OP (GETENV_S),										\
 	 /* io */												\
 	 OP (INPUT_N),											\
 	 OP (INPUT_S),											\
@@ -115,6 +116,7 @@ mneumonic[] = {
   "halt",
   "nop",
   "system_s",
+  "getenv_s",
 
   "input_n",
   "input_s",

@@ -1,10 +1,10 @@
 SUBDIRS = src
 
-EXTRA_DIST = examples
+EXTRA_DIST = examples $(DIST_ALPHA)
 
 if MAINTAINER_MODE
-CFLAGS = -g -I.
+  CFLAGS = -g -I.
 else
-CFLAGS = @CFLAGS@ -I.
+  CFLAGS = @CFLAGS@ -I.
 endif
 

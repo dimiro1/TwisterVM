@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 08:01:33 BRT>
+ *   Modified: <2009-07-27 09:46:35 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ COMPILER Twisterc
                                       (. gen->add_instruction (OP_ABS_N, A, C); .)
 								| "acos_n"	  Register<A> Register<C>
                                       (. gen->add_instruction (OP_ACOS_N, A, C); .)
-								| "add_n"	  Register<A> Register<C>
+								| "add_n"	  Register<A> Register<B> Register<C>
                                       (. gen->add_instruction (OP_ADD_N, A, B, C); .)
 								| "asin_n"	  Register<A> Register<C>
                                       (. gen->add_instruction (OP_ASIN_N, A, C); .)
@@ -110,6 +110,8 @@ COMPILER Twisterc
                                       (. gen->add_instruction (OP_NOP); .)
                         | "system_s"    Register<A>
 							                 (. gen->add_instruction (OP_SYSTEM_S, A); .)
+                        | "getenv_s"    Register<A> Register<C>
+							                 (. gen->add_instruction (OP_GETENV_S, A, C); .)
                         | "input_n"           Register<A>
                                       (. gen->add_instruction (OP_INPUT_N, A); .)
                         | "input_s"           Register<A>
