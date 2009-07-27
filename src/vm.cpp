@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 09:36:48 BRT>
+ *   Modified: <2009-07-27 10:57:15 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -175,6 +175,11 @@ void VM::dispatch ()
   Instruction executing;
 
   /* see opcodes.h */
+  /* caso HAVE_COMPUTED_GOTO esteja ativo */
+  /* o dispatch sera realizado com gotos,
+	  caso contrario será um grande switch */
+  /* Ver saida do preprocessador nesse arquivo
+	  g++ -E vm.cpp */
   BEGIN_SWITCH
 
   CASE (ADD_N)
@@ -219,7 +224,7 @@ void VM::dispatch ()
 	 puts ("div_n");
 	 #endif
 	 /* Colocar como exception */
-	 if (current_context->get_num (executing.B) == 0)
+	 if (RN (executing.B) == 0)
 		{
 		  error_emitter.emit (ZERO_DIVISION);
 		  abort ();

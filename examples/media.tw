@@ -1,0 +1,21 @@
+# pede a entrada de alguns numeros
+# exibe a media dos numeros
+.main
+  store_s "Digite alguns numeros, para terminar digite 0" $0
+  store_s "A media é: " $1
+  store_n 0 $0
+  store_n 0 $1
+  store_n 0 $2
+  put_s $0
+LOOP:
+  input_n $3
+  eq_n $3 $1 END
+  add_n $2 $3 $2
+  inc_n $0
+  goto LOOP
+END:
+  print_s $1
+  div_n $2 $0 $2
+  put_n $2
+  halt
+.end

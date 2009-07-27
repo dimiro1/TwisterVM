@@ -1,0 +1,18 @@
+.main
+  store_s "Digite 5 numeros" $0
+  store_s "A soma é: " $1
+  store_n 1 $0
+  store_n 5 $1
+  store_n 0 $2
+  put_s $0
+LOOP:
+  gt_n $0 $1 END
+  input_n $3
+  add_n $2 $3 $2
+  inc_n $0
+  goto LOOP
+END:
+  print_s $1
+  put_n $2
+  halt
+.end
