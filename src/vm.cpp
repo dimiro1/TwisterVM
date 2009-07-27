@@ -1,7 +1,20 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-25 16:13:14 BRT>
+ *   Modified: <2009-07-27 07:56:28 BRT>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program. If not, see <http://www.gnu.org/licences>
  */
 
 #include "vm.h"
@@ -82,6 +95,9 @@ void VM::list ()
 				break;
 			 case OP_GOTO:
 				cout << current.A;
+				break;
+			 case OP_SYSTEM_S:
+				cout << "$" << current.A;
 				break;
 			 case OP_ADD_N:  case OP_SUB_N:
 			 case OP_MULT_N: case OP_DIV_N:
@@ -382,6 +398,16 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("nop");
 	 #endif
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR
+	 BREAK
+  END_CASE
+
+  CASE (SYSTEM_S)
+	 #ifdef DEBUG
+	 puts ("system_s");
+	 #endif
+	 system (RS (executing.A).c_str ());
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK

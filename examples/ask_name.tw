@@ -1,0 +1,10 @@
+# ask for your name and print a message
+.main
+  store_s "What is your name? " $0
+  store_s " is a nice name!" $1
+  print_s $0
+  input_s $2
+  concat_s $2 $1 $1
+  put_s $1
+  halt
+.end

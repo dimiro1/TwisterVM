@@ -1,0 +1,8 @@
+# show how the vm interact with the system
+.main
+  store_s "clear" $0
+  store_s "ls" $1
+  system_s $0
+  system_s $1
+  halt
+.end

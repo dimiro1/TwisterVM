@@ -16,3 +16,9 @@ config.status
 config.h
 stamp-h1
 .deps
+Parser.h
+Parser.cpp
+Scanner.h
+Scanner.cpp
+twister
+twisterc

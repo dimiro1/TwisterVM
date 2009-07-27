@@ -1,0 +1,16 @@
+.main
+  store_s "How many stars do you want? " $0
+  store_s "*" $1
+  store_n 1 $3
+  store_s "" $4
+  print_s $0
+  input_n $2
+LOOP:
+  gt_n $3 $2 END
+  print_s $1
+  inc_n $3
+  goto LOOP
+END:
+  put_s $4
+  halt
+.end

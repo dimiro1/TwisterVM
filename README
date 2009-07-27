@@ -1,52 +1,16 @@
-TwisterVM - versão: 0.1
+TwisterVM - versão: 0.5
 =======================
 
 A Virtual Machine
-  TwisterVM é uma maquina virtual de pilha que pretende ser simples
+  TwisterVM é uma maquina virtual de registradores que pretende ser simples
   o suficiente para qualquer aluno de graduação entender.
 
   Poderá ser usada em cursos de compiladores, introdução a computação etc.
-  
+
 Tipos Primitivos
-  Possui 4 tipos primitivos
+  Possui 2 tipos primitivos
   * Numero - inteiro, ponto flutuante
   * String - sequencia de caracteres
-  * Função
-  * Boleano
-
-Instruções
-  Possui 27 instruções.
-----------------------------------------------------------------------------------------------------------
-| operação | no oper  |    syntax      |              descrição										     |
-----------------------------------------------------------------------------------------------------------
-|  add	   |	0	  |	 add		   |	 soma dois operandos na pilha								 |
-|  call    |	1	  |	 call fun	   |	 chama fun													 |
-|  clsp    |	0	  |	 clsp		   |	 limpa a pilha												 |
-|  dcard   |	0	  |   dcard		   |	 discarta o topo da pilha									 |
-|  dec	   |	0	  |	 dec		   |	 decrementa o topo da pilha									 |
-|  div	   |	0	  |	 div		   |	 divide dois operandos na pilha								 |
-|  dup	   |	0	  |	 dup		   |	 duplica o topo da pilha									 |
-|  getop   |	1	  |	 getop a	   |	 copia o topo na pilha para a								 |
-|  gofalse |	1	  |	 gofalse label |	 pc passa a ser o valor do label							 |
-|  goto	   |	1	  |	 goto label	   |	 pc passa a ser o valor do label							 |
-|  gotrue  |	1	  |	 gotrue label  |	 pc passa a ser o valor do label							 |
-|  gt	   |	0	  |	 gt			   |	 faz pilha[topo] > pilha[topo -1], adiciona boolean no topo	 |
-|  gte	   |	0	  |	 gte		   |	 faz pilha[topo] >= pilha[topo -1], adiciona boolean no topo |
-|  halt	   |	0	  |	 halt		   |	 finaliza a vm												 |
-|  inc	   |	0	  |	 inc		   |	 incrementa o topo da pilha									 |
-|  lt	   |	0	  |	 lt			   |	 faz pilha[topo] < pilha[topo -1], adiciona boolean no topo	 |
-|  lte	   |	0	  |	 lte		   |	 faz pilha[topo] <= pilha[topo -1], adiciona boolean no topo |
-|  mult	   |	0	  |	 mult		   |	 multiplica dois operandos na pilha							 |
-|  nop	   |	0	  |	 nop		   |	 sem operação												 |
-|  pop	   |	1	  |	 pop b		   |	 move o topo da pilha para b								 |
-|  print   |	0	  |	 print		   |	 imprime o topo da pilha									 |
-|  pushc   |	1	  |	 pushc a	   |	 empilha uma constante										 |
-|  pushn   |	1	  |	 pushn 1	   |	 empilha um numero											 |
-|  puts	   |	0	  |	 puts		   |	 imprime o topo da pilha e '\n'								 |
-|  reset   |	0	  |	 reset		   |	 reseta a vm												 |
-|  ret	   |	0	  |	 ret		   |	 retorna o topo da pilha									 |
-|  sub	   |	0	  |	 sub		   |	 subtrai dois operandos na pilha							 |
-----------------------------------------------------------------------------------------------------------
 
 O arquivo assembly
   Options é o local onde pode ser colocado o nome de saida, quantidade de instruções
@@ -58,23 +22,12 @@ O arquivo assembly
   exemplo:
   Faz com que o nome do arquivo compilado seja hello_world.twc
   .options
-	 name hello_world
-  .end
-
-  Static
-  .static
-	 {static_list}
-  .end
-
-  exemplo
-  declara uma nova string nome.
-  .static
-    @string nome "claudemiro"
+	 .name hello_world
   .end
 
   Código
   Sessão de Código
-  .code
+  .main
     {code_list}
   .end
 

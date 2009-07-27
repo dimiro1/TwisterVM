@@ -1,7 +1,20 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-25 09:39:48 BRT>
+ *   Modified: <2009-07-27 07:58:38 BRT>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program. If not, see <http://www.gnu.org/licences>
  */
 
 #include "exec_context.h"
@@ -16,28 +29,6 @@ ExecContext::~ExecContext ()
 	 delete code_section;
 }
 
-/* ARQUIVO */
-/*
-	Header
-	-----------------------------------
-	| name              |    bits     |
-	-----------------------------------
-	| magic             |      8      |
-	| string_table_len  |      12     |
-	| num_table_len     |      12     |
-	| code_len          |      12     |
-	-----------------------------------
-
-	Tables and code
-	---------------------------------------------
-	| name             |       bits             |
-	---------------------------------------------
-	| header           |           8            |
-	| string_table     | string_table_len * 8   |
-	| num_table        | num_table_len * 64     |
-	| code             |    code_len * 44       |
-	---------------------------------------------
- */
 void ExecContext::load_file (string file_name)
   throw (BadFileException, NotRecognizedFileException, bad_alloc)
 {
