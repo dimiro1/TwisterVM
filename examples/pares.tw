@@ -8,16 +8,15 @@
 LOOP:
   gt_n $0 $1 END
   mod_n $0 $2 $4
+  print_n $0
   zero_n $4 PAR
   goto IMPAR
 PAR:
-  print_n $0
   put_s $0
   inc_n $0
   goto LOOP
 IMPAR:
-  print_n $0
-  put_s $1 
+  put_s $1
   inc_n $0
   goto LOOP
 END:

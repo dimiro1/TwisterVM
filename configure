@@ -656,8 +656,6 @@ AMDEPBACKSLASH
 CXXDEPMODE
 am__fastdepCXX_TRUE
 am__fastdepCXX_FALSE
-DIST_ALPHA
-COCOCPP_BIN
 LIBOBJS
 LTLIBOBJS'
 ac_subst_files=''
@@ -3062,115 +3060,10 @@ test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL}'
 test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 
-case $VERSION in
- [0-9]*.[0-9]*[a-z]) DIST_ALPHA="README-alpha";;
- [0-9]*.[0-9]*.[0-9]*) DIST_ALPHA="README-alpha";;
- *) DIST_ALPHA=;;
-esac
 
 
 
-if test "x${MANTAINER_MODE}" = "x"; then
-  # Extract the first word of "cococpp", so it can be a program name with args.
-set dummy cococpp; ac_word=$2
-{ echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
-if test "${ac_cv_path_COCOCPP_BIN+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $COCOCPP_BIN in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_COCOCPP_BIN="$COCOCPP_BIN" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_path_COCOCPP_BIN="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
 
-  ;;
-esac
-fi
-COCOCPP_BIN=$ac_cv_path_COCOCPP_BIN
-if test -n "$COCOCPP_BIN"; then
-  { echo "$as_me:$LINENO: result: $COCOCPP_BIN" >&5
-echo "${ECHO_T}$COCOCPP_BIN" >&6; }
-else
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-fi
-
-
-
-  if test "x${COCOCPP}" = "x"; then
-	  # Extract the first word of "cococpp", so it can be a program name with args.
-set dummy cococpp; ac_word=$2
-{ echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
-if test "${ac_cv_path_COCOCPP_BIN+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $COCOCPP_BIN in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_COCOCPP_BIN="$COCOCPP_BIN" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_path_COCOCPP_BIN="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-COCOCPP_BIN=$ac_cv_path_COCOCPP_BIN
-if test -n "$COCOCPP_BIN"; then
-  { echo "$as_me:$LINENO: result: $COCOCPP_BIN" >&5
-echo "${ECHO_T}$COCOCPP_BIN" >&6; }
-else
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-fi
-
-
-  fi
-
-  if test "x${COCOCPP_BIN}" = "x"; then
-    { { echo "$as_me:$LINENO: error:
-	    O programa \"COCO/R\" (ou cococpp) não foi encontrado
-	    em seu sistema (PATH).
-	    TwisterVM precisa do COCO/R instalado.
-	 " >&5
-echo "$as_me: error:
-	    O programa \"COCO/R\" (ou cococpp) não foi encontrado
-	    em seu sistema (PATH).
-	    TwisterVM precisa do COCO/R instalado.
-	 " >&2;}
-   { (exit 1); exit 1; }; }
-  fi
-
-
-fi
 
 ac_config_files="$ac_config_files Makefile src/Makefile src/assembler/Makefile"
 
@@ -3903,13 +3796,11 @@ AMDEPBACKSLASH!$AMDEPBACKSLASH$ac_delim
 CXXDEPMODE!$CXXDEPMODE$ac_delim
 am__fastdepCXX_TRUE!$am__fastdepCXX_TRUE$ac_delim
 am__fastdepCXX_FALSE!$am__fastdepCXX_FALSE$ac_delim
-DIST_ALPHA!$DIST_ALPHA$ac_delim
-COCOCPP_BIN!$COCOCPP_BIN$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 82; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 80; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

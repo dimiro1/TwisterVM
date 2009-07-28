@@ -5,6 +5,7 @@
 # max = $3
 # temp = $4
 # ini = $5
+
 .main
   store_s "Factorial of " $6
   store_s " is " $7
