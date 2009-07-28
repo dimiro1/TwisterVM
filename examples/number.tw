@@ -1,0 +1,18 @@
+# mostra exemplos de numeros
+.main
+  store_n 10 $1 # simples
+  store_n 3.14 $2 # ponto flutuante
+  store_n 4e2 $3 # inteiro exponnencial
+  store_n 4e+2 $4 # inteiro exponnencial
+  store_n 4e-2 $5 # inteiro exponnencial
+  store_n 4.5e2 $6 # flutuante exponnencial
+  store_n 4.5e+2 $7 # flutuante exponnencial
+  put_n $1
+  put_n $2
+  put_n $3
+  put_n $4
+  put_n $5
+  put_n $6
+  put_n $7
+  halt
+.end

@@ -37,7 +37,7 @@ COMPILER Twisterc
 
 	TOKENS
 		ID = letter {letter | digit | "-" | "_"}.
-		NUM = digit {digit} ["." digit {digit}] [("e"|"E" ["-"|"+"]) digit {digit}].
+		NUM = digit {digit} ["." digit {digit}] [("e"|"E") ["-"|"+"] digit {digit}].
 		STRING = ("'" {noquote1} "'" | '"' {noquote2} '"'). /* permitida string vazia. */
 
 	COMMENTS FROM "#" TO lf
@@ -129,7 +129,7 @@ COMPILER Twisterc
 								| "mov_s"	  Register<A>				  Register<C>
                                       (. gen->add_instruction (OP_MOV_S, A, C); .)
 
-                        | "store_n" (. int n, index; .)  NUM 
+                        | "store_n" (. double n; int index; .)  NUM 
                                                           (. n = atof (coco_string_create_char (t->val));
                                                              index = gen->add_num (n); .)
                                                                           Register<C>

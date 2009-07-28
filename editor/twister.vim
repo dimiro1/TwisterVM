@@ -1,3 +1,25 @@
+"" Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
+"" <dimiro1@gmail.com>
+""
+"" this is a simple syntax file for working with twister assembler
+""
+"" offerings:
+""
+"" 1) syntax highlighting
+""
+"" This program is free software: you can redistribute it and/or modify
+"" it under the terms of the GNU General Public License as published by
+"" the Free Software Foundation, either version 3 of the License, or
+"" (at your option) any later version.
+""
+"" This program is distributed in the hope that it will be useful,
+"" but WITHOUT ANY WARRANTY; without even the implied warranty of
+"" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+"" GNU General Public License for more details.
+""
+"" You should have received a copy of the GNU General Public License
+"" along with this program. If not, see <http://www.gnu.org/licences>
+
 if version < 600
   syntax clear
 elseif exists("b:current_syntax")
@@ -19,9 +41,6 @@ syn match twisterLabel          /[A-Za-z0-9_]\+:/he=e-1
 syn match twisterDollarRegister /\$[0-9]\+/
 
 syn match twisterNumber         /[+-]\?[0-9]\+\(\.[0-9]*\([Ee][+-]\?[0-9]\+\)\?\)\?/
-syn match twisterNumber         /0[xX][0-9a-fA-F]\+/
-syn match twisterNumber         /0[oO][0-7]\+/
-syn match twisterNumber         /0[bB][01]\+/
 
 syn region twisterString start=/"/ end=/"/
 syn region twisterString start=/'/ end=/'/

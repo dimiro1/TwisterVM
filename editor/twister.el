@@ -5,12 +5,13 @@
 ;;
 ;; offerings:
 ;;
-;; 1) highlighting for labels
+;; 1) syntax highlighting
 ;;
 ;; 2) simple indentation
 ;;
 ;; 3) a simple function for following branches. see the doc string
 ;; for twister-follow-branch. By default this is bound to "C-c C-j".
+;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +19,7 @@
 ;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ;; GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
@@ -65,14 +66,6 @@
     (define-key map (kbd "TAB") 'twister-indent-function)
 	 map)
 	 "Keymap for TWISTER major mode.")
-;; (unless twister-mode-keymap
-;;   ;; please, someone tell how i should really do this...
-;;   (let ((inner-keymap (make-sparse-keymap)))
-;;     (define-key inner-keymap (kbd "C-c") 'twister-assemble-and-run-buffer)
-;;     (define-key inner-keymap (kbd "C-j") 'twister-follow-branch)
-;;     (setq twister-mode-keymap (make-sparse-keymap))
-;;     (define-key twister-mode-keymap (kbd "\C-c") inner-keymap)
-;;     (define-key twister-mode-keymap (kbd "TAB") 'twister-indent-function)))
 
 
 (unless twister-mode-syntax-table
@@ -97,7 +90,7 @@
   (interactive)
   (kill-all-local-variables)
   (setq major-mode 'twister-mode)
-  (setq mode-name "twister")
+  (setq mode-name "TWISTER")
   (set-syntax-table twister-mode-syntax-table)
   (make-local-variable 'paragraph-start)
   (setq paragraph-start (concat "^$\\|" page-delimiter))
@@ -113,6 +106,7 @@
   (setq comment-end "")
   (make-local-variable 'comment-start-skip)
   (setq comment-start-skip "#+ *")
+  (setq comment-indent-function 'twister-comment-indent)
   (make-local-variable 'font-lock-defaults)
   (setq font-lock-defaults '(twister-font-lock-keywords))
   (font-lock-mode 1)
@@ -138,6 +132,8 @@
       (indent-to 0))
      ((looking-at (regexp-opt twister-dotted-directives))
       (indent-to 0))
+     ((looking-at "^#")
+      (indent-to 0))
      (t
 		(indent-to 2)))))
 
@@ -159,6 +155,13 @@ moved forward to column 2"
   (unless (or (looking-at twister-label-regexp)
               (/= (beginning-of-line-point) (point)))
       (forward-char 2)))
+
+(defun twister-comment-indent ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (delete-horizontal-space)
+	 (indent-to 0)))
 
 (defun twister-follow-branch ()
   "Look at the current op, it it's a branching op we jump to the
