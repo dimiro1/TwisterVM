@@ -1,5 +1,5 @@
 .main
-  store_s "JAVA_HOME" $0
+  store_s "PATH" $0
   getenv_s $0 $1 # $1 = getenv ($0)
   put_s $1
   halt

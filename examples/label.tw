@@ -1,0 +1,8 @@
+.main
+BEG:
+  store_n 1 $0
+  zero_n $0 END
+  goto BEG
+END:
+  halt
+.end

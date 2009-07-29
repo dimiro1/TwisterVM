@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 16:27:10 BRT>
+ *   Modified: <2009-07-28 21:17:10 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -76,6 +76,7 @@ public:
   string name;
   int offset;
   bool defined;
+  std::vector<Instruction *> instructions;
 };
 
 /* declaração temporaria de string */
@@ -191,12 +192,14 @@ public:
 		{
 		  Instruction i (_opcode, _A, get_label_offset (_label_name));
 		  i.label_defined = true;
+		  get_label (_label_name).instructions.push_back (&i);
 		  instruction_table.push_back (i);
 		}
 	 else
 		{
 		  Instruction i (_opcode, _A, get_label_index (_label_name));
 		  i.label_defined = false;
+		  get_label (_label_name).instructions.push_back (&i);
 		  instruction_table.push_back (i);
 		}
   }
@@ -207,12 +210,14 @@ public:
 		{
 		  Instruction i (_opcode, get_label_offset (_label_name));
 		  i.label_defined = true;
+		  get_label (_label_name).instructions.push_back (&i);
 		  instruction_table.push_back (i);
 		}
 	 else
 		{
 		  Instruction i (_opcode, get_label_index (_label_name));
 		  i.label_defined = false;
+		  get_label (_label_name).instructions.push_back (&i);
 		  instruction_table.push_back (i);
 		}
   }
@@ -225,6 +230,7 @@ public:
 
   bool label_defined (string _name);
   int get_label_index (string _name);
+  LabelDec &get_label (string _name);
 
 private:
   int current_code_line;		  /* atual linha de codigo. */

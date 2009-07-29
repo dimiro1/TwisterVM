@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 17:15:40 BRT>
+ *   Modified: <2009-07-28 21:15:28 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -206,6 +206,15 @@ int AsmGen::add_num (NUMBER _num)
 /* é chamando sempre que um label é definido. */
 void AsmGen::update_references_to_label_table (string _name)
 {
+  /* teste */
+  std::vector<Instruction *>::const_iterator i;
+  for (i = get_label(_name).instructions.begin ();
+		 i != get_label (_name).instructions.end (); i++)
+	 {
+		cout << (*i)->opcode << endl;
+	 }
+  /* teste */
+
   std::vector<Instruction>::iterator i_code;
   int index;
   index = get_label_index (_name);
@@ -265,6 +274,18 @@ int AsmGen::get_label_offset (string _name)
 		  return (*i_label).offset;
 	 }
   return 0;
+}
+
+/* return the declaration label */
+LabelDec & AsmGen::get_label (string _name)
+{
+  std::vector<LabelDec>::iterator i_label;
+  for (i_label = label_table.begin ();
+		 i_label != label_table.end (); i_label++)
+	 {
+		if ((*i_label).name == _name)
+		  return (*i_label);
+	 }
 }
 
 /* verifica se o label foi definido */
