@@ -1,4 +1,13 @@
-2009-07-28  Claudemiro Alves  <dimiro1@gmail.com>
+2009-07-29 Claudemiro Alves <dimiro1@gmail.com>
+  * 0.6.3 version
+
+2009-07-29 Claudemiro Alves <dimiro1@gmail.com>
+  * new assembler label code. const parameters and const methods.
+
+2009-07-28 Claudemiro Alves <dimiro1@gmail.com>
+  * new label code in assembler.
+
+2009-07-28 Claudemiro Alves <dimiro1@gmail.com>
   * error in assembler with floating pointers corrected v0.6.2.
 
 2009-07-28 Claudemiro Alves <dimiro1@gmail.com>
@@ -29,7 +38,7 @@
   * retactored code, big corrections, final assembler and little documentation
 
 2009-07-24 Claudemiro Alves <dimiro1@gmail.com>
-  * assembler com>pleted.
+  * assembler completed.
 
 2009-07-23 Claudemiro Alves <dimiro1@gmail.com>
   * little changes.
@@ -65,13 +74,13 @@
   * condicional goto finished.
 
 2009-07-20 Claudemiro Alves <dimiro1@gmail.com>
-  * com>puted goto almost finished
+  * computed goto almost finished
 
 2009-07-20 Claudemiro Alves <dimiro1@gmail.com>
   * little change
 
 2009-07-19 Claudemiro Alves <dimiro1@gmail.com>
-  * improved execptions and com>piled file format.
+  * improved execptions and compiled file format.
 
 2009-07-19 Claudemiro Alves <dimiro1@gmail.com>
   * corrections
@@ -161,10 +170,10 @@
   * an old file removed
 
 2009-07-13 Claudemiro Alves <dimiro1@gmail.com>
-  * improved makefile and removed old simple com>piler
+  * improved makefile and removed old simple compiler
 
 2009-07-13 Claudemiro Alves <dimiro1@gmail.com>
-  * com>plete simple assembler
+  * complete simple assembler
 
 2009-07-13 Claudemiro Alves <dimiro1@gmail.com>
   * new bytecode file format
@@ -188,7 +197,7 @@
   * Merge branch 'teste'
 
 2009-03-01 Claudemiro Alves <dimiro1@gmail.com>
-  * added a com>ment
+  * added a comment
 
 2009-03-01 Claudemiro Alves <dimiro1@gmail.com>
   * Changes in makefile
@@ -206,5 +215,5 @@
   * fixed bytecode constructor
 
 2009-03-01 Claudemiro Alves <dimiro1@gmail.com>
-  * Initial com>mit.
+  * Initial commit.
 
