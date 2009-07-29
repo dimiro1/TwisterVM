@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:56:48 BRT>
+ *   Modified: <2009-07-29 19:46:13 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,9 +29,9 @@
 class VM {
 public:
   ~VM ();
-  void load (string progname);
+  void load (const string progname);
   void execute ();
-  void list ();
+  void list () const;
 
 private:
   /* Registers */
@@ -42,13 +42,15 @@ private:
   ExecContext *current_context;  /* programa sendo executado */
   void dispatch ();
 
-  /* registers gets */
-  inline STRING RS (int i);
-  inline NUMBER RN (int i);
+  /* registers get */
+  inline STRING RS (const unsigned int i);
+  inline NUMBER RN (const unsigned int i);
 
-  /* registers sets */
-  inline void RS (int i, STRING s);
-  inline void RN (int i, NUMBER n);
+  /* registers set */
+  inline void RS (const unsigned int i,
+						const STRING s);
+  inline void RN (const unsigned int i,
+						const NUMBER n);
 };
 
 #endif

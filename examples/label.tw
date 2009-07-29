@@ -1,7 +1,9 @@
 .main
-BEG:
   store_n 1 $0
+BEG:
   zero_n $0 END
+  put_n $0
+  dec_n $0
   goto BEG
 END:
   halt

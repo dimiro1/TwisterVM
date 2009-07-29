@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:59:00 BRT>
+ *   Modified: <2009-07-29 19:37:47 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,49 +25,47 @@ Instruction::Instruction ()
    A = NULL;
 	B = NULL;
 	C = NULL;
-	label_defined = false;
 }
 
-Instruction::Instruction (unsigned int _opcode)
+Instruction::Instruction (const unsigned int _opcode)
 {
    opcode = _opcode;
    A = NULL;
 	B = NULL;
 	C = NULL;
-	label_defined = false;
 }
 
-Instruction::Instruction (unsigned int _opcode, unsigned int _A)
+Instruction::Instruction (const unsigned int _opcode,
+								  const unsigned int _A)
 {
    opcode = _opcode;
    A = _A;
 	B = NULL;
 	C = NULL;
-	label_defined = false;
 }
 
-Instruction::Instruction (unsigned int _opcode,
-								  unsigned int _A,
-								  unsigned int _C)
+Instruction::Instruction (const unsigned int _opcode,
+								  const unsigned int _A,
+								  const unsigned int _C)
 {
    opcode = _opcode;
    A = _A;
 	B = NULL;
 	C = _C;
-	label_defined = false;
 }
 
-Instruction::Instruction (unsigned int _opcode, unsigned int _A,
-								  unsigned int _B, unsigned int _C)
+Instruction::Instruction (const unsigned int _opcode,
+								  const unsigned int _A,
+								  const unsigned int _B,
+								  const unsigned int _C)
 {
    opcode = _opcode;
    A = _A;
 	B = _B;
 	C = _C;
-	label_defined = false;
 }
 
-TwcFile::TwcFile (int _code_len)
+TwcFile::TwcFile (const int _code_len)
 {
   magic = MAGIC_VERSION_NUM;
   code_len = _code_len;
@@ -81,12 +79,12 @@ TwcFile::TwcFile()
   pc = 0;
 }
 
-void TwcFile::add_instruction (Instruction _b)
+void TwcFile::add_instruction (const Instruction _b)
 {
   code_section[pc++] = _b;
 }
 
-void TwcFile::alloc_code_section (int _code_len)
+void TwcFile::alloc_code_section (const int _code_len)
 {
   code_section = new Instruction[_code_len];
   code_len = _code_len;

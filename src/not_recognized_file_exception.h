@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:59:46 BRT>
+ *   Modified: <2009-07-29 19:47:11 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ using std::ostringstream;
 
 class NotRecognizedFileException {
 public:
-  NotRecognizedFileException (string file_name)
+  NotRecognizedFileException (const string file_name)
   {
 	 ostringstream temp;
 	 temp << "\"" << file_name << "\"" << " is not a valid file!";
@@ -42,7 +42,7 @@ public:
 	 temp << "\"" << file_name << "\"" << " is not a valid file!";
 	 msg = temp.str ();
   }
-  
+
   inline string what () { return msg; }
 
 private:

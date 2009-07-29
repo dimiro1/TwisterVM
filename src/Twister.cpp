@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 17:17:19 BRT>
+ *   Modified: <2009-07-29 19:39:05 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,9 +31,9 @@ public:
 		cflag (false) {}
 
   void main (int argc, char **argv);
-  void show_copyright ();
-  void show_usage ();
-  void show_version ();
+  void show_copyright () const;
+  void show_usage () const;
+  void show_version () const;
 private:
   VM vm;
   string stream_name;
@@ -118,7 +118,7 @@ void TwisterMain::main (int argc, char **argv)
 	 }
 }
 
-inline void TwisterMain::show_version ()
+inline void TwisterMain::show_version () const
 {
     cout << "TwisterVm v" << VM_VERSION_MAJOR
          << "." << VM_VERSION_MINOR
@@ -131,12 +131,12 @@ inline void TwisterMain::show_version ()
 
 }
 
-inline void TwisterMain::show_copyright ()
+inline void TwisterMain::show_copyright () const
 {
   cout << "TwisterVm - Copyright (C) 2009 Claudemiro Alves Feitosa Neto" << endl;
 }
 
-void TwisterMain::show_usage ()
+void TwisterMain::show_usage () const
 {
   cerr << "usage: " << stream_name << " [options] [twcfile]." << endl
 		 << "Available options are:" << endl

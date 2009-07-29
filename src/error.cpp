@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 09:38:05 BRT>
+ *   Modified: <2009-07-29 19:40:33 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 #include "error.h"
 
-void Error::emit (ERRORS err)
+void Error::emit (const ERRORS err)
 {
   switch (err)
 	 {

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-28 21:15:28 BRT>
+ *   Modified: <2009-07-29 19:39:42 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@
 #include "asm_gen.h"
 
 /* aloca espaço para code_section */
-void AsmGen::alloc_code_section (int _code_len)
+void AsmGen::alloc_code_section (const int _code_len)
 {
   context.code_section = new Instruction[_code_len];
 }
 
 /* aloca espaço para string_table */
-void AsmGen::alloc_string_table_section (int _len)
+void AsmGen::alloc_string_table_section (const int _len)
 {
   context.string_table = new char[_len];
 }
 
 /* aloca espaço para num_table */
-void AsmGen::alloc_num_table_section (int _len)
+void AsmGen::alloc_num_table_section (const int _len)
 {
   context.num_table = new NUMBER[_len];
 }
@@ -50,7 +50,8 @@ void AsmGen::mount_string_table ()
 
   /* aloca espaço para tabela de strings */
   context.header.string_table_len += string_table.size ();
-  alloc_string_table_section (context.header.string_table_len + string_table.size ()); /* adiciona espaço para \0 */
+  alloc_string_table_section (context.header.string_table_len +
+										string_table.size ()); /* adiciona espaço para \0 */
 
   /* copia strings encontradas para tabela de strings que sera gravada no arquivo */
   for (i = string_table.begin();
@@ -65,7 +66,7 @@ void AsmGen::mount_string_table ()
 }
 
 /* exibe uma informação sobre a tabela de strings */
-void AsmGen::report_string_table ()
+void AsmGen::report_string_table () const
 {
   std::vector<StringDec>::const_iterator i;
   cout << "-------------------- STRING TABLE --------------------" << endl;
@@ -83,7 +84,7 @@ void AsmGen::report_string_table ()
 }
 
 /* exibe informações sobre a tabela de numeros */
-void AsmGen::report_num_table ()
+void AsmGen::report_num_table () const
 {
   std::vector<NumDec>::const_iterator i;
   cout << "-------------------- NUMBER TABLE --------------------" << endl;
@@ -116,7 +117,7 @@ void AsmGen::mount_num_table ()
 /* copia codigo da tabela temporaria para o contexto */
 void AsmGen::mount_code_table ()
 {
-  std::vector<Instruction>::const_iterator i;
+  std::vector<Instruction *>::const_iterator i;
   int index = 0;
   context.header.code_len = instruction_table.size ();
   alloc_code_section (instruction_table.size ());
@@ -124,12 +125,12 @@ void AsmGen::mount_code_table ()
   for (i = instruction_table.begin ();
 		 i != instruction_table.end (); i++)
 	 {
-		context.code_section[index++] = (*i);
+		context.code_section[index++] = *(*i);
 	 }
 }
 
 /* exibe informações sobre os labels */
-void AsmGen::report_label_table ()
+void AsmGen::report_label_table () const
 {
   std::vector<LabelDec>::const_iterator i;
   cout << "-------------------- LABEL TABLE --------------------" << endl;
@@ -143,7 +144,7 @@ void AsmGen::report_label_table ()
 }
 
 /* exibe informações sobre instruções */
-void AsmGen::report_code ()
+void AsmGen::report_code () const
 {
   cout << "-------------------- INSTRUCTIONS TABLE --------------------" << endl;
   cout << "lenght: " << instruction_table.size ()
@@ -155,7 +156,7 @@ void AsmGen::report_code ()
 void AsmGen::update_references_to_string_table ()
 {
   std::vector<StringDec>::const_iterator i_string;
-  std::vector<Instruction>::iterator i_code;
+  std::vector<Instruction *>::iterator i_code;
   int index = 0;
   for (i_string = string_table.begin ();
 		 i_string != string_table.end (); i_string++)
@@ -163,10 +164,10 @@ void AsmGen::update_references_to_string_table ()
 		for (i_code = instruction_table.begin ();
 			  i_code != instruction_table.end (); i_code++)
 		  {
-			 if (((*i_code).opcode == OP_STORE_S) &&
-				  (*i_code).A == index)
+			 if (((*i_code)->opcode == OP_STORE_S) &&
+				  (*i_code)->A == index)
 				{
-				  (*i_code).A = (*i_string).offset;
+				  (*i_code)->A = (*i_string).offset;
 				}
 		  }
 		++index;
@@ -174,7 +175,7 @@ void AsmGen::update_references_to_string_table ()
 }
 
 /* adiciona string à tabela temporaria */
-int AsmGen::add_string (string _name)
+int AsmGen::add_string (const string _name)
 {
   std::vector<StringDec>::const_iterator i_string;
 
@@ -189,7 +190,7 @@ int AsmGen::add_string (string _name)
 }
 
 /* adicionar numero à tabela temporaria */
-int AsmGen::add_num (NUMBER _num)
+int AsmGen::add_num (const NUMBER _num)
 {
   std::vector<NumDec>::const_iterator i_num;
   for (i_num = num_table.begin ();
@@ -204,67 +205,48 @@ int AsmGen::add_num (NUMBER _num)
 
 /* atualiza referencias aos labels no codigo */
 /* é chamando sempre que um label é definido. */
-void AsmGen::update_references_to_label_table (string _name)
+void AsmGen::update_references_to_label_table (const string _name)
 {
-  /* teste */
-  std::vector<Instruction *>::const_iterator i;
-  for (i = get_label(_name).instructions.begin ();
-		 i != get_label (_name).instructions.end (); i++)
+  LabelDec *label = get_label (_name);
+  std::vector<Instruction *>::iterator i_code;
+  for (i_code = label->instructions.begin ();
+		 i_code != label->instructions.end (); i_code++)
 	 {
-		cout << (*i)->opcode << endl;
-	 }
-  /* teste */
-
-  std::vector<Instruction>::iterator i_code;
-  int index;
-  index = get_label_index (_name);
-
-  if (label_table[index].defined == false)
-  	 {
-		for (i_code = instruction_table.begin ();
-			  i_code != instruction_table.end (); i_code++)
+		switch ((*i_code)->opcode)
 		  {
-			 if ((*i_code).label_defined == false)
-				{
-				  switch ((*i_code).opcode)
-					 {
-					 case OP_GOTO:
-						if ((*i_code).A == index)
-						  (*i_code).A = label_table[index].offset;
-						break;
-					 case OP_LT_S:
-					 case OP_GT_S:
-					 case OP_LTE_S:
-					 case OP_GTE_S:
-					 case OP_EQ_S:
-					 case OP_NOT_LT_S:
-					 case OP_NOT_GT_S:
-					 case OP_NOT_LTE_S:
-					 case OP_NOT_GTE_S:
-					 case OP_NOT_EQ_S:
-					 case OP_LT_N:
-					 case OP_GT_N:
-					 case OP_LTE_N:
-					 case OP_GTE_N:
-					 case OP_EQ_N:
-					 case OP_NOT_LT_N:
-					 case OP_NOT_GT_N:
-					 case OP_NOT_LTE_N:
-					 case OP_NOT_GTE_N:
-					 case OP_NOT_EQ_N:
-					 case OP_ZERO_N:
-					 case OP_NOT_ZERO_N:
-						if ((*i_code).C == index)
-						  (*i_code).C = label_table[index].offset;
-						break;
-					 }
-				}
+		  case OP_GOTO:
+			 (*i_code)->A = label->offset;
+			 break;
+		  case OP_LT_S:
+		  case OP_GT_S:
+		  case OP_LTE_S:
+		  case OP_GTE_S:
+		  case OP_EQ_S:
+		  case OP_NOT_LT_S:
+		  case OP_NOT_GT_S:
+		  case OP_NOT_LTE_S:
+		  case OP_NOT_GTE_S:
+		  case OP_NOT_EQ_S:
+		  case OP_LT_N:
+		  case OP_GT_N:
+		  case OP_LTE_N:
+		  case OP_GTE_N:
+		  case OP_EQ_N:
+		  case OP_NOT_LT_N:
+		  case OP_NOT_GT_N:
+		  case OP_NOT_LTE_N:
+		  case OP_NOT_GTE_N:
+		  case OP_NOT_EQ_N:
+		  case OP_ZERO_N:
+		  case OP_NOT_ZERO_N:
+			 (*i_code)->C = label->offset;
+			 break;
 		  }
 	 }
 }
 
 /* retorna o offset do label */
-int AsmGen::get_label_offset (string _name)
+int AsmGen::get_label_offset (const string _name)
 {
   std::vector<LabelDec>::const_iterator i_label;
   for (i_label = label_table.begin ();
@@ -277,19 +259,19 @@ int AsmGen::get_label_offset (string _name)
 }
 
 /* return the declaration label */
-LabelDec & AsmGen::get_label (string _name)
+LabelDec * AsmGen::get_label (const string _name)
 {
   std::vector<LabelDec>::iterator i_label;
   for (i_label = label_table.begin ();
 		 i_label != label_table.end (); i_label++)
 	 {
 		if ((*i_label).name == _name)
-		  return (*i_label);
+		  return &(*i_label);
 	 }
 }
 
 /* verifica se o label foi definido */
-bool AsmGen::label_defined (string _name)
+bool AsmGen::label_defined (const string _name)
 {
   std::vector<LabelDec>::const_iterator i_label;
   for (i_label = label_table.begin ();
@@ -301,23 +283,8 @@ bool AsmGen::label_defined (string _name)
   return false;
 }
 
-/* retorna o indice do label */
-/* é usado para localizar o label */
-/* em forward references */
-int AsmGen::get_label_index (string _name)
-{
-  std::vector<LabelDec>::const_iterator i_label;
-  for (i_label = label_table.begin ();
-		 i_label != label_table.end (); i_label++)
-	 {
-		if ((*i_label).name == _name)
-		  return (*i_label).i;
-	 }
-  return NULL;
-}
-
 /* adiciona um novo label, não definido */
-bool AsmGen::add_label (string _name)
+bool AsmGen::add_label (const string _name)
 {
   std::vector<LabelDec>::const_iterator i_label;
   for (i_label = label_table.begin ();
@@ -326,13 +293,12 @@ bool AsmGen::add_label (string _name)
 		if ((*i_label).name == _name)
 		  return false;
 	 }
-  label_table.push_back (LabelDec (_name, current_code_line, false, current_label_index));
-  current_label_index++;
+  label_table.push_back (LabelDec (_name, current_code_line, false));
   return true;
 }
 
 /* permite adicionar um novo label, informando seu status */
-bool AsmGen::add_label (string _name, bool _defined)
+bool AsmGen::add_label (const string _name, const bool _defined)
 {
   std::vector<LabelDec>::iterator i_label;
   for (i_label = label_table.begin ();
@@ -346,11 +312,9 @@ bool AsmGen::add_label (string _name, bool _defined)
 			 return false;
 		  }
 	 }
-  label_table.push_back (LabelDec (_name, current_code_line, _defined, current_label_index));
-  current_label_index++;
+  label_table.push_back (LabelDec (_name, current_code_line, _defined));
   return true;
 }
-
 
 /* escreve os dados no arquivo. */
 void AsmGen::assemble ()
@@ -378,12 +342,12 @@ void AsmGen::assemble ()
   output->write ( reinterpret_cast<char *>(&context.header), sizeof (Header));
 
   if (context.header.string_table_len > 0)
-    output->write ( reinterpret_cast<char *>(context.string_table),
-                   context.header.string_table_len * sizeof (char));
+	 output->write ( reinterpret_cast<char *>(context.string_table),
+						 context.header.string_table_len * sizeof (char));
 
   if (context.header.num_table_len > 0)
-    output->write ( reinterpret_cast<char *>(context.num_table),
-                   context.header.num_table_len * sizeof (NUMBER));
+	 output->write ( reinterpret_cast<char *>(context.num_table),
+						 context.header.num_table_len * sizeof (NUMBER));
 
   output->write ( reinterpret_cast<char *>(context.code_section),
 						context.header.code_len * sizeof (Instruction));

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:58:03 BRT>
+ *   Modified: <2009-07-29 19:47:23 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ using std::ostringstream;
 
 class BadFileException {
 public:
-  BadFileException (string file_name)
+  BadFileException (const string file_name)
   {
 	 ostringstream temp;
 	 temp << "\"" << file_name << "\"" << " could not be open!";

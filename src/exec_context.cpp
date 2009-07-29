@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 07:58:38 BRT>
+ *   Modified: <2009-07-29 19:41:50 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ ExecContext::~ExecContext ()
 	 delete code_section;
 }
 
-void ExecContext::load_file (string file_name)
+void ExecContext::load_file (const string file_name)
   throw (BadFileException, NotRecognizedFileException, bad_alloc)
 {
 

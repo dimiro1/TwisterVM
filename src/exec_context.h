@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 17:16:02 BRT>
+ *   Modified: <2009-07-29 19:41:23 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ public:
 	 return offset;
   }
 
-  int add_num (NUMBER n)
+  int add_num (const NUMBER n)
   {
 	 int offset = current_num_pos;
 	 num_table[current_num_pos++] = n;
@@ -84,18 +84,18 @@ public:
   }
 
 
-  inline char * get_string (short n)
+  inline char * get_string (const short n)
   {
 	 return string_table + n;
   }
 
-  inline NUMBER get_num (short n)
+  inline NUMBER get_num (const short n)
   {
 	 return num_table[n];
   }
 
   /* FIXME: Responsabilidade da VM */
-  void load_file (string file_name)
+  void load_file (const string file_name)
 	 throw (BadFileException, NotRecognizedFileException, bad_alloc);
 };
 

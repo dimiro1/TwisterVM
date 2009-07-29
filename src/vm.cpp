@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 16:18:30 BRT>
+ *   Modified: <2009-07-29 19:46:08 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ void VM::execute ()
 }
 
 /* load code_section into memory */
-void VM::load (string progname)
+void VM::load (const string progname)
 {
   current_context = new ExecContext ();
 
@@ -52,7 +52,7 @@ void VM::load (string progname)
 }
 
 
-void VM::list ()
+void VM::list () const
 {
 	 Instruction current;
 
@@ -899,23 +899,26 @@ void VM::dispatch ()
   END_SWITCH
 }
 
-inline STRING VM::RS (int i)
+/* acesso aos registradores */
+inline STRING VM::RS (const unsigned int i)
 {
-	 return s_registers[i];
+  return s_registers[i];
 }
 
-inline NUMBER VM::RN (int i)
+inline NUMBER VM::RN (const unsigned int i)
 {
-	 return n_registers[i];
+  return n_registers[i];
 }
 
 /* registers sets */
-inline void VM::RS (int i, STRING s)
+inline void VM::RS (const unsigned int i,
+						  const STRING s)
 {
-	 s_registers[i] = s;
+  s_registers[i] = s;
 }
 
-inline void VM::RN (int i, NUMBER n)
+inline void VM::RN (const unsigned int i,
+						  const NUMBER n)
 {
-	 n_registers[i] = n;
+  n_registers[i] = n;
 }

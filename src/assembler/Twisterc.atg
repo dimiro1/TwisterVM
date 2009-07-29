@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 09:46:35 BRT>
+ *   Modified: <2009-07-29 19:55:11 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,9 +45,9 @@ COMPILER Twisterc
 	IGNORE cr + tab + lf
 
 	PRODUCTIONS
-		  Twisterc = [OptionsSection] CodeSection.
+		Twisterc = [OptionsSection] CodeSection.
 
-		 OptionsSection = ".options"
+		OptionsSection = ".options"
 							   {OptionsOptionsSection}
 						  ".end".
 
@@ -59,9 +59,9 @@ COMPILER Twisterc
 						  {CodeInstruction}
 					  ".end".
 
-                        // opcode        A           B          C
-		CodeInstruction (. int A, B, C; string label_name; gen->inc_code_line (); .) 
-                        = "abs_n"     Register<A> Register<C>
+                                 // opcode        A           B          C
+		CodeInstruction (. int A, B, C; string label_name; gen->inc_code_line (); .)
+                                = "abs_n"     Register<A> Register<C>
                                       (. gen->add_instruction (OP_ABS_N, A, C); .)
 								| "acos_n"	  Register<A> Register<C>
                                       (. gen->add_instruction (OP_ACOS_N, A, C); .)
@@ -101,22 +101,22 @@ COMPILER Twisterc
                                       (. gen->add_instruction (OP_SUB_N, A, B, C); .)
 								| "tan_n"	  Register<A> Register<C>
                                       (. gen->add_instruction (OP_TAN_N, A, C); .)
-                        | "goto"      Label<label_name>
+                                | "goto"      Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GOTO, label_name); .)
-                        | "halt"
+                                | "halt"
                                       (. gen->add_instruction (OP_HALT); .)
-                        | "nop"
+                                | "nop"
                                       (. gen->add_instruction (OP_NOP); .)
-                        | "system_s"    Register<A>
-							                 (. gen->add_instruction (OP_SYSTEM_S, A); .)
-                        | "getenv_s"    Register<A> Register<C>
-							                 (. gen->add_instruction (OP_GETENV_S, A, C); .)
-                        | "input_n"           Register<A>
+                                | "system_s"  Register<A>
+							          (. gen->add_instruction (OP_SYSTEM_S, A); .)
+                                | "getenv_s"  Register<A> Register<C>
+							          (. gen->add_instruction (OP_GETENV_S, A, C); .)
+                                | "input_n"   Register<A>
                                       (. gen->add_instruction (OP_INPUT_N, A); .)
-                        | "input_s"           Register<A>
+                                | "input_s"   Register<A>
                                       (. gen->add_instruction (OP_INPUT_S, A); .)
-                        | "print_n"   Register<A>
+                                | "print_n"   Register<A>
                                       (. gen->add_instruction (OP_PRINT_N, A); .)
 								| "print_s"	  Register<A>
                                       (. gen->add_instruction (OP_PRINT_S, A); .)
@@ -124,99 +124,100 @@ COMPILER Twisterc
                                       (. gen->add_instruction (OP_PUT_N, A); .)
 								| "put_s"	  Register<A>
                                       (. gen->add_instruction (OP_PUT_S, A); .)
-								| "mov_n"	  Register<A>				  Register<C>
+								| "mov_n"	  Register<A>			  Register<C>
                                       (. gen->add_instruction (OP_MOV_N, A, C); .)
-								| "mov_s"	  Register<A>				  Register<C>
+								| "mov_s"	  Register<A>			  Register<C>
                                       (. gen->add_instruction (OP_MOV_S, A, C); .)
 
-                        | "store_n" (. double n; int index; .)  NUM 
-                                                          (. n = atof (coco_string_create_char (t->val));
-                                                             index = gen->add_num (n); .)
-                                                                          Register<C>
-                                         (. gen->add_instruction (OP_STORE_N, index, C); .)
+                                | "store_n" (. double n; int index; .)  NUM
+                                      (. n = atof (coco_string_create_char (t->val));
+                                         index = gen->add_num (n); .)
+                                                                      Register<C>
+                                      (. gen->add_instruction (OP_STORE_N, index, C); .)
 
-                        | "store_s" (. int index; .)   STRING (. index = gen->add_string (string (coco_string_create_char (t->val))); .)
-                                                              Register<C>
+                                | "store_s" (. int index; .) STRING
+                                      (. index = gen->add_string (string (coco_string_create_char (t->val))); .)
+                                                                     Register<C>
                                       (. gen->add_instruction (OP_STORE_S, index, C); .)
 
-                        | "concat_s"  Register<A> Register<B> Register<C>
+                                | "concat_s"  Register<A> Register<B> Register<C>
                                       (. gen->add_instruction (OP_CONCAT_S, A, B, C); .)
-                        | "charat_s"  Register<A> NUM
+                                | "charat_s"  Register<A> NUM
                                       (. gen->add_instruction (OP_CHARAT_S, A, 1); .)
-                        | "lt_s"      Register<A> Register<B> Label<label_name>
+                                | "lt_s"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_LT_S, A, B, label_name); .)
-                        | "gt_s"      Register<A> Register<B> Label<label_name>
+                                | "gt_s"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GT_S, A, B, label_name); .)
-                        | "lte_s"     Register<A> Register<B> Label<label_name>
+                                | "lte_s" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_LTE_S, A, B, label_name); .)
-                        | "gte_s"     Register<A> Register<B> Label<label_name>
+                                | "gte_s" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GTE_S, A, B, label_name); .)
-                        | "eq_s"      Register<A> Register<B> Label<label_name>
+                                | "eq_s"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_EQ_S, A, B, label_name); .)
-                        | "lt_n"      Register<A> Register<B> Label<label_name>
+                                | "lt_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_LT_N, A, B, label_name); .)
-                        | "gt_n"      Register<A> Register<B> Label<label_name>
+                                | "gt_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GT_N, A, B, label_name); .)
-                        | "lte_n"     Register<A> Register<B> Label<label_name>
+                                | "lte_n" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_LTE_N, A, B, label_name); .)
-                        | "gte_n"     Register<A> Register<B> Label<label_name>
+                                | "gte_n" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GTE_S, A, B, label_name); .)
-                        | "eq_n"      Register<A> Register<B> Label<label_name>
+                                | "eq_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_EQ_N, A, B, label_name); .)
-                        | "not_lt_s"  Register<A> Register<B> Label<label_name>
+                                | "not_lt_s"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_LT_S, A, B, label_name); .)
-                        | "not_gt_s"  Register<A> Register<B> Label<label_name>
+                                | "not_gt_s"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_GT_S, A, B, label_name); .)
-                        | "not_lte_s" Register<A> Register<B> Label<label_name>
+                                | "not_lte_s" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_LTE_S, A, B, label_name); .)
-                        | "not_gte_s" Register<A> Register<B> Label<label_name>
+                                | "not_gte_s" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_GTE_S, A, B, label_name); .)
-                        | "not_eq_s"  Register<A> Register<B> Label<label_name>
+                                | "not_eq_s"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_EQ_S, A, B, label_name); .)
-                        | "not_lt_n"  Register<A> Register<B> Label<label_name>
+                                | "not_lt_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_LT_N, A, B, label_name); .)
-                        | "not_gt_n"  Register<A> Register<B> Label<label_name>
+                                | "not_gt_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_GT_N, A, B, label_name); .)
-                        | "not_lte_n" Register<A> Register<B> Label<label_name>
+                                | "not_lte_n" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_LTE_N, A, B, label_name); .)
-                        | "not_gte_n" Register<A> Register<B> Label<label_name>
+                                | "not_gte_n" Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_GTE_N, A, B, label_name); .)
-                        | "not_eq_n"  Register<A> Register<B> Label<label_name>
+                                | "not_eq_n"  Register<A> Register<B> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_EQ_N, A, B, label_name); .)
-                        | "zero_n"  Register<A> Label<label_name>
+                                | "zero_n"  Register<A> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_ZERO_N, A, label_name); .)
-                        | "not_zero_n"  Register<A> Label<label_name>
+                                | "not_zero_n"  Register<A> Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_NOT_ZERO_N, A, label_name); .)
-                        | LabelDec<label_name> (. 
-                                                  gen->dec_code_line ();
-                                                  gen->add_label (label_name, true);
-                                                .)
-						.
+                                | LabelDec<label_name> (. gen->dec_code_line ();
+                                                          gen->add_label (label_name, true); .)
+						        .
 
-        Label<string &label_name> = ID (. label_name = string (coco_string_create_char(t->val)); .).
-        LabelDec<string &label_name> = ID (. label_name = string (coco_string_create_char(t->val)); .) ":".
+        Label<string &label_name> = ID
+                    (. label_name = string (coco_string_create_char(t->val)); .).
+        LabelDec<string &label_name> = ID
+                    (. label_name = string (coco_string_create_char(t->val)); .) ":".
 
 		Register<int &n>= "$" NUM
                         (. n =  atoi (coco_string_create_char (t->val)); .).
