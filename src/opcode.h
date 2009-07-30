@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-27 16:01:08 BRT>
+ *   Modified: <2009-07-29 22:53:24 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 	 OP (SQRT_N),											\
 	 OP (SUB_N),											\
 	 OP (TAN_N),											\
+	 OP (RAND_N),											\
 	 /* generic */											\
 	 OP (GOTO),												\
 	 OP (HALT),												\
@@ -113,6 +114,7 @@ mneumonic[] = {
   "sqrt_n",
   "sub_n",
   "tan_n",
+  "rand_n",
 
   "goto",
   "halt",

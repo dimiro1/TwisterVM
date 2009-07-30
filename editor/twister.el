@@ -56,7 +56,7 @@
 								  "print_n" "print_s" "put_n" "put_s"
 								  "mov_n" "mov_s" "store_s" "store_n"
 								  "concat_s" "charat_s" "system_s"
-								  "getenv_s")
+								  "getenv_s" "rand_n")
   "All twister opcodes without jumps.")
 
 (defvar twister-mode-map

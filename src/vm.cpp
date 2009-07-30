@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 21:52:35 BRT>
+ *   Modified: <2009-07-29 23:19:01 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ void VM::load (const string progname)
 
 void VM::list () const
 {
-	 Instruction current;
+	 auto Instruction current;
 
 	 cout << " twisterc v" << current_context->header.major_version
 			<< "." << current_context->header.minor_version
@@ -309,6 +309,17 @@ void VM::dispatch ()
 	 puts ("tan_n");
 	 #endif
 	 RN (executing.C, tan (RN (executing.A)));
+	 current_context->pc++;
+	 GOTO_NEXT_INSTR
+	 BREAK
+  END_CASE
+
+  CASE (RAND_N)
+	 #ifdef DEBUG
+	 puts ("rand_n");
+	 #endif
+	 srand (time (0));
+	 RN (executing.C, rand ());
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK

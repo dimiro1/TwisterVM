@@ -1,0 +1,15 @@
+# pergunta o raio
+# informa a area do circulo
+.main
+  store_n 3.1415 $0
+  store_n 2 $1
+  store_s "Qual o raio do circulo? " $0
+  store_s "o circulo tem area = " $1
+  print_s $0
+  input_n $2
+  mult_n $1 $0 $1
+  mult_n $2 $1 $1
+  print_s $1
+  put_n $1
+  halt
+.end

@@ -1,0 +1,15 @@
+.main
+  store_s "* * * * * * * *" $0
+  store_s " * * * * * * * *" $1
+  store_n 8 $0
+  store_n 1 $1
+  store_n 2 $2
+LOOP:
+  gt_n $1 $0 END
+  put_s $0
+  put_s $1
+  add_n $1 $2 $1
+  goto LOOP
+END:
+  halt
+.end

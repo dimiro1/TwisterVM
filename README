@@ -58,6 +58,7 @@ ARITMETICOS
   sqrt_n      raiz quadrada
   sub_n       subtrai
   tan_n       calcula tangente
+  rand_n      numero aleatorio entre 0 e 32767
 
 GENERICOS
   OPCODE      Descrição

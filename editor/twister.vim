@@ -27,7 +27,7 @@ elseif exists("b:current_syntax")
 endif
 
 syn keyword twisterOpcodes abs_n acos_n add_n asin_n atan_n ceil_n cos_n dec_n div_n floor_n inc_n log_n mod_n mult_n neg_n pow_n sin_n sqrt_n sub_n tan_n
-syn keyword twisterOpcodes goto halt nop
+syn keyword twisterOpcodes goto halt nop rand_n
 syn keyword twisterOpcodes input_n input_s print_n print_s put_n put_s mov_n mov_s
 syn keyword twisterOpcodes store_s store_n concat_s charat_s system_s getenv_s
 syn keyword twisterBranch lt_s gt_s lte_s gte_s eq_s lt_n gt_n lte_n gte_n eq_n not_lt_s zero_n not_zero_n

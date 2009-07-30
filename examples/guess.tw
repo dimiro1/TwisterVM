@@ -1,0 +1,31 @@
+# exemplo de numeros aleatórios
+.main
+  store_s "Adivinhe o numero entre 0 e 100!" $0
+  store_s "Digite um numero: " $1
+  store_s "maior!" $2
+  store_s "menor!" $3
+  store_s "Você acertou!! em " $4
+  store_s " tentativa(s)" $5
+  store_n 100 $4
+  store_n 1 $5
+  rand_n $1
+  mod_n $1 $4 $1
+  put_s $0
+  put_n $1
+LOOP:
+  print_s $1
+  input_n $2
+  eq_n $2 $1 END
+  inc_n $5
+  lt_n $2 $1 LT
+  put_s $3
+  goto LOOP
+LT:
+  put_s $2
+  goto LOOP
+END:
+  print_s $4
+  print_n $5
+  put_s $5
+  halt
+.end

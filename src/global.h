@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 21:23:57 BRT>
+ *   Modified: <2009-07-29 23:01:47 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ using std::string;
 
 #include <cstring>
 #include <cstdlib>
+#include <ctime>
 
 /* Exceptions */
 #include <new>

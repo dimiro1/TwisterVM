@@ -101,6 +101,8 @@ COMPILER Twisterc
                                       (. gen->add_instruction (OP_SUB_N, A, B, C); .)
 								| "tan_n"	  Register<A> Register<C>
                                       (. gen->add_instruction (OP_TAN_N, A, C); .)
+								| "rand_n"	  Register<C>
+                                      (. gen->add_instruction (OP_RAND_N, NULL, C); .)
                                 | "goto"      Label<label_name>
                                       (. gen->add_label (label_name);
                                          gen->add_instruction (OP_GOTO, label_name); .)
