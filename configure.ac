@@ -35,6 +35,5 @@ AC_OUTPUT(Makefile
 			 src/Makefile
 			 src/assembler/Makefile
 			 src/lib/Makefile
-			 src/lib/io/Makefile
-			)
+			 src/lib/io/Makefile)
 

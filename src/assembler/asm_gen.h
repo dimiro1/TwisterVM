@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 19:40:01 BRT>
+ *   Modified: <2009-07-29 22:24:03 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
 #ifndef _ASM_GEN_H_
 #define _ASM_GEN_H_
 
-#include "../exec_context.h"
-#include "../instruction.h"
+#include "exec_context.h"
+#include "instruction.h"
 
 #include <iostream>
 using std::ios;

@@ -1,11 +1,11 @@
 bin_PROGRAMS = twisterc
 twisterc_SOURCES = asm_gen.cpp Parser.cpp\
 	Scanner.cpp Twisterc.cpp\
-	@top_srcdir@/src/exec_context.cpp @top_srcdir@/src/instruction.cpp
+	${top_srcdir}/src/exec_context.cpp ${top_srcdir}/src/instruction.cpp
 
 noinst_HEADERS = asm_gen.h Scanner.h Parser.h
 
-INCLUDES = -I@top_srcdir@/src
+INCLUDES = -I${top_srcdir}/src
 
 twisterc_atg = Twisterc.atg
 frames_dir = /usr/share/coco-cpp
