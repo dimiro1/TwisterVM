@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 19:46:08 BRT>
+ *   Modified: <2009-07-29 21:52:35 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -464,7 +464,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("print_s");
 	 #endif
-	 cout << RS (executing.A);
+	 TIO::print_string (RS (executing.A), false);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -474,7 +474,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("print_n");
 	 #endif
-	 cout << RN (executing.A);
+	 TIO::print_num (RN (executing.A), false);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -484,7 +484,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("put_s");
 	 #endif
-	 cout << RS (executing.A) << endl;
+	 TIO::print_string (RS (executing.A), true);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -494,7 +494,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("put_n");
 	 #endif
-	 cout << RN (executing.A) << endl;
+	 TIO::print_num (RN (executing.A), true);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -504,7 +504,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("input_s");
 	 #endif
-	 cin >> input_s;
+	 TIO::read_string (input_s);
 	 RS (executing.A, input_s);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -515,7 +515,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("input_n");
 	 #endif
-	 cin >> input_d;
+	 TIO::read_num (input_d);
 	 RN (executing.A, input_d);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR

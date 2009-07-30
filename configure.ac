@@ -6,6 +6,7 @@ AC_CONFIG_HEADER(config.h)
 AC_LANG(C++)
 AC_PROG_CXX
 AC_PROG_INSTALL
+AC_PROG_RANLIB
 
 dnl------------------------
 dnl Checks for COCO/R
@@ -33,5 +34,7 @@ fi
 AC_OUTPUT(Makefile
 			 src/Makefile
 			 src/assembler/Makefile
+			 src/lib/Makefile
+			 src/lib/io/Makefile
 			)
 

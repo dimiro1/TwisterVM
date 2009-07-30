@@ -49,6 +49,7 @@ am_twister_OBJECTS = vm.$(OBJEXT) Twister.$(OBJEXT) \
 	instruction.$(OBJEXT) exec_context.$(OBJEXT) error.$(OBJEXT)
 twister_OBJECTS = $(am_twister_OBJECTS)
 twister_LDADD = $(LDADD)
+twister_DEPENDENCIES = lib/io/libtio.a
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -111,6 +112,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -164,7 +166,8 @@ noinst_HEADERS = vm.h instruction.h opcode.h\
 	not_recognized_file_exception.h bad_file_exception.h\
 	dispatch.h exec_context.h error.h global.h types.h
 
-SUBDIRS = assembler
+SUBDIRS = assembler lib
+LDADD = lib/io/libtio.a
 all: all-recursive
 
 .SUFFIXES:
