@@ -5,6 +5,7 @@
 *.old
 *.twc
 *.a
+configure
 config.h,
 config.h,.in
 test/runtests

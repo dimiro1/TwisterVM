@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 23:19:01 BRT>
+ *   Modified: <2009-07-31 17:59:03 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,118 +54,122 @@ void VM::load (const string progname)
 
 void VM::list () const
 {
-	 auto Instruction current;
+  auto Instruction current;
 
-	 cout << " twisterc v" << current_context->header.major_version
-			<< "." << current_context->header.minor_version
-			<< " (" << current_context->header.code_len
-			<< " instructions)" << endl;
-
-	 for (int i = 0; i < current_context->header.code_len; i++)
+  cout << " twisterc v" << current_context->header.major_version
+       << "." << current_context->header.minor_version
+       << "." << current_context->header.path_version
+       << " (" << current_context->header.code_len
+       << " instructions)" << endl;
+  for (int i = 0; i < current_context->header.code_len; i++)
 	 {
-		  current = current_context->code_section[i];
-		  cout << " " << i << ": " << mneumonic[current.opcode] << " ";
-		  switch (current.opcode)
+      current = current_context->code_section[i];
+      cout << std::setw (3) << i << ": "
+           << mneumonic[current.opcode] << " ";
+      switch (current.opcode)
 		  {
-			 case OP_STORE_S:
-				cout << "\"" << current_context->get_string(current.A)
-					  << "\" $" << current.C;
-				break;
-			 case OP_PUT_S: case OP_PRINT_S:
-				cout << "$" << current.A;
-				break;
-			 case OP_STORE_N:
-				cout  << current_context->get_num (current.A)
-						<< " $" << current.C;
-				break;
-			 case OP_PUT_N: case OP_PRINT_N:
-				cout << "$" << current.A;
-				break;
-			 case OP_CONCAT_S:
-				cout  << "$" << current.A
-						<< " $" << current.B
-						<< " $" << current.C ;
-				break;
-			 case OP_MOV_N: case OP_MOV_S:
-				cout  << "$" << current.A
-						<< " $" << current.C ;
-				break;
-			 case OP_INPUT_N: case OP_INPUT_S:
-				cout  << "$" << current.A;
-				break;
-			 case OP_GOTO:
-				cout << current.A;
-				break;
-			 case OP_SYSTEM_S:
-				cout << "$" << current.A;
-				break;
-			 case OP_GETENV_S:
-				cout << "$" << current.A
-					  << " $" << current.C;
-				break;
-			 case OP_ADD_N:  case OP_SUB_N:
-			 case OP_MULT_N: case OP_DIV_N:
-			 case OP_MOD_N:
-				cout  << "$" << current.A
-						<< " $" << current.B
-						<< " $" << current.C ;
-				break;
-			 case OP_POW_N:
-				cout  << "$" << current.A
-						<< " $" << current.C ;
-				break;
-			 case OP_NEG_N:
-				cout  << "$" << current.A;
-				break;
-			 case OP_ABS_N:  case OP_SIN_N:
-			 case OP_COS_N:  case OP_TAN_N:
-			 case OP_ASIN_N: case OP_ACOS_N:
-			 case OP_ATAN_N: case OP_LOG_N:
-			 case OP_SQRT_N: case OP_CEIL_N:
-			 case OP_FLOOR_N:
-				cout  << "$" << current.A
-						<< " $" << current.C ;
-				break;
-			 case OP_INC_N:
-				cout  << "$" << current.A;
-				break;
-			 case OP_DEC_N:
-				cout  << "$" << current.A;
-				break;
-			 case OP_CHARAT_S:
-				cout << current_context->get_string (current.A)
-					  << " " << current.B << " $" << current.C;
-				break;
+        case OP_STORE_S:
+          cout << "\"" << current_context->get_string(current.A)
+               << "\" $" << current.C;
+          break;
+        case OP_PUT_S: case OP_PRINT_S:
+          cout << "$" << current.A;
+          break;
+        case OP_STORE_N:
+          cout  << current_context->get_num (current.A)
+                << " $" << current.C;
+          break;
+        case OP_PUT_N: case OP_PRINT_N:
+          cout << "$" << current.A;
+          break;
+        case OP_CONCAT_S:
+          cout  << "$" << current.A
+                << " $" << current.B
+                << " $" << current.C ;
+          break;
+        case OP_MOV_N: case OP_MOV_S:
+          cout  << "$" << current.A
+                << " $" << current.C ;
+          break;
+        case OP_INPUT_N: case OP_INPUT_S:
+          cout  << "$" << current.C;
+          break;
+        case OP_GOTO:
+          cout << current.A;
+          break;
+        case OP_SYSTEM_S:
+          cout << "$" << current.A;
+          break;
+        case OP_RAND_N:
+          cout << "$" << current.C;
+          break;
+        case OP_GETENV_S:
+          cout << "$" << current.A
+               << " $" << current.C;
+          break;
+        case OP_ADD_N:  case OP_SUB_N:
+        case OP_MULT_N: case OP_DIV_N:
+        case OP_MOD_N:
+          cout  << "$" << current.A
+                << " $" << current.B
+                << " $" << current.C ;
+          break;
+        case OP_POW_N:
+          cout  << "$" << current.A
+                << " $" << current.C ;
+          break;
+        case OP_NEG_N:
+          cout  << "$" << current.A;
+          break;
+        case OP_ABS_N:  case OP_SIN_N:
+        case OP_COS_N:  case OP_TAN_N:
+        case OP_ASIN_N: case OP_ACOS_N:
+        case OP_ATAN_N: case OP_LOG_N:
+        case OP_SQRT_N: case OP_CEIL_N:
+        case OP_FLOOR_N:
+          cout  << "$" << current.A
+                << " $" << current.C ;
+          break;
+        case OP_INC_N:
+          cout  << "$" << current.A;
+          break;
+        case OP_DEC_N:
+          cout  << "$" << current.A;
+          break;
+        case OP_CHARAT_S:
+          cout << current_context->get_string (current.A)
+               << " " << current.B << " $" << current.C;
+          break;
 		  case OP_ZERO_N: case OP_NOT_ZERO_N:
-				cout  << "$" << current.A
-						<< " " << current.C;
-				break;
-			 case OP_LT_S:
-			 case OP_GT_S:
-			 case OP_LTE_S:
-			 case OP_GTE_S:
-			 case OP_EQ_S:
-			 case OP_NOT_LT_S:
-			 case OP_NOT_GT_S:
-			 case OP_NOT_LTE_S:
-			 case OP_NOT_GTE_S:
-			 case OP_NOT_EQ_S:
-			 case OP_LT_N:
-			 case OP_GT_N:
-			 case OP_LTE_N:
-			 case OP_GTE_N:
-			 case OP_EQ_N:
-			 case OP_NOT_LT_N:
-			 case OP_NOT_GT_N:
-			 case OP_NOT_LTE_N:
-			 case OP_NOT_GTE_N:
-			 case OP_NOT_EQ_N:
-				cout  << "$" << current.A
-						<< " $" << current.B
-						<< " " << current.C;
-				break;
+          cout  << "$" << current.A
+                << " " << current.C;
+          break;
+        case OP_LT_S:
+        case OP_GT_S:
+        case OP_LTE_S:
+        case OP_GTE_S:
+        case OP_EQ_S:
+        case OP_NOT_LT_S:
+        case OP_NOT_GT_S:
+        case OP_NOT_LTE_S:
+        case OP_NOT_GTE_S:
+        case OP_NOT_EQ_S:
+        case OP_LT_N:
+        case OP_GT_N:
+        case OP_LTE_N:
+        case OP_GTE_N:
+        case OP_EQ_N:
+        case OP_NOT_LT_N:
+        case OP_NOT_GT_N:
+        case OP_NOT_LTE_N:
+        case OP_NOT_GTE_N:
+        case OP_NOT_EQ_N:
+          cout  << "$" << current.A
+                << " $" << current.B
+                << " " << current.C;
+          break;
 		  }
-		  cout << endl;
+      cout << endl;
 	 }
 }
 
@@ -516,7 +520,7 @@ void VM::dispatch ()
 	 puts ("input_s");
 	 #endif
 	 TIO::read_string (input_s);
-	 RS (executing.A, input_s);
+	 RS (executing.C, input_s);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -527,7 +531,7 @@ void VM::dispatch ()
 	 puts ("input_n");
 	 #endif
 	 TIO::read_num (input_d);
-	 RN (executing.A, input_d);
+	 RN (executing.C, input_d);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK

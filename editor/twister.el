@@ -61,9 +61,9 @@
 
 (defvar twister-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "RET") 'twister-reindent-then-newline-and-indent)
+    (define-key map (kbd "RET") 'reindent-then-newline-and-indent)
     (define-key map (kbd "C-c C-j") 'twister-follow-branch)
-    (define-key map (kbd "TAB") 'twister-indent-function)
+    (define-key map (kbd "TAB") 'indent-according-to-mode)
 	 map)
 	 "Keymap for TWISTER major mode.")
 
@@ -97,7 +97,7 @@
   (make-local-variable 'paragraph-separate)
   (setq paragraph-separate paragraph-start)
   (make-local-variable 'indent-line-function)
-  (setq indent-line-function 'twister-indent-line-function)
+  (setq indent-line-function 'twister-indent-function)
   (make-local-variable 'require-final-newline)
   (setq require-final-newline t)
   (make-local-variable 'comment-start)
@@ -106,21 +106,13 @@
   (setq comment-end "")
   (make-local-variable 'comment-start-skip)
   (setq comment-start-skip "#+ *")
+  (make-local-variable 'comment-indent-function)
   (setq comment-indent-function 'twister-comment-indent)
   (make-local-variable 'font-lock-defaults)
   (setq font-lock-defaults '(twister-font-lock-keywords))
   (font-lock-mode 1)
   (use-local-map twister-mode-map)
   (run-hooks 'twister-mode-hook))
-
-(defun twister-reindent-then-newline-and-indent ()
-  "Reindent current TWISTER line, insert newline, and indent the new line."
-  (interactive)
-  (save-excursion
-    (delete-region (point) (progn (skip-chars-backward " \t") (point)))
-    (twister-indent-function))
-  (insert "\n")
-  (twister-indent-function))
 
 (defun twister-indent-line-function ()
   (interactive)
@@ -150,8 +142,6 @@ the beginning of a line (which doesn't have a label) we want to be
 moved forward to column 2"
   (interactive)
   (twister-indent-line-function)
-  ;; how do we check if we're at the beginnign of a line? there must
-  ;; be a function for this
   (unless (or (looking-at twister-label-regexp)
               (/= (beginning-of-line-point) (point)))
       (forward-char 2)))

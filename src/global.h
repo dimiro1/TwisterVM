@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 23:01:47 BRT>
+ *   Modified: <2009-07-31 18:02:58 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 /* version */
 #define VM_VERSION_MAJOR 0
 #define VM_VERSION_MINOR 6
-#define VM_VERSION_PATH 3
+#define VM_VERSION_PATH 4
 
 #define MAGIC_VERSION_NUM 0x06
 #define EOS '\0'

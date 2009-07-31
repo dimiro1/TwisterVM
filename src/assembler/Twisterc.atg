@@ -114,10 +114,10 @@ COMPILER Twisterc
 							          (. gen->add_instruction (OP_SYSTEM_S, A); .)
                                 | "getenv_s"  Register<A> Register<C>
 							          (. gen->add_instruction (OP_GETENV_S, A, C); .)
-                                | "input_n"   Register<A>
-                                      (. gen->add_instruction (OP_INPUT_N, A); .)
+                                | "input_n"   Register<C>
+                                      (. gen->add_instruction (OP_INPUT_N, NULL, C); .)
                                 | "input_s"   Register<A>
-                                      (. gen->add_instruction (OP_INPUT_S, A); .)
+                                      (. gen->add_instruction (OP_INPUT_S, NULL, C); .)
                                 | "print_n"   Register<A>
                                       (. gen->add_instruction (OP_PRINT_N, A); .)
 								| "print_s"	  Register<A>

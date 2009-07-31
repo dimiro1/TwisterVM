@@ -1,5 +1,5 @@
-AC_INIT(TwisterVM, 0.6.2, dimiro1@gmail.com)
-AM_INIT_AUTOMAKE(TwisterVM, 0.6.2)
+AC_INIT(TwisterVM, 0.6.4, dimiro1@gmail.com)
+AM_INIT_AUTOMAKE(TwisterVM, 0.6.4)
 AM_MAINTAINER_MODE
 AC_CONFIG_HEADER(config.h)
 

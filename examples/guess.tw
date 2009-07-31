@@ -11,7 +11,6 @@
   rand_n $1
   mod_n $1 $4 $1
   put_s $0
-  put_n $1
 LOOP:
   print_s $1
   input_n $2
