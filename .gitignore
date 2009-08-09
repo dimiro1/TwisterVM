@@ -24,3 +24,4 @@ Scanner.h
 Scanner.cpp
 twister
 twisterc
+*.in

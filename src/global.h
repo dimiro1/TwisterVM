@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-31 18:02:58 BRT>
+ *   Modified: <2009-08-09 19:16:31 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -73,6 +73,6 @@ using std::out_of_range;
 /* VM types */
 #include "types.h"
 
-#include "lib/io/tio.h"
+#include "IO.h"
 
 #endif /* _GLOBAL_H_ */

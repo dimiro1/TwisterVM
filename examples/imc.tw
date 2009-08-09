@@ -1,0 +1,51 @@
+# calcula o IMC
+# peso/altura^2
+.main
+  store_n 18.5 $0
+  store_n 25 $1
+  store_n 30 $2
+  store_n 35 $3
+  store_n 40 $4
+  store_n 2 $10
+  store_s "Digite seu peso: " $5
+  store_s "Digite sua altura: " $6
+  store_s "IMC = " $7
+  print_s $5
+  input_n $8 # ler peso
+  print_s $6
+  input_n $9 # ler altura
+# calcula IMC
+  pow_n $9 $10 $9 # eleva a altura ao quadrado
+  div_n $8 $9 $8
+  print_s $7
+  put_n $8
+  lt_n $8 $0 ABAIXO
+  lt_n $8 $1 NORMAL
+  lt_n $8 $2 SOBREPESO
+  lt_n $8 $3 OBESO_L
+  lt_n $8 $4 OBESO_M
+  store_s "Obeso mórbido" $11
+  put_s $11
+  goto END
+ABAIXO:
+  store_s "Abaixo do peso" $11
+  put_s $11
+  goto END
+NORMAL:
+  store_s "Peso normal" $11
+  put_s $11
+  goto END
+SOBREPESO:
+  store_s "Sobrepeso" $11
+  put_s $11
+  goto END
+OBESO_L:
+  store_s "Obeso leve" $11
+  put_s $11
+  goto END
+OBESO_M:
+  store_s "Obeso moderado" $11
+  put_s $11
+END:
+  halt
+.end

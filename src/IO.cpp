@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 21:53:02 BRT>
+ *   Modified: <2009-08-09 19:14:54 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,24 +16,29 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licences>
  */
-#ifndef _IO_H_
-#define _IO_H_
-/* #include "../../types.h" */
 
-#include <iostream>
-using std::cout;
-using std::cin;
-using std::endl;
+#include "IO.h"
 
-#include <string>
-using std::string;
+void print_num (const double n, bool has_new_line)
+{
+  cout << n;
+  if (has_new_line)
+	 cout << endl;
+}
 
-namespace TIO {
-  void print_num (const double, bool);
-  void print_string (const string, bool);
+void print_string (const string s, bool has_new_line)
+{
+  cout << s;
+  if (has_new_line)
+	 cout << endl;
+}
 
-  void read_num (double &);
-  void read_string (string &);
-};
+void read_num (double &n)
+{
+  cin >> n;
+}
 
-#endif /* _IO_H_ */
+void read_string (string &s)
+{
+  cin >> s;
+}

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-29 19:39:05 BRT>
+ *   Modified: <2009-08-09 19:01:53 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licences>
  */
 
-#include "global.h"
-#include "vm.h"
+#include "Twister.h"
 #include <getopt.h>
 
 class TwisterMain {
@@ -35,7 +34,7 @@ public:
   void show_usage () const;
   void show_version () const;
 private:
-  VM vm;
+  TwisterVM vm;
   string stream_name;
   /* execute, version, list, help and copyright flags */
   bool eflag;
@@ -114,7 +113,7 @@ void TwisterMain::main (int argc, char **argv)
 		if (lflag)
 		  vm.list ();
 		if (eflag)
-		  vm.execute ();
+		  vm.run ();
 	 }
 }
 

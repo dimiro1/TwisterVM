@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-07-31 17:59:03 BRT>
+ *   Modified: <2009-08-09 19:16:54 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,20 +17,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licences>
  */
 
-#include "vm.h"
+#include "VM.h"
 
-VM::~VM ()
+TwisterVM::~TwisterVM ()
 {
   delete current_context;
 }
 
-void VM::execute ()
+void TwisterVM::run ()
 {
   dispatch ();
 }
 
 /* load code_section into memory */
-void VM::load (const string progname)
+void TwisterVM::load (const string progname)
 {
   current_context = new ExecContext ();
 
@@ -52,7 +52,7 @@ void VM::load (const string progname)
 }
 
 
-void VM::list () const
+void TwisterVM::list () const
 {
   auto Instruction current;
 
@@ -173,7 +173,7 @@ void VM::list () const
 	 }
 }
 
-void VM::dispatch ()
+void TwisterVM::dispatch ()
 {
   STRING s_aux1;
   STRING s_aux2;
@@ -479,7 +479,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("print_s");
 	 #endif
-	 TIO::print_string (RS (executing.A), false);
+	 print_string (RS (executing.A), false);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -489,7 +489,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("print_n");
 	 #endif
-	 TIO::print_num (RN (executing.A), false);
+	 print_num (RN (executing.A), false);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -499,7 +499,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("put_s");
 	 #endif
-	 TIO::print_string (RS (executing.A), true);
+	 print_string (RS (executing.A), true);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -509,7 +509,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("put_n");
 	 #endif
-	 TIO::print_num (RN (executing.A), true);
+	 print_num (RN (executing.A), true);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
 	 BREAK
@@ -519,7 +519,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("input_s");
 	 #endif
-	 TIO::read_string (input_s);
+	 read_string (input_s);
 	 RS (executing.C, input_s);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -530,7 +530,7 @@ void VM::dispatch ()
 	 #ifdef DEBUG
 	 puts ("input_n");
 	 #endif
-	 TIO::read_num (input_d);
+	 read_num (input_d);
 	 RN (executing.C, input_d);
 	 current_context->pc++;
 	 GOTO_NEXT_INSTR
@@ -915,24 +915,24 @@ void VM::dispatch ()
 }
 
 /* acesso aos registradores */
-inline STRING VM::RS (const unsigned int i)
+inline STRING TwisterVM::RS (const unsigned int i)
 {
   return s_registers[i];
 }
 
-inline NUMBER VM::RN (const unsigned int i)
+inline NUMBER TwisterVM::RN (const unsigned int i)
 {
   return n_registers[i];
 }
 
 /* registers sets */
-inline void VM::RS (const unsigned int i,
+inline void TwisterVM::RS (const unsigned int i,
 						  const STRING s)
 {
   s_registers[i] = s;
 }
 
-inline void VM::RN (const unsigned int i,
+inline void TwisterVM::RN (const unsigned int i,
 						  const NUMBER n)
 {
   n_registers[i] = n;
