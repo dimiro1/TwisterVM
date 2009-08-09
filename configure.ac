@@ -33,5 +33,6 @@ fi
 
 AC_OUTPUT(Makefile
 			 src/Makefile
+			 src/interpreter/Makefile
 			 src/assembler/Makefile)
 
