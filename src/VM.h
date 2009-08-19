@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-08-09 17:16:48 BRT>
+ *   Modified: <2009-08-18 23:19:26 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 #include "global.h"
 /* informações sobre dispatch de instruções */
-#include "dispatch.h"
+#include "core.h"
 #include "exec_context.h"
 #include "instruction.h"
 
@@ -52,6 +52,30 @@ private:
   inline void RN (const unsigned int i,
 						const NUMBER n);
 };
+
+/* acesso aos registradores */
+inline STRING TwisterVM::RS (const unsigned int i)
+{
+  return s_registers[i];
+}
+
+inline NUMBER TwisterVM::RN (const unsigned int i)
+{
+  return n_registers[i];
+}
+
+/* registers sets */
+inline void TwisterVM::RS (const unsigned int i,
+						  const STRING s)
+{
+  s_registers[i] = s;
+}
+
+inline void TwisterVM::RN (const unsigned int i,
+						  const NUMBER n)
+{
+  n_registers[i] = n;
+}
 
 #endif
 
