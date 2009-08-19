@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-08-09 20:42:57 BRT>
+ *   Modified: <2009-08-19 19:37:29 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licences>
  */
 
-#include <Twister.h>
+#include "Twister.h"
 #include <getopt.h>
 
 class TwisterMain {
