@@ -7,6 +7,7 @@ directory "obj/src/assembler"
 task :clean => [] do
   sh "rm -rf obj"
   sh "rm -f bin/*"
+  sh "rm -f examples/*.twc"
 end
 
 VMSRC = FileList[ 'src/*.cpp' ]
@@ -44,6 +45,22 @@ file "bin/twisterc" => [ :compile ] do |t|
   sh "g++ -o bin/twisterc #{ASMOBJ}"
 end
 
+desc "Generate core files."
+task :generate_core do
+  sh "ruby tools/opcode_gen.rb -c goto src/instructions.rb"
+  sh "mv core.h core.cpp src/"
+end
+
+desc "Compile all example files."
+task :examples do
+  sources = FileList["examples/*.tw"]
+  sources.each do |s|
+    puts "COMPILING: #{s}"
+    sh "bin/twisterc #{s} -o #{s.slice 0...s.index(".tw")}.twc"
+    puts
+  end
+end
+
 rule '.o' => [ proc { |o| obj_dep( o ) } ] do |t|
   sh %{g++ -c -g -o #{t.name} #{t.source}}
 end
@@ -54,4 +71,4 @@ desc "Compile all source files into objects"
 task :compile => [ "obj/src" ] + VMOBJ + ASMOBJ
 
 desc "Build the main executable"
-task :build => [ "bin/twister", "bin/twisterc" ]
+task :build => [ :generate_core, "bin/twister", "bin/twisterc" ]

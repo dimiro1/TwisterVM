@@ -6,7 +6,7 @@ class Generator
   @@using_block = String.new
 
   def self.declare_options(options = {})
-    @@options[:core] = options[:core].to_sym || :switch
+    @@options[:core] = options[:core]
   end
   
   def self.declare_opcode(opcode)
@@ -23,8 +23,8 @@ class Generator
       file.puts <<-END
      // Gerado por tools/opcode_gen.rb
      // modifique instructions.rb
-    #ifndef _OPCODE_H_
-    #define _OPCODE_H_
+    #ifndef _CORE_H_
+    #define _CORE_H_
     #{ @@options[:core] == :goto ? "#define HAVE_COMPUTED_GOTO" : ""}
     enum Opcode { #{@@opcodes.collect {|o| "OP_#{o.name.to_s.upcase}," }} };
 
@@ -63,7 +63,6 @@ class Generator
       file.puts "}"
     end
     file.puts end_dispatch
-    file.puts "}"
     end
   end
 
@@ -72,7 +71,7 @@ class Generator
       <<-CODE
       static const void
       *label_targets[] = {
-	     #{@@opcodes.collect {|o| "\"#{o.name}\"," }}
+	     #{@@opcodes.collect {|o| "&&LOP_#{o.name.to_s.upcase}, " }}
       };
       #{next_intruction}
       CODE
@@ -88,9 +87,9 @@ class Generator
 
   def self.end_dispatch
     if @@options[:core] == :goto
-      ""
+      "}"
     elsif @@options[:core] == :switch
-      "}}"
+      "}}}"
     end
   end
   
@@ -127,7 +126,7 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   opts = OptionParser.new
-  opts.on("-c", "--core CORE", String) { |core| Generator.declare_options :core => core }
+  opts.on("-c", "--core CORE", String) { |core| Generator.declare_options :core => core.to_sym }
   file = opts.parse(ARGV)
   load file.to_s
   Generator.generate("core.cpp")

@@ -41,7 +41,7 @@ opcode :add_n do
 		 RN (executing.A) +
 		 RN (executing.B));
 	 current_context->pc++;
-    CODE
+  CODE
 end
 
 opcode :asin_n do

@@ -1,7 +1,7 @@
 /*
  *   Copyright (C) 2009 by Claudemiro Alves Feitosa Neto
  *   <dimiro1@gmail.com>
- *   Modified: <2009-08-19 19:37:29 BRT>
+ *   Modified: <2009-08-19 20:40:36 BRT>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -127,7 +127,6 @@ inline void TwisterMain::show_version () const
 #else
          << " (Computed goto desactivated)" << endl;
 #endif
-
 }
 
 inline void TwisterMain::show_copyright () const

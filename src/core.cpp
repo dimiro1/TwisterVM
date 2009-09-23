@@ -12,7 +12,7 @@
 
       static const void
       *label_targets[] = {
-	     "abs_n","acos_n","add_n","asin_n","atan_n","ceil_n","cos_n","dec_n","div_n","floor_n","inc_n","log_n","mod_n","mult_n","neg_n","pow_n","sin_n","sqrt_n","sub_n","tan_n","rand_n","goto","halt","nop","system_s","getenv_s","input_n","input_s","print_n","print_s","put_n","put_s","mov_n","mov_s","store_n","store_s","concat_s","charat_s","lt_s","gt_s","lte_s","gte_s","eq_s","lt_n","gt_n","lte_n","gte_n","eq_n","not_lt_s","not_gt_s","not_lte_s","not_gte_s","not_eq_s","not_lt_n","not_gt_n","not_lte_n","not_gte_n","not_eq_n","zero_n","not_zero_n",
+	     &&LOP_ABS_N, &&LOP_ACOS_N, &&LOP_ADD_N, &&LOP_ASIN_N, &&LOP_ATAN_N, &&LOP_CEIL_N, &&LOP_COS_N, &&LOP_DEC_N, &&LOP_DIV_N, &&LOP_FLOOR_N, &&LOP_INC_N, &&LOP_LOG_N, &&LOP_MOD_N, &&LOP_MULT_N, &&LOP_NEG_N, &&LOP_POW_N, &&LOP_SIN_N, &&LOP_SQRT_N, &&LOP_SUB_N, &&LOP_TAN_N, &&LOP_RAND_N, &&LOP_GOTO, &&LOP_HALT, &&LOP_NOP, &&LOP_SYSTEM_S, &&LOP_GETENV_S, &&LOP_INPUT_N, &&LOP_INPUT_S, &&LOP_PRINT_N, &&LOP_PRINT_S, &&LOP_PUT_N, &&LOP_PUT_S, &&LOP_MOV_N, &&LOP_MOV_S, &&LOP_STORE_N, &&LOP_STORE_S, &&LOP_CONCAT_S, &&LOP_CHARAT_S, &&LOP_LT_S, &&LOP_GT_S, &&LOP_LTE_S, &&LOP_GTE_S, &&LOP_EQ_S, &&LOP_LT_N, &&LOP_GT_N, &&LOP_LTE_N, &&LOP_GTE_N, &&LOP_EQ_N, &&LOP_NOT_LT_S, &&LOP_NOT_GT_S, &&LOP_NOT_LTE_S, &&LOP_NOT_GTE_S, &&LOP_NOT_EQ_S, &&LOP_NOT_LT_N, &&LOP_NOT_GT_N, &&LOP_NOT_LTE_N, &&LOP_NOT_GTE_N, &&LOP_NOT_EQ_N, &&LOP_ZERO_N, &&LOP_NOT_ZERO_N, 
       };
             executing = current_context->code_section[current_context->pc];
       goto *label_targets[executing.opcode];
@@ -661,5 +661,4 @@ LOP_NOT_ZERO_N: {
       executing = current_context->code_section[current_context->pc];
       goto *label_targets[executing.opcode];
 }
-
 }
